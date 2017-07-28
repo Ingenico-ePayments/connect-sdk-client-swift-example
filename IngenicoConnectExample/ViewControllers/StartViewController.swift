@@ -153,7 +153,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         regionLabel = viewFactory.labelWithType(type: .gcLabelType)
         regionLabel.text = NSLocalizedString("Region", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Region")
         regionLabel.translatesAutoresizingMaskIntoConstraints = false
-        regionControl = UISegmentedControl(items: ["EU", "US"])
+        regionControl = UISegmentedControl(items: ["EU", "US", "AMS", "PAR"])
         regionControl.selectedSegmentIndex = 0
         regionControl.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(regionLabel)
@@ -305,8 +305,12 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         
         if regionControl.selectedSegmentIndex == 0 {
             region = .EU
-        } else {
+        } else if regionControl.selectedSegmentIndex == 1 {
             region = .US
+        } else if regionControl.selectedSegmentIndex == 2 {
+            region = .AMS
+        } else {
+            region = .PAR
         }
         
         var environment = Environment.sandbox
