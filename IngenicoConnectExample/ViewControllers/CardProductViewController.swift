@@ -14,7 +14,7 @@ class CardProductViewController: PaymentProductViewController {
     
     var cursorPositionInCreditCardNumberTextField: UITextPosition?
     var iinDetailsResponse: IINDetailsResponse?
-    
+    var cobrands: [IINDetail] = []
     override func registerReuseIdentifiers() {
         super.registerReuseIdentifiers()
         tableView.register(CoBrandsSelectionTableViewCell.self, forCellReuseIdentifier: CoBrandsSelectionTableViewCell.reuseIdentifier)
@@ -39,21 +39,6 @@ class CardProductViewController: PaymentProductViewController {
                 cell.rightView = UIView()
             }
         }
-    }
-    
-    override func cell(for row: FormRowTextField, tableView: UITableView) -> TextFieldTableViewCell {
-        let cell = super.cell(for: row, tableView: tableView)
-        
-        // Add payment product logo
-        if row.paymentProductField.identifier == "cardNumber", confirmedPaymentProducts.contains(paymentItem.identifier) {
-            let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            view.contentMode = .scaleAspectFit
-            row.logo = paymentItem.displayHints.logoImage
-            view.image = row.logo
-            cell.rightView = view
-        }
-        
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -99,7 +84,8 @@ class CardProductViewController: PaymentProductViewController {
         cell.logo = row.logo
         
         cell.accessoryType = .none
-        cell.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        cell.shouldHaveMaximalWidth = true
+        cell.color = UIColor(white: 0.9, alpha: 1)
         cell.setNeedsLayout()
         
         return cell
@@ -108,8 +94,9 @@ class CardProductViewController: PaymentProductViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        if let row = formRows[indexPath.row] as? PaymentProductsTableRow {
+        if let row = formRows[indexPath.row] as? PaymentProductsTableRow, row.paymentProductIdentifier != self.paymentItem.identifier {
             switchToPaymentProduct(paymentProductId: row.paymentProductIdentifier)
+            return
         }
         
         if formRows[indexPath.row] is FormRowCoBrandsSelection || formRows[indexPath.row] is PaymentProductsTableRow {
@@ -122,7 +109,71 @@ class CardProductViewController: PaymentProductViewController {
             updateFormRows()
         }
     }
-    
+    override func updateFormRows() {
+        if self.switching {
+            
+            // We need to update the tableView to the new amount of rows. However, we cannot use tableView.reloadData(), because then
+            // the current textfield losses focus. We also should not reload the cardNumber row with tableView.reloadRows([indexOfCardNumber, with: ...) 
+            // because that also makes the textfield lose focus.
+            
+            // Because the cardNumber field might move, we cannot just insert/delete the difference in rows in general, because if we 
+            // do, the index of the cardNumber field might change, and we cannot reload the new place.
+            
+            // So instead, we check the difference in rows before the cardNumber field between before the mutation and after the mutation, 
+            // and the difference in rows after the cardNumber field between before and after the mutations
+                        
+            tableView.beginUpdates()
+            let oldFormRows = self.formRows
+            self.initializeFormRows()
+            let oldCardNumberIndex = oldFormRows.index(where: { (r) -> Bool in
+                (r as? FormRowTextField)?.paymentProductField.identifier == "cardNumber"
+            }) ?? 0
+            let newCardNumberIndex = self.formRows.index(where: { (r) -> Bool in
+                (r as? FormRowTextField)?.paymentProductField.identifier == "cardNumber"
+            })  ?? 0
+            
+            let diffCardNumberIndex = newCardNumberIndex - oldCardNumberIndex
+
+            if (diffCardNumberIndex >= 0) {
+                let insertIndexes = (0 ..< diffCardNumberIndex).map{ (i) in IndexPath(row: oldCardNumberIndex - 1 + i, section: 0)}
+                tableView.insertRows(at:  insertIndexes, with: UITableViewRowAnimation.automatic)
+                let updateIndexes = (0 ..< oldCardNumberIndex).map { (i) in IndexPath(row: i, section: 0) }
+                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+
+            }
+            if (diffCardNumberIndex < 0) {
+                let deleteIndexes = (0 ..< -diffCardNumberIndex).map{ (i) in IndexPath(row:  i, section: 0)}
+                tableView.deleteRows(at:  deleteIndexes, with: UITableViewRowAnimation.automatic)
+                let updateIndexes = (0 ..< oldCardNumberIndex + diffCardNumberIndex).map { (i) in IndexPath(row: oldCardNumberIndex - i, section: 0) }
+                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+            }
+
+            let oldAfterCardNumberCount = oldFormRows.count - oldCardNumberIndex - 1
+            var newAfterCardNumberCount = formRows.count - newCardNumberIndex - 1
+            
+            let diffAfterCardNumberCount = newAfterCardNumberCount - oldAfterCardNumberCount
+            if newAfterCardNumberCount < 0 {
+                newAfterCardNumberCount = 0
+            }
+            if (diffAfterCardNumberCount >= 0) {
+                let insertIndexes = (0 ..< diffAfterCardNumberCount).map{ (i) in IndexPath(row: oldFormRows.count + i, section: 0)}
+                tableView.insertRows(at:  insertIndexes, with: UITableViewRowAnimation.automatic)
+                let updateIndexes = (0 ..< oldAfterCardNumberCount).map { (i) in IndexPath(row: i + oldCardNumberIndex + 1, section: 0) }
+                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+
+            }
+            if (diffAfterCardNumberCount < 0) {
+                let deleteIndexes = (0 ..< -diffAfterCardNumberCount).map{ (i) in IndexPath(row:  oldFormRows.count - i - 1, section: 0)}
+                tableView.deleteRows(at:  deleteIndexes, with: UITableViewRowAnimation.automatic)
+                let updateIndexes = (0 ..< newAfterCardNumberCount).map { (i) in IndexPath(row: self.formRows.count - i - 1 - diffCardNumberIndex, section: 0) }
+                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+
+            }
+            
+            tableView.endUpdates()
+        }
+        super.updateFormRows()
+    }
     override func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath) {
         super.formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath)
         
@@ -141,26 +192,7 @@ class CardProductViewController: PaymentProductViewController {
                     
                     self.iinDetailsResponse = response
                     
-                    // Reload cobrands form rows
-                    var deleteRows = [IndexPath]()
-                    for (index, row) in self.formRows.enumerated() {
-                        if row is FormRowCoBrandsSelection || row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow {
-                            deleteRows.append(IndexPath(row: index, section: 0))
-                        }
-                    }
-                    for indexPath in deleteRows.reversed() {
-                        self.formRows.remove(at: indexPath.row)
-                    }
-                    self.tableView.deleteRows(at: deleteRows, with: .none)
-                    
-                    let rows = self.coBrandForms(iinDetailsResponse: response)
-                    if rows.count > 0 {
-                        let insertionIndex = indexPath.row + 1
-                        self.formRows.insert(contentsOf: rows, at: insertionIndex)
-                        let indexPaths = (0..<rows.count).map { return IndexPath(row: insertionIndex + $0, section: 0) }
-                        self.tableView.insertRows(at: indexPaths, with: .none)
-                    }
-                    
+                    self.cobrands = response.coBrands;
                     if response.status == .supported {
                         var coBrandSelected = false
                         let coBrands = response.coBrands
@@ -179,6 +211,8 @@ class CardProductViewController: PaymentProductViewController {
                     else {
                         self.switchToPaymentProduct(paymentProductId: self.initialPaymentProduct?.identifier)
                     }
+                    
+
                 }, failure: { error in
                 })
             } else if unmasked.characters.count < 6 {
@@ -188,9 +222,9 @@ class CardProductViewController: PaymentProductViewController {
                     if row is FormRowCoBrandsSelection || row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow {
                         deleteRows.append(IndexPath(row: index, section: 0))
                     }
-                    if let row = row as? FormRowTextField, row.paymentProductField.identifier == "cardNumber" {
-                        updateFormRows()
-                    }
+                    //if let row = row as? FormRowTextField, row.paymentProductField.identifier == "cardNumber" {
+                    //    updateFormRows()
+                    //}
                 }
                 for indexPath in deleteRows.reversed() {
                     self.formRows.remove(at: indexPath.row)
@@ -198,14 +232,13 @@ class CardProductViewController: PaymentProductViewController {
                 self.tableView.deleteRows(at: deleteRows, with: .none)
                 
                 // To toggle card logo
-                switchToPaymentProduct(paymentProductId: initialPaymentProduct?.identifier)
+                //switchToPaymentProduct(paymentProductId: self.initialPaymentProduct?.identifier)
             }
         }
     }
     
-    func coBrandForms(iinDetailsResponse: IINDetailsResponse) -> [FormRow] {
+    func coBrandForms(inputCoBrands: [IINDetail]) -> [FormRow] {
         var coBrands = [String]()
-        let inputCoBrands = iinDetailsResponse.coBrands
         for coBrand: IINDetail in inputCoBrands where coBrand.allowedInContext {
             coBrands.append(coBrand.paymentProductId)
         }
@@ -238,16 +271,9 @@ class CardProductViewController: PaymentProductViewController {
         
         return formRows
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func initializeFormRows() {
+        super.initializeFormRows()
+        let newFormRows = coBrandForms(inputCoBrands: self.cobrands)
+        self.formRows.insert(contentsOf: newFormRows, at: 2)
     }
-    */
-
 }

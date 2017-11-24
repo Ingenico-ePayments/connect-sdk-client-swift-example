@@ -16,8 +16,8 @@ class CurrencyTableViewCell: TableViewCell {
     var separatorlabel = UILabel()
     var currencyCodeLabel = UILabel()
 
-    static let reuseIdentifier = "currency-text-field-cell"
-    
+    override class var reuseIdentifier: String {return "currency-text-field-cell"}
+
     var delegate: UITextFieldDelegate? {
         get {
             return integerTextField.delegate

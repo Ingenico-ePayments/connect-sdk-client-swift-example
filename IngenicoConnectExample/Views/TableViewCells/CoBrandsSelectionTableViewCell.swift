@@ -11,8 +11,8 @@ import UIKit
 import IngenicoConnectKit
 
 class CoBrandsSelectionTableViewCell: TableViewCell {
-    static let reuseIdentifier = "co-brand-selection-cell"
-    
+    override class var reuseIdentifier: String { return "co-brand-selection-cell" }
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -28,5 +28,10 @@ class CoBrandsSelectionTableViewCell: TableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let width = accessoryAndMarginCompatibleWidth()
+        let leftMargin = accessoryCompatibleLeftMargin()
+        textLabel?.frame = CGRect(x: leftMargin, y: 4, width: width, height: 36)
+    }
 }

@@ -76,17 +76,12 @@ class FormRowsConverter {
                 errorMessageKey = ""
             }
             
-            // TODO: Replace this structure with something nice
             let errorMessageValueWithPlaceholders = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            let errorMessageValueWithPlaceholder = errorMessageValueWithPlaceholders.replacingOccurrences(of: "{maxLength}", with: "%ld")
-            errorMessageValue = errorMessageValueWithPlaceholder.replacingOccurrences(of: "{minLength}", with: "%ld")
-            errorMessage = String(format: errorMessageValue, lengthError.minLength, lengthError.maxLength)
+            let errorMessageValueWithPlaceholder = errorMessageValueWithPlaceholders.replacingOccurrences(of: "{maxLength}", with: String(lengthError.maxLength))
+            errorMessage = errorMessageValueWithPlaceholder.replacingOccurrences(of: "{minLength}", with: String(lengthError.minLength))
         } else if let rangeError = errorClass as? ValidationErrorRange {
             errorMessageKey = String(format: errorMessageFormat, "length.between")
-            // TODO: Replace this structure with something nice
             let errorMessageValueWithPlaceholders = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            let errorMessageValueWithPlaceholder = errorMessageValueWithPlaceholders.replacingOccurrences(of: "{maxValue}", with: "%ld")
-            errorMessageValue = errorMessageValueWithPlaceholder.replacingOccurrences(of: "{minValue}", with: "%ld")
             var minString = ""
             var maxString = ""
             if withCurrency {
@@ -97,7 +92,8 @@ class FormRowsConverter {
                 minString = "\(Int(rangeError.minValue))"
                 maxString = "\(Int(rangeError.maxValue))"
             }
-            errorMessage = String(format: errorMessageValue, minString, maxString)
+            let errorMessageValueWithPlaceholder = errorMessageValueWithPlaceholders.replacingOccurrences(of: "{maxValue}", with: String(maxString))
+            errorMessage = errorMessageValueWithPlaceholder.replacingOccurrences(of: "{minValue}", with: String(minString))
         } else if errorClass is ValidationErrorExpirationDate {
             errorMessageKey = String(format: errorMessageFormat, "expirationDate")
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")

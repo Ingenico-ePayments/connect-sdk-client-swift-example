@@ -44,6 +44,7 @@ class PaymentProductsViewController: UITableViewController {
             sections.append(accountsSection)
         }
         
+        // Don't group paymentProducts if bcmc access is required
         let productsSection = TableSectionConverter.paymentProductsTableSection(from: paymentItems)
         productsSection.title = NSLocalizedString("gc.app.paymentProductSelection.pageTitle", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Title of the section that shows all available payment products.")
         sections.append(productsSection)

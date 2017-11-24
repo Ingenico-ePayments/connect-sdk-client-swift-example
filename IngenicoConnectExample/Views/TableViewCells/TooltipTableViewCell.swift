@@ -13,7 +13,7 @@ class TooltipTableViewCell: TableViewCell {
     private var tooltipLabel = UILabel()
     private var tooltipImageContainer = UIImageView()
 
-    static let reuseIdentifier = "info-cell"
+    override class var reuseIdentifier: String {return "info-cell"}
 
     var label: String? {
         get {
@@ -47,14 +47,15 @@ class TooltipTableViewCell: TableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let width = contentView.frame.size.width
-        tooltipLabel.frame = CGRect(x: 15, y: 0, width: width - 30, height: 40)
+        let width = self.accessoryAndMarginCompatibleWidth()
+        let leftMargin = accessoryCompatibleLeftMargin()
+        tooltipLabel.frame = CGRect(x: Int(leftMargin), y: 0, width: Int(width - 30), height: 40)
 
         if let image = tooltipImage {
             let ratio = image.size.width / image.size.height
-            tooltipImageContainer.frame = CGRect(x: 15, y: 40, width: 100 * ratio, height: 100)
+            tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 100 * ratio, height: 100)
         } else {
-            tooltipImageContainer.frame = CGRect(x: 15, y: 40, width: 0, height: 0)
+            tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 0, height: 0)
         }
     }
     

@@ -12,8 +12,8 @@ import UIKit
 class ButtonTableViewCell: TableViewCell {
     private var button: Button = Button()
     
-    static let reuseIdentifier: String = "button-cell"
-    
+    override class var reuseIdentifier: String {return "button-cell"}
+
     var buttonType: ButtonType {
         get {
             return button.type
@@ -63,9 +63,10 @@ class ButtonTableViewCell: TableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        let width = self.accessoryAndMarginCompatibleWidth()
+        let leftMargin = accessoryCompatibleLeftMargin()
         let height = contentView.frame.size.height
-        let width = contentView.frame.size.width
-        button.frame = CGRect(x: 10, y: buttonType == .primary ? 12 : 6, width: width - 20, height: height - 12)
+        button.frame = CGRect(x: leftMargin, y: buttonType == .secondary ? 6 : 12, width: width, height: height - 12)
     }
     
     override func prepareForReuse() {

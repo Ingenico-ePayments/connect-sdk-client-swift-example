@@ -11,8 +11,7 @@ import UIKit
 
 class SwitchTableViewCell: TableViewCell {
     var switchControl = UISwitch()
-
-    static let reuseIdentifier = "switch-cell"
+    override class var reuseIdentifier: String {return "switch-cell"}
 
     var title: String? {
         get {
@@ -46,10 +45,11 @@ class SwitchTableViewCell: TableViewCell {
         super.layoutSubviews()
 
         let height = contentView.frame.size.height
-        let width = contentView.frame.size.width
+        let width = self.accessoryAndMarginCompatibleWidth()
+        let leftMargin = self.accessoryCompatibleLeftMargin()
         let switchWidth = switchControl.frame.size.width
-        switchControl.frame = CGRect(x: 10, y: 7, width: 0, height: 0)
-        textLabel?.frame = CGRect(x: 20 + switchWidth, y: -1, width: width - switchWidth - 30, height: height)
+        switchControl.frame = CGRect(x: leftMargin, y: 7, width: 0, height: 0)
+        textLabel?.frame = CGRect(x: leftMargin + switchWidth + 16, y: -1, width: width - switchWidth, height: height)
     }
 
     override func prepareForReuse() {

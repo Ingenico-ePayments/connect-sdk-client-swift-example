@@ -15,7 +15,9 @@ class TableSectionConverter {
         let section = PaymentProductsTableSection()
         section.type = .gcAccountOnFileType
         
-        for accountOnFile in accountsOnFile {
+        for accountOnFile in accountsOnFile.sorted(by: { (a, b) -> Bool in
+            return paymentItems.paymentItem(withIdentifier:a.paymentProductIdentifier)?.displayHints.displayOrder ?? Int.max < paymentItems.paymentItem(withIdentifier:b.paymentProductIdentifier)?.displayHints.displayOrder ?? Int.max;
+        }) {
             if let product = paymentItems.paymentItem(withIdentifier: accountOnFile.paymentProductIdentifier) {
                 let row = PaymentProductsTableRow()
                 let displayName = accountOnFile.label
@@ -34,7 +36,9 @@ class TableSectionConverter {
     static func paymentProductsTableSection(from paymentItems: PaymentItems) -> PaymentProductsTableSection {
         let section = PaymentProductsTableSection()
         
-        for paymentItem in paymentItems.paymentItems {
+        for paymentItem in paymentItems.paymentItems.sorted(by: { (a, b) -> Bool in
+            return a.displayHints.displayOrder ?? Int.max < b.displayHints.displayOrder ?? Int.max;
+        }) {
             section.type = .gcPaymentProductType
             
             let row = PaymentProductsTableRow()

@@ -32,9 +32,12 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     var paymentRequestTarget: PaymentRequestTarget?
     var accountOnFile: AccountOnFile?
     
+    // MARK: -
+    // MARK: ViewController
     init(paymentItem: PaymentItem, session: Session, context: PaymentContext, viewFactory: ViewFactory, accountOnFile: AccountOnFile?) {
         super.init(style: .plain)
         self.paymentItem = paymentItem
+        context.forceBasicFlow = true
         self.session = session
         self.context = context
         self.amount = context.amountOfMoney.totalAmount
@@ -168,14 +171,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         tableView.endUpdates()
     }
     
-    func updateTextFieldCell(cell: TextFieldTableViewCell, row: FormRowTextField) {
-        // Add error messages for cells
-        if let error = row.paymentProductField.errors.first {
-            cell.error = FormRowsConverter.errorMessage(for: error, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType)
-        } else {
-            cell.error = nil
-        }
-    }
     
     func updateButtonCell(cell: ButtonTableViewCell, row: FormRowButton) {
         cell.isEnabled = row.isEnabled
@@ -194,7 +189,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
             switching = true
             session.paymentProduct(withId: paymentProductId, context: context, success: {(_ paymentProduct: PaymentProduct) -> Void in
                 self.paymentItem = paymentProduct
-                paymentProduct.fields = self.inputData.paymentItem.fields
                 self.inputData.paymentItem = paymentProduct
                 self.updateFormRows()
                 self.switching = false
@@ -216,7 +210,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = formRows[indexPath.row]
-        var cell = formRowCell(for: row, indexPath: indexPath)
+        let cell = formRowCell(for: row, indexPath: indexPath)
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
@@ -253,16 +247,22 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         }
         return cell!
     }
-    
-    func cell(for row: FormRowTextField, tableView: UITableView) -> TextFieldTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseIdentifier) as! TextFieldTableViewCell
-        
+    func updateTextFieldCell(cell: TextFieldTableViewCell, row: FormRowTextField) {
+        // Add error messages for cells
         cell.delegate = self
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
         cell.field = row.field
-        if row.paymentProductField.errors.count > 0 {
-            cell.error = FormRowsConverter.errorMessage(for: row.paymentProductField.errors.first!, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType)
+        if let error = row.paymentProductField.errors.first {
+            cell.error = FormRowsConverter.errorMessage(for: error, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType)
+        } else {
+            cell.error = nil
         }
+    }
+
+    func cell(for row: FormRowTextField, tableView: UITableView) -> TextFieldTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseIdentifier) as! TextFieldTableViewCell
+        
+        self.updateTextFieldCell(cell: cell, row: row)
 
         return cell
     }
@@ -313,6 +313,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let cell = tableView.dequeueReusableCell(withIdentifier: LabelTableViewCell.reuseIdentifier) as! LabelTableViewCell
         
         cell.label = row.text
+        cell.isBold = row.isBold
         
         return cell
     }
@@ -333,7 +334,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         
         return cell
     }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = formRows[indexPath.row]
         
@@ -350,8 +350,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         else if let row = row as? FormRowTooltip, row.image != nil {
             return 145
         }
-        else if row is FormRowLabel {
-            return 36
+        else if let row = row as? FormRowLabel {
+            let height = LabelTableViewCell.cellSize(width: min(320, tableView.frame.width), formRow: row).height
+            return height
         } else if row is FormRowButton {
             return 52
         } else if let row = row as? FormRowTextField, row.paymentProductField.errors.count > 0 {
@@ -366,7 +367,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         
         return 44
     }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Subclasses need to be able to call this method to prevent unrecognized selector exception so don't delete it!
     }
@@ -393,7 +393,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         else if let castedTextField = textField as? TextField {
             returnValue = standardTextField(castedTextField, shouldChangeCharactersIn: range, replacementString: string)
         }
-        
         if validation {
             validateData()
         }
@@ -412,7 +411,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         inputData.setValue(value: newString, forField: row.paymentProductField.identifier)
         var field = row.field
-        field.text = newString
+        field.text = inputData.maskedValue(forField: row.paymentProductField.identifier)
         row.field = field
         formRows[indexPath.row] = row
 
@@ -429,6 +428,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         
         let trimSet = CharacterSet(charactersIn: " /-_")
         let formattedString = inputData.maskedValue(forField: row.paymentProductField.identifier, cursorPosition: &cursorPosition).trimmingCharacters(in: trimSet)
+        row.field.text = formattedString
         textField.text = formattedString
         cursorPosition = min(cursorPosition, formattedString.characters.count)
         

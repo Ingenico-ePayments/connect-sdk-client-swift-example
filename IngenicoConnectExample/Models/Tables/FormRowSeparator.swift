@@ -2,17 +2,16 @@
 //  FormRowLabel.swift
 //  IngenicoConnectExample
 //
-//  Created for Ingenico ePayments on 15/12/2016.
+//  Created for Ingenico ePayments on 30/06/2017.
 //  Copyright © 2016 Global Collect Services. All rights reserved.
 //
 
 import Foundation
 
-class FormRowLabel: FormRow {
+class FormRowSeparator: FormRow {
     var text: String
-    var isBold: Bool
+    
     init(text: String) {
         self.text = text
-        self.isBold = false
     }
 }

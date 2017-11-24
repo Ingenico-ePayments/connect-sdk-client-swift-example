@@ -12,7 +12,7 @@ import IngenicoConnectKit
 
 class PickerViewTableViewCell: TableViewCell {
     var pickerView = PickerView()
-    static let reuseIdentifier = "picker-view-cell"
+    override class var reuseIdentifier: String {return "picker-view-cell"}
 
     var items: [ValueMappingItem]? {
         didSet {

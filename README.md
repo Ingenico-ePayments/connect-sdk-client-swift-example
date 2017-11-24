@@ -1,9 +1,9 @@
 Ingenico Connect Swft SDK example
 =======================
 
-This example app illustrates the use of the [Ingenico Connect Swift SDK](https://github.com/Ingenico-ePayments/connect-sdk-client-swift) and the services provided by Ingenico ePayments on the GlobalCollect platform.
+This example app illustrates the use of the [Ingenico Connect Swift SDK](https://github.com/Ingenico-ePayments/connect-sdk-client-swift) and the services provided by Ingenico ePayments on the Ingenico ePayments platform.
 
-See the [Ingenico Connect Developer Hub](https://developer.globalcollect.com/documentation/sdk/mobile/swift/) for more information on how to use the SDK.
+See the [Ingenico Connect Developer Hub](https://epayments.developer-ingenico.com/documentation/sdk/mobile/swift/) for more information on how to use the SDK.
 
 Prerequisites
 ------------

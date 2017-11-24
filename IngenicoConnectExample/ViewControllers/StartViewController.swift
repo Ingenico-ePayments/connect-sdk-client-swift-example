@@ -49,6 +49,8 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     var isRecurringLabel: Label!
     var isRecurringSwitch: Switch!
     var payButton: UIButton!
+    var shouldGroupProductsSwitch: UISwitch!
+
     var paymentProductsViewControllerTarget: PaymentProductsViewControllerTarget?
     
     var amountValue: Int = 0
@@ -73,7 +75,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         countryCodes = CountryCode.allValues.sorted { $0.rawValue.localizedCaseInsensitiveCompare($1.rawValue) == .orderedAscending }
         currencyCodes = CurrencyCode.allValues.sorted { $0.rawValue.localizedCaseInsensitiveCompare($1.rawValue) == .orderedAscending }
         
-        let viewHeight: CGFloat = 1500
+        let viewHeight: CGFloat = 1530
         
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.delaysContentTouches = false
@@ -100,7 +102,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         
         explanation = UITextView()
         explanation.translatesAutoresizingMaskIntoConstraints = false
-        explanation.text = NSLocalizedString("SetupExplanation", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "To process a payment using the services provided by the GlobalCollect platform, the following information must be provided by a merchant.\n\nAfter providing the information requested below, this example app can process a payment.")
+        explanation.text = NSLocalizedString("SetupExplanation", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "To process a payment using the services provided by the Ingenico ePayments platform, the following information must be provided by a merchant.\n\nAfter providing the information requested below, this example app can process a payment.")
         explanation.isEditable = false
         explanation.backgroundColor = UIColor(red: CGFloat(0.85), green: CGFloat(0.94), blue: CGFloat(0.97), alpha: CGFloat(1))
         explanation.textColor = UIColor(red: CGFloat(0), green: CGFloat(0.58), blue: CGFloat(0.82), alpha: CGFloat(1))
@@ -212,6 +214,14 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.addSubview(isRecurringLabel)
         containerView.addSubview(isRecurringSwitch)
         
+        let shouldGroupProductsSwitchLabel = viewFactory.labelWithType(type: .gcLabelType)
+        shouldGroupProductsSwitchLabel.text = NSLocalizedString("ShouldGroupProductsSwitch", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "Group payment products", comment: "Label for switch to enable product grouping")
+        shouldGroupProductsSwitchLabel.translatesAutoresizingMaskIntoConstraints = false
+        shouldGroupProductsSwitch = viewFactory.switchWithType(type: .gcSwitchType)
+        shouldGroupProductsSwitch.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(shouldGroupProductsSwitchLabel)
+        containerView.addSubview(shouldGroupProductsSwitch)
+
         payButton = viewFactory.buttonWithType(type: .primary)
         payButton.setTitle(NSLocalizedString("PayNow", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Pay securely now"), for: .normal)
         payButton.translatesAutoresizingMaskIntoConstraints = false
@@ -238,7 +248,9 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             "currencyCodePicker": currencyCodePicker,
             "isRecurringLabel": isRecurringLabel,
             "isRecurringSwitch": isRecurringSwitch,
-            "payButton": payButton
+            "payButton": payButton,
+            "shouldGroupProductsSwitchLabel": shouldGroupProductsSwitchLabel,
+            "shouldGroupProductsSwitch": shouldGroupProductsSwitch
         ]
         let metrics = ["largeSpace": "24"]
         
@@ -259,10 +271,12 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodePicker]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodeLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodePicker]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[isRecurringLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[isRecurringSwitch]-|", options: [], metrics: nil, views: views))
+        //containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[isRecurringLabel]-[isRecurringSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
+        //containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|--|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[shouldGroupProductsSwitchLabel]-[shouldGroupProductsSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[payButton]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(largeSpace)-[explanation(==100)]-(largeSpace)-[clientSessionIdLabel]-[clientSessionIdTextField]-(largeSpace)-[customerIdLabel]-[customerIdTextField]-(largeSpace)-[merchantIdLabel]-[merchantIdTextField]-(largeSpace)-[regionLabel]-[regionControl]-(largeSpace)-[environmentLabel]-[environmentPicker]-(largeSpace)-[amountLabel]-[amountTextField]-(largeSpace)-[countryCodeLabel]-[countryCodePicker]-(largeSpace)-[currencyCodeLabel]-[currencyCodePicker]-(largeSpace)-[isRecurringLabel]-[isRecurringSwitch]-(largeSpace)-[payButton]", options: [], metrics: metrics, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(largeSpace)-[explanation(==100)]-(largeSpace)-[clientSessionIdLabel]-[clientSessionIdTextField]-(largeSpace)-[customerIdLabel]-[customerIdTextField]-(largeSpace)-[merchantIdLabel]-[merchantIdTextField]-(largeSpace)-[regionLabel]-[regionControl]-(largeSpace)-[environmentLabel]-[environmentPicker]-(largeSpace)-[amountLabel]-[amountTextField]-(largeSpace)-[countryCodeLabel]-[countryCodePicker]-(largeSpace)-[currencyCodeLabel]-[currencyCodePicker]-(largeSpace)-[isRecurringSwitch]-(largeSpace)-[shouldGroupProductsSwitch]-(largeSpace)-[payButton]-|", options: [], metrics: metrics, views: views))
     }
     
     func initializeTapRecognizer() {
@@ -355,7 +369,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         do {
             let amountOfMoney = try PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
             context = try PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode)
-            session!.paymentItems(for: context!, groupPaymentProducts: true, success: {(_ paymentItems: PaymentItems) -> Void in
+            session!.paymentItems(for: context!, groupPaymentProducts: self.shouldGroupProductsSwitch.isOn, success: {(_ paymentItems: PaymentItems) -> Void in
                 SVProgressHUD.dismiss()
                 self.showPaymentProductSelection(paymentItems)
             }, failure: { error in

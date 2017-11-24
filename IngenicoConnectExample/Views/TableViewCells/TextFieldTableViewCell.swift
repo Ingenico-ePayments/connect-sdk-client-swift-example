@@ -52,7 +52,7 @@ class TextFieldTableViewCell: TableViewCell {
     
     private var errorLabel: Label = Label()
     
-    static let reuseIdentifier = "text-field-cell"
+    override class var reuseIdentifier: String {return "text-field-cell"}
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -68,16 +68,15 @@ class TextFieldTableViewCell: TableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        let width = contentView.frame.size.width
-        textField.frame = CGRect(x: 10, y: 4, width: width - 20, height: 36)
-        errorLabel.frame = CGRect(x: 10, y: 44, width: width - 20, height: 20)
+        let width = accessoryAndMarginCompatibleWidth()
+        let leftMargin = self.accessoryCompatibleLeftMargin()
+        textField.frame = CGRect(x: leftMargin, y: 4, width: width, height: 36)
+        errorLabel.frame = CGRect(x: leftMargin, y: 44, width: width, height: 20)
         errorLabel.preferredMaxLayoutWidth = width - 20
         errorLabel.sizeToFit()
-        errorLabel.frame = CGRect(x: 10, y: 44, width: width - 20, height: errorLabel.frame.height)
+        errorLabel.frame = CGRect(x: leftMargin, y: 44, width: width, height: errorLabel.frame.height)
     }
     
     override func prepareForReuse() {

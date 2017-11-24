@@ -18,6 +18,7 @@ public class AppConstants {
     static let kClientSessionId = "kClientSessionId"
     static let kCustomerId = "kCustomerId"
     static let kMerchantId = "kMerchantId"
-    static let kApplicationIdentifier = "Swift Example Application/v1.0"
+    static let kApplicationIdentifier = "Swift Example Application/v1.2.0"
     static let kBoletoBancarioId = "1503"
+    static let kBancontactId = "3012"
 }
