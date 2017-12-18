@@ -9,9 +9,9 @@
 import Foundation
 
 class FormRowSeparator: FormRow {
-    var text: String
+    var text: String?
     
-    init(text: String) {
+    init(text: String?) {
         self.text = text
     }
 }

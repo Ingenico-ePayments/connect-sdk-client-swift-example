@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import IngenicoConnectKit
 
-class PaymentProductViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class PaymentProductViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, SwitchTableViewCellDelegate, DatePickerTableViewCellDelegate {
+    
     
     var viewFactory: ViewFactory!
     var paymentItem: PaymentItem!
@@ -71,6 +72,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         }
         
         initializeFormRows()
+        addExtraRows()
         registerReuseIdentifiers()
     }
     
@@ -83,6 +85,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         tableView.register(PickerViewTableViewCell.self, forCellReuseIdentifier: PickerViewTableViewCell.reuseIdentifier)
         tableView.register(ErrorMessageTableViewCell.self, forCellReuseIdentifier: ErrorMessageTableViewCell.reuseIdentifier)
         tableView.register(TooltipTableViewCell.self, forCellReuseIdentifier: TooltipTableViewCell.reuseIdentifier)
+        tableView.register(DatePickerTableViewCell.self, forCellReuseIdentifier: DatePickerTableViewCell.reuseIdentifier)
     }
 
     func initializeTapRecognizer() {
@@ -108,6 +111,29 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         header.setSecurePayment(securePayment: NSLocalizedString("gc.app.general.securePaymentText", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Text indicating that a secure payment method is used."))
         tableView.tableHeaderView = header
     }
+    func addExtraRows() {
+        // Add remember me switch
+        let switchFormRow = FormRowSwitch(title: NSLocalizedString("gc.app.paymentProductDetails.rememberMe", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Explanation of the switch for remembering payment information."), isOn: rememberPaymentDetails, target: self, action: #selector(switchChanged), paymentProductField: nil)
+        switchFormRow.isEnabled = false
+        self.formRows.append(switchFormRow)
+        
+        let switchFormRowTooltip = FormRowTooltip()
+        switchFormRowTooltip.text = NSLocalizedString("gc.app.paymentProductDetails.rememberMe.tooltip", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
+        switchFormRow.tooltip = switchFormRowTooltip
+        self.formRows.append(switchFormRowTooltip)
+        
+        // Add pay and cancel button
+        let payButtonTitle = NSLocalizedString("gc.app.paymentProductDetails.payButton", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Title of the pay button on the payment product screen.")
+        let payButtonFormRow = FormRowButton(title: payButtonTitle, target: self, action: #selector(payButtonTapped))
+        payButtonFormRow.isEnabled = paymentItem is PaymentProduct
+        self.formRows.append(payButtonFormRow)
+        
+        let cancelButtonTitle = NSLocalizedString("gc.app.paymentProductDetails.cancelButton", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Title of the cancel button on the payment product screen.")
+        let cancelButtonFormRow = FormRowButton(title: cancelButtonTitle, target: self, action: #selector(cancelButtonTapped))
+        cancelButtonFormRow.buttonType = .secondary
+        cancelButtonFormRow.isEnabled = true
+        self.formRows.append(cancelButtonFormRow)
+    }
     
     func initializeFormRows() {
         let mapper = FormRowsConverter()
@@ -122,29 +148,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         }
         
         self.formRows = formRowsWithTooltip
-
-        // Add remember me switch
-        let switchFormRow = FormRowSwitch(title: NSLocalizedString("gc.app.paymentProductDetails.rememberMe", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Explanation of the switch for remembering payment information."), isOn: rememberPaymentDetails, target: self, action: #selector(switchChanged))
-        switchFormRow.isEnabled = false
-        self.formRows.append(switchFormRow)
-
-        let switchFormRowTooltip = FormRowTooltip()
-        switchFormRowTooltip.text = NSLocalizedString("gc.app.paymentProductDetails.rememberMe.tooltip", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-        switchFormRow.tooltip = switchFormRowTooltip
-        self.formRows.append(switchFormRowTooltip)
-
-        // Add pay and cancel button
-        let payButtonTitle = NSLocalizedString("gc.app.paymentProductDetails.payButton", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Title of the pay button on the payment product screen.")
-        let payButtonFormRow = FormRowButton(title: payButtonTitle, target: self, action: #selector(payButtonTapped))
-        payButtonFormRow.isEnabled = paymentItem is PaymentProduct
-        self.formRows.append(payButtonFormRow)
-
-        let cancelButtonTitle = NSLocalizedString("gc.app.paymentProductDetails.cancelButton", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Title of the cancel button on the payment product screen.")
-        let cancelButtonFormRow = FormRowButton(title: cancelButtonTitle, target: self, action: #selector(cancelButtonTapped))
-        cancelButtonFormRow.buttonType = .secondary
-        cancelButtonFormRow.isEnabled = true
-        self.formRows.append(cancelButtonFormRow)
-        
     }
     
     
@@ -153,11 +156,21 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         for (index, row) in formRows.enumerated() {
             if let row = row as? FormRowTextField, let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? TextFieldTableViewCell {
                 updateTextFieldCell(cell: cell, row: row)
-            } else if let row = row as? FormRowSwitch, row.action == #selector(switchChanged) {
-                if let product = paymentItem as? BasicPaymentProduct, product.allowsTokenization && !product.autoTokenized && accountOnFile == nil {
-                    row.isEnabled = true
-                } else {
-                    row.isEnabled = false
+            } else if let row = row as? FormRowSwitch {
+                if row.action == #selector(switchChanged) {
+                    if let product = paymentItem as? BasicPaymentProduct, product.allowsTokenization && !product.autoTokenized && accountOnFile == nil {
+                        row.isEnabled = true
+                    } else {
+                        row.isEnabled = false
+                    }
+                }
+                if let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? SwitchTableViewCell {
+                    updateSwitchCell(cell, row: row)
+                }
+
+            } else if let row = row as? FormRowList {
+                if let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? PickerViewTableViewCell {
+                    updatePickerCell(cell, row: row)
                 }
             } else if let row = row as? FormRowButton, row.action == #selector(payButtonTapped), let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ButtonTableViewCell {
                 if paymentItem is PaymentProduct {
@@ -242,9 +255,13 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         else if let formRow = row as? FormRowTooltip {
             cell = self.cell(for: formRow, tableView: tableView)
         }
+        else if let formRow = row as? FormRowDate {
+            cell = self.cell(for: formRow, tableView: tableView)
+        }
         else {
             NSException(name: NSExceptionName(rawValue: "Invalid form row class"), reason: "Form row class is invalid", userInfo: nil).raise()
         }
+        cell?.clipsToBounds = true
         return cell!
     }
     func updateTextFieldCell(cell: TextFieldTableViewCell, row: FormRowTextField) {
@@ -266,6 +283,14 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
 
         return cell
     }
+    
+    func cell(for row: FormRowDate, tableView: UITableView) -> DatePickerTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: DatePickerTableViewCell.reuseIdentifier) as! DatePickerTableViewCell
+        
+        cell.delegate = self
+        
+        return cell
+    }
 
     // TODO: not tested, not present in current API
     func cell(for row: FormRowCurrency, tableView: UITableView) -> CurrencyTableViewCell {
@@ -283,8 +308,13 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.reuseIdentifier) as! SwitchTableViewCell
         
         cell.setSwitchTarget(row.target, action: row.action)
-        cell.title = row.title
+        cell.delegate = self
+        cell.isOn = row.isOn
+        cell.attributedTitle = row.title
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
+        if let error = row.field?.errors.first, validation {
+            cell.errorMessage = FormRowsConverter.errorMessage(for: error, withCurrency: false)
+        }
 
         return cell
     }
@@ -314,6 +344,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         
         cell.label = row.text
         cell.isBold = row.isBold
+        cell.accessoryType = row.showInfoButton ? .detailButton : .none
         
         return cell
     }
@@ -338,8 +369,12 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let row = formRows[indexPath.row]
         
         if row is FormRowList {
-            return 162.5
+            return DatePickerTableViewCell.pickerHeight
         }
+        if row is FormRowDate {
+            return DatePickerTableViewCell.pickerHeight
+        }
+
         // Rows that you can toggle
         else if row is FormRowTooltip, !row.isEnabled {
             return 0
@@ -349,6 +384,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         }
         else if let row = row as? FormRowTooltip, row.image != nil {
             return 145
+        }
+        else if let row = row as? FormRowTooltip {
+            return TooltipTableViewCell.cellSize(width: min(320, tableView.frame.width), formRow: row).height
         }
         else if let row = row as? FormRowLabel {
             let height = LabelTableViewCell.cellSize(width: min(320, tableView.frame.width), formRow: row).height
@@ -363,6 +401,17 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
             let str = NSAttributedString(string: FormRowsConverter.errorMessage(for: row.paymentProductField.errors.first!, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType))
             
             return 44 + str.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil).height
+        } else if let row = row as? FormRowSwitch {
+            var width = tableView.bounds.width - 20
+            if (row.showInfoButton) {
+                width -= 48
+            }
+            var errorHeight: CGFloat = 0
+            if let firstError = row.field?.errors.first, validation {
+                let str = NSAttributedString(string: FormRowsConverter.errorMessage(for: firstError, withCurrency: false))
+                errorHeight = str.boundingRect(with: CGSize.init(width: width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, context: nil).height + 10
+            }
+            return 10 + 44 + 10 + errorHeight
         }
         
         return 44
@@ -576,8 +625,66 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         paymentRequestTarget?.didCancelPaymentRequest()
     }
     
+    func updateSwitchCell(_ cell: SwitchTableViewCell, row: FormRowSwitch) {
+        guard let field = row.field else {
+            return
+        }
+        
+        if let error = field.errors.first {
+            cell.errorMessage = FormRowsConverter.errorMessage(for: error, withCurrency: false)
+        } else {
+            cell.errorMessage = nil
+        }
+        
+    }
+    func updatePickerCell(_ cell: PickerViewTableViewCell, row: FormRowList) {
+        return
+    }
+
+    func datePicker(_ datePicker: UIDatePicker, selectedNewDate date: Date) {
+        guard let cell = datePicker.superview as? DatePickerTableViewCell else {
+            return
+        }
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        guard let row = formRows[indexPath.row] as? FormRowDate else {
+            return
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        inputData.setValue(value: formatter.string(from: date), forField: row.paymentProductField.identifier)
+        
+    }
+    
     func switchChanged(_ sender: Switch) {
-        inputData.tokenize = sender.isOn
+        
+        guard let cell = sender.superview as? SwitchTableViewCell else {
+            return
+        }
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        let row = formRows[indexPath.row] as? FormRowSwitch
+        let field = row?.field
+        
+        if let field = field {
+            inputData.setValue(value: sender.isOn ? "true" : "false", forField: field.identifier)
+            row?.isOn = sender.isOn
+            if validation {
+                validateData()
+            }
+            updateSwitchCell(cell, row: row!)
+        } else {
+            inputData.tokenize = sender.isOn
+        }
     }
 
 }
+
+
+
+
+
+
+

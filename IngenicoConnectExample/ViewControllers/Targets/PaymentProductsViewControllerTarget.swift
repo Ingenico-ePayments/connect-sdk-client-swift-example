@@ -248,7 +248,10 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
     
     func show(paymentItem: PaymentItem, accountOnFile: AccountOnFile?) {
         var paymentProductForm: PaymentProductViewController! = nil
-        if (paymentItem is PaymentProductGroup && paymentItem.identifier == "cards") || (paymentItem as? PaymentProduct)?.paymentMethod == "card" {
+        if (AppConstants.kArvatoIds.contains(paymentItem.identifier)) {
+            paymentProductForm = ArvatoProductViewController(paymentItem: paymentItem, session: session, context: context, viewFactory: viewFactory, accountOnFile: accountOnFile)
+        }
+        else if (paymentItem is PaymentProductGroup && paymentItem.identifier == "cards") || (paymentItem as? PaymentProduct)?.paymentMethod == "card" {
             paymentProductForm = CardProductViewController(paymentItem: paymentItem, session: session, context: context, viewFactory: viewFactory, accountOnFile: accountOnFile)
         } else if (paymentItem.identifier == AppConstants.kBoletoBancarioId) {
             paymentProductForm = BoletoProductViewController(paymentItem: paymentItem, session: session, context: context, viewFactory: viewFactory, accountOnFile: accountOnFile)

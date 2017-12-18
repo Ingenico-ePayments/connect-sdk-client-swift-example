@@ -178,7 +178,11 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountTextField = viewFactory.getTextField()
         amountTextField.translatesAutoresizingMaskIntoConstraints = false
-        amountTextField.text = "100"
+        if let amount = UserDefaults.standard.value(forKey: AppConstants.kPrice) as? Int {
+            amountTextField.text = String(amount)
+        } else {
+            amountTextField.text = "100"
+        }
         containerView.addSubview(amountLabel)
         containerView.addSubview(amountTextField)
         
@@ -190,7 +194,11 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         countryCodePicker.content = countryCodes.map { $0.rawValue }
         countryCodePicker.dataSource = self
         countryCodePicker.delegate = self
-        countryCodePicker.selectRow(165, inComponent: 0, animated: false)
+        if let row = UserDefaults.standard.value(forKey: AppConstants.kCountryCode) as? Int {
+            countryCodePicker.selectRow(row, inComponent: 0, animated: false)
+        } else {
+            countryCodePicker.selectRow(165, inComponent: 0, animated: false)
+        }
         containerView.addSubview(countryCodeLabel)
         containerView.addSubview(countryCodePicker)
         
@@ -202,7 +210,11 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         currencyCodePicker.content = currencyCodes.map { $0.rawValue }
         currencyCodePicker.dataSource = self
         currencyCodePicker.delegate = self
-        currencyCodePicker.selectRow(42, inComponent: 0, animated: false)
+        if let row = UserDefaults.standard.value(forKey: AppConstants.kCurrency) as? Int {
+            currencyCodePicker.selectRow(row, inComponent: 0, animated: false)
+        } else {
+            currencyCodePicker.selectRow(42, inComponent: 0, animated: false)
+        }
         containerView.addSubview(currencyCodeLabel)
         containerView.addSubview(currencyCodePicker)
         
@@ -298,6 +310,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     func buyButtonTapped(_ sender: UIButton) {
         if payButton == sender, let newValue = Int(amountTextField.text!) {
             amountValue = newValue
+            UserDefaults.standard.set(newValue, forKey: AppConstants.kPrice)
         } else {
             NSException(name: NSExceptionName(rawValue: "Invalid sender"), reason: "Sender is invalid", userInfo: nil).raise()
         }
@@ -310,8 +323,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         UserDefaults.standard[AppConstants.kClientSessionId] = clientSessionId
         let customerId = customerIdTextField.text
         UserDefaults.standard[AppConstants.kCustomerId] = customerId
-        if merchantIdTextField.text != nil {
-            let merchantId = merchantIdTextField.text
+        if let merchantId = merchantIdTextField.text {
             UserDefaults.standard.set(merchantId, forKey: AppConstants.kMerchantId)
         }
         
@@ -352,7 +364,9 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         session = Session(clientSessionId: clientSessionId!, customerId: customerId!, region: region, environment: environment, appIdentifier: AppConstants.kApplicationIdentifier)
 
         let countryCode = countryCodes[countryCodePicker.selectedRow(inComponent: 0)]
+        UserDefaults.standard.set(countryCodePicker.selectedRow(inComponent: 0), forKey: AppConstants.kCountryCode)
         let currencyCode = currencyCodes[currencyCodePicker.selectedRow(inComponent: 0)]
+        UserDefaults.standard.set(currencyCodePicker.selectedRow(inComponent: 0), forKey: AppConstants.kCurrency)
         let isRecurring = isRecurringSwitch.isOn
         
         // ***************************************************************************

@@ -44,13 +44,25 @@ class TooltipTableViewCell: TableViewCell {
         contentView.addSubview(tooltipImageContainer)
         contentView.addSubview(tooltipLabel)
     }
-    
+    private class func labelSize(width: CGFloat, text: String) -> CGSize {
+        let style = NSMutableParagraphStyle()
+        style.lineBreakMode = .byWordWrapping;
+        let text = text as NSString
+        let rect = text.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [:], context: nil)
+        return rect.size
+    }
+    class func cellSize(width: CGFloat, formRow: FormRowTooltip) -> CGSize {
+        var rect = TooltipTableViewCell.labelSize(width: width, text: formRow.text ?? "")
+        rect.height += 8
+        return rect
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         let width = self.accessoryAndMarginCompatibleWidth()
         let leftMargin = accessoryCompatibleLeftMargin()
-        tooltipLabel.frame = CGRect(x: Int(leftMargin), y: 0, width: Int(width - 30), height: 40)
-
+        tooltipLabel.frame = CGRect(x: Int(leftMargin), y: 4, width: Int(width - 30), height: Int.max)
+        tooltipLabel.sizeToFit()
         if let image = tooltipImage {
             let ratio = image.size.width / image.size.height
             tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 100 * ratio, height: 100)

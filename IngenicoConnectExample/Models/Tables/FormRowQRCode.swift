@@ -17,6 +17,5 @@ class FormRowQRCode: FormRowImage {
     init(data: Data) {
         let image = UIImage(data: data)
         super.init(image: image!)
-
     }
 }

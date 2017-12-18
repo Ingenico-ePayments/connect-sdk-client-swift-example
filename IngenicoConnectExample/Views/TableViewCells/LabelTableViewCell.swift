@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class LabelTableViewCell: TableViewCell {
+
     var labelView: Label = Label()
 
     override class var reuseIdentifier: String { return "label-cell" }
@@ -71,7 +72,6 @@ class LabelTableViewCell: TableViewCell {
         let leftMargin = accessoryCompatibleLeftMargin()
         labelView.frame = CGRect(x: leftMargin, y: 4, width: width, height: self.labelSize(width: width).height)
 
-        //labelView.sizeToFit()
     }
 
     override func prepareForReuse() {

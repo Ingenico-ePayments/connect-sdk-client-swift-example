@@ -43,14 +43,6 @@ class PaymentProductInputData {
         
         if value == nil {
             value = ""
-            let field = paymentItem.paymentProductField(withId: paymentProductFieldId )!
-            let validators = field.dataRestrictions.validators.validators
-            for validator in validators {
-                if let fixedListValidator = validator as? ValidatorFixedList {
-                    value = fixedListValidator.allowedValues[0]
-                    setValue(value: value!, forField: paymentProductFieldId)
-                }
-            }
         }
         
         return value!
@@ -123,21 +115,49 @@ class PaymentProductInputData {
         }
         return unmaskedFieldValues
     }
-    
-    func validate() {
+    func validateExcept(fieldNames exceptFieldNames: Set<String>) {
         errors.removeAllObjects()
 
         let request = self.paymentRequest();
         let paymentProductFields = paymentItem.fields.paymentProductFields
         for field in paymentProductFields {
+            if self.unmaskedValue(forField: field.identifier) == "" {
+                let validators = field.dataRestrictions.validators.validators
+                var hasFixedValidator = false
+                for validator in validators {
+                    if let fixedListValidator = validator as? ValidatorFixedList {
+                        // It's not possible to choose an empty string with a picker
+                        // If it is neccessary to choose an invalid value here (placeholder, see ArvatoViewController), choose a different value from ""
+                        hasFixedValidator = true
+                        let value = fixedListValidator.allowedValues[0]
+                        setValue(value: value, forField: field.identifier)
+                    }
+                }
+                // It's not possible to choose an empty string with a date picker
+                // If not set, we assume the first is chosen
+                if !hasFixedValidator && field.type == .dateString {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyyMMdd"
+                    setValue(value: formatter.string(from: Date()), forField: field.identifier)
+                }
+
+            }
+
             if !fieldIsPartOfAccountOnFile(paymentProductFieldId: field.identifier) {
+                if exceptFieldNames.contains(field.identifier) {
+                    continue
+                }
                 let fieldValue = self.unmaskedValue(forField: field.identifier )
                 field.validateValue(value: fieldValue, for: request)
                 errors.addObjects(from: field.errors)
             }
         }
     }
-    
+
+    func validate() {
+        self.validateExcept(fieldNames: Set())
+    }
+
 }
 
 

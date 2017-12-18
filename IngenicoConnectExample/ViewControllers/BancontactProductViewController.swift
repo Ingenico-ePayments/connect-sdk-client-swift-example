@@ -42,7 +42,6 @@ class BancontactProductViewController: PaymentProductViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
@@ -79,7 +78,6 @@ class BancontactProductViewController: PaymentProductViewController {
             }
         }
     }
-    
     override func formRowCell(for row: FormRow, indexPath: IndexPath) -> UITableViewCell {
         var cell: TableViewCell?
         if let formRow = row as? FormRowQRCode {
@@ -218,7 +216,7 @@ class BancontactProductViewController: PaymentProductViewController {
     func cell(for row: FormRowSeparator, tableView: UITableView) -> SeparatorTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SeparatorTableViewCell.reuseIdentifier) as! SeparatorTableViewCell
         
-        cell.separatorText = row.text as NSString
+        cell.separatorText = row.text as NSString?
         return cell
     }
 

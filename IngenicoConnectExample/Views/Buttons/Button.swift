@@ -12,6 +12,7 @@ import UIKit
 enum ButtonType {
     case primary
     case secondary
+    case destructive
 }
 
 class Button : UIButton {
@@ -39,6 +40,11 @@ class Button : UIButton {
                 setTitleColor(UIColor.gray.withAlphaComponent(0.5), for: .highlighted)
                 backgroundColor = UIColor.clear
                 titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize)
+            case .destructive:
+                setTitleColor(UIColor.white, for: .normal)
+                setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
+                backgroundColor = AppConstants.kDestructiveColor
+                titleLabel?.font = UIFont.boldSystemFont(ofSize: UIFont.buttonFontSize)
             }
         }
     }

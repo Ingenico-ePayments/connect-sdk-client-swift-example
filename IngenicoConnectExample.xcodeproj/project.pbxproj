@@ -60,8 +60,14 @@
 		732012E71EF2806F00A736A5 /* FormRowQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732012E61EF2806F00A736A5 /* FormRowQRCode.swift */; };
 		732012E91EF285F300A736A5 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732012E81EF285F300A736A5 /* ImageTableViewCell.swift */; };
 		735209F31EE9437E009DC21F /* BancontactProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735209F21EE9437E009DC21F /* BancontactProductViewController.swift */; };
+		7375BBB41F161F5200AFB547 /* DetailedPickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7375BBB31F161F5200AFB547 /* DetailedPickerViewTableViewCell.swift */; };
+		739878A31F17529600A2B7A6 /* FormRowReadonlyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739878A21F17529600A2B7A6 /* FormRowReadonlyReview.swift */; };
+		739878A51F175A4400A2B7A6 /* ReadonlyReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739878A41F175A4400A2B7A6 /* ReadonlyReviewTableViewCell.swift */; };
+		73B656D41F0F83BD00BBAF8D /* ArvatoProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B656D31F0F83BD00BBAF8D /* ArvatoProductViewController.swift */; };
 		73B656D61F0FB44A00BBAF8D /* FormRowSmallLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B656D51F0FB44A00BBAF8D /* FormRowSmallLogo.swift */; };
 		73B656D81F0FB6B700BBAF8D /* LogoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B656D71F0FB6B700BBAF8D /* LogoTableViewCell.swift */; };
+		73E9AB941F9DC7DB00AC1893 /* FormRowDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9AB931F9DC7DB00AC1893 /* FormRowDate.swift */; };
+		73E9AB961F9DC80000AC1893 /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9AB951F9DC80000AC1893 /* DatePickerTableViewCell.swift */; };
 		73E9DC1B1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1A1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift */; };
 		73E9DC1E1EFBB87600969D43 /* CheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1D1EFBB87600969D43 /* CheckMarkView.swift */; };
 		73E9DC201EFBC01000969D43 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1F1EFBC01000969D43 /* StatusView.swift */; };
@@ -155,8 +161,14 @@
 		732012E61EF2806F00A736A5 /* FormRowQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowQRCode.swift; path = Models/Tables/FormRowQRCode.swift; sourceTree = "<group>"; };
 		732012E81EF285F300A736A5 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageTableViewCell.swift; path = Views/TableViewCells/ImageTableViewCell.swift; sourceTree = "<group>"; };
 		735209F21EE9437E009DC21F /* BancontactProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BancontactProductViewController.swift; path = ViewControllers/BancontactProductViewController.swift; sourceTree = "<group>"; };
+		7375BBB31F161F5200AFB547 /* DetailedPickerViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailedPickerViewTableViewCell.swift; path = Views/TableViewCells/DetailedPickerViewTableViewCell.swift; sourceTree = "<group>"; };
+		739878A21F17529600A2B7A6 /* FormRowReadonlyReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowReadonlyReview.swift; path = Models/Tables/FormRowReadonlyReview.swift; sourceTree = "<group>"; };
+		739878A41F175A4400A2B7A6 /* ReadonlyReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadonlyReviewTableViewCell.swift; path = Views/TableViewCells/ReadonlyReviewTableViewCell.swift; sourceTree = "<group>"; };
+		73B656D31F0F83BD00BBAF8D /* ArvatoProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArvatoProductViewController.swift; path = ViewControllers/ArvatoProductViewController.swift; sourceTree = "<group>"; };
 		73B656D51F0FB44A00BBAF8D /* FormRowSmallLogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowSmallLogo.swift; path = Models/Tables/FormRowSmallLogo.swift; sourceTree = "<group>"; };
 		73B656D71F0FB6B700BBAF8D /* LogoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogoTableViewCell.swift; path = Views/TableViewCells/LogoTableViewCell.swift; sourceTree = "<group>"; };
+		73E9AB931F9DC7DB00AC1893 /* FormRowDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowDate.swift; path = Models/Tables/FormRowDate.swift; sourceTree = "<group>"; };
+		73E9AB951F9DC80000AC1893 /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerTableViewCell.swift; path = Views/TableViewCells/DatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		73E9DC1A1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalAppStatusViewController.swift; path = ViewControllers/ExternalAppStatusViewController.swift; sourceTree = "<group>"; };
 		73E9DC1D1EFBB87600969D43 /* CheckMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckMarkView.swift; path = Views/CustomViews/CheckMarkView.swift; sourceTree = "<group>"; };
 		73E9DC1F1EFBC01000969D43 /* StatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusView.swift; path = Views/CustomViews/StatusView.swift; sourceTree = "<group>"; };
@@ -352,6 +364,7 @@
 				42974C7B1DC8AB5400B91814 /* Targets */,
 				735209F21EE9437E009DC21F /* BancontactProductViewController.swift */,
 				73E9DC1A1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift */,
+				73B656D31F0F83BD00BBAF8D /* ArvatoProductViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -383,6 +396,7 @@
 		A3FE1F8719629E5C005FF3FA /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				73E9AB951F9DC80000AC1893 /* DatePickerTableViewCell.swift */,
 				6DF724681E1CF47100D6BA15 /* TableViewCell.swift */,
 				6DF7246A1E1CF80500D6BA15 /* TooltipTableViewCell.swift */,
 				6DF7246C1E1CF95000D6BA15 /* PaymentProductTableViewCell.swift */,
@@ -398,6 +412,8 @@
 				732012E81EF285F300A736A5 /* ImageTableViewCell.swift */,
 				81BCAD2B1F06BBB8000B0BCF /* SeparatorTableViewCell.swift */,
 				73B656D71F0FB6B700BBAF8D /* LogoTableViewCell.swift */,
+				7375BBB31F161F5200AFB547 /* DetailedPickerViewTableViewCell.swift */,
+				739878A41F175A4400A2B7A6 /* ReadonlyReviewTableViewCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -485,6 +501,7 @@
 		A3FE1F921962A099005FF3FA /* Tables */ = {
 			isa = PBXGroup;
 			children = (
+				73E9AB931F9DC7DB00AC1893 /* FormRowDate.swift */,
 				6D7E21681E1BF6F1007BA84B /* PaymentProductsTableRow.swift */,
 				6D7E216E1E1BF85E007BA84B /* PaymentProductsTableSection.swift */,
 				6D7E21701E1BF8CF007BA84B /* FormRow.swift */,
@@ -503,6 +520,7 @@
 				732012E61EF2806F00A736A5 /* FormRowQRCode.swift */,
 				81BCAD291F06B40C000B0BCF /* FormRowSeparator.swift */,
 				73B656D51F0FB44A00BBAF8D /* FormRowSmallLogo.swift */,
+				739878A21F17529600A2B7A6 /* FormRowReadonlyReview.swift */,
 			);
 			name = Tables;
 			sourceTree = "<group>";
@@ -840,6 +858,7 @@
 				732012E51EF2805700A736A5 /* FormRowImage.swift in Sources */,
 				6DF7247D1E1D076700D6BA15 /* CoBrandsSelectionTableViewCell.swift in Sources */,
 				735209F31EE9437E009DC21F /* BancontactProductViewController.swift in Sources */,
+				739878A51F175A4400A2B7A6 /* ReadonlyReviewTableViewCell.swift in Sources */,
 				6DF7248B1E1D2E4500D6BA15 /* PaymentRequestTarget.swift in Sources */,
 				F56177071EA6509800B75175 /* CardProductViewController.swift in Sources */,
 				6D9A63B01E1C0EF2001799FE /* FormRowTooltip.swift in Sources */,
@@ -851,11 +870,14 @@
 				6DF724791E1D03A600D6BA15 /* LabelTableViewCell.swift in Sources */,
 				6D9A63941E1C0563001799FE /* IntegerTextField.swift in Sources */,
 				B4DC6A091E1E6E1500D9A8BA /* PaymentProductsViewController.swift in Sources */,
+				73E9AB941F9DC7DB00AC1893 /* FormRowDate.swift in Sources */,
 				6DEAB9651E2798E800C36908 /* EndViewController.swift in Sources */,
 				6D9A63B21E1C0FAF001799FE /* FormRowCoBrandsSelection.swift in Sources */,
+				739878A31F17529600A2B7A6 /* FormRowReadonlyReview.swift in Sources */,
 				6D7E216F1E1BF85E007BA84B /* PaymentProductsTableSection.swift in Sources */,
 				6D9A63AC1E1C0E8A001799FE /* FormRowButton.swift in Sources */,
 				73E9DC1E1EFBB87600969D43 /* CheckMarkView.swift in Sources */,
+				7375BBB41F161F5200AFB547 /* DetailedPickerViewTableViewCell.swift in Sources */,
 				6D9A638A1E1BFE08001799FE /* Switch.swift in Sources */,
 				6D9A63981E1C0BE2001799FE /* FormRowTextField.swift in Sources */,
 				6DF7246D1E1CF95000D6BA15 /* PaymentProductTableViewCell.swift in Sources */,
@@ -866,6 +888,7 @@
 				6DF724911E1D2EAA00D6BA15 /* PaymentFinishedTarget.swift in Sources */,
 				6D7E21671E1BF53B007BA84B /* AppConstants.swift in Sources */,
 				732012E71EF2806F00A736A5 /* FormRowQRCode.swift in Sources */,
+				73B656D41F0F83BD00BBAF8D /* ArvatoProductViewController.swift in Sources */,
 				81BCAD281F06B38B000B0BCF /* SeparatorView.swift in Sources */,
 				73E9DC201EFBC01000969D43 /* StatusView.swift in Sources */,
 				81BCAD2C1F06BBB8000B0BCF /* SeparatorTableViewCell.swift in Sources */,
@@ -889,6 +912,7 @@
 				6DF724871E1D25EA00D6BA15 /* ViewFactory.swift in Sources */,
 				6D7E21711E1BF8CF007BA84B /* FormRow.swift in Sources */,
 				6D7E216B1E1BF7DC007BA84B /* PaymentType.swift in Sources */,
+				73E9AB961F9DC80000AC1893 /* DatePickerTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,7 +1087,7 @@
 					"\"${SRCROOT}\"",
 				);
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.globalcollect.GlobalCollectExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;
@@ -1096,7 +1120,7 @@
 					"\"${SRCROOT}\"",
 				);
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.globalcollect.GlobalCollectExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;

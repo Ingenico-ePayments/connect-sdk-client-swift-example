@@ -30,7 +30,7 @@ class FormRowsConverter {
                 isEnabled = true
             }
             
-            var row: FormRow = labelFormRow(from: field, paymentProduct: inputData.paymentItem.identifier , viewFactory: viewFactory)
+            var row: FormRow = labelFormRow(from: field, paymentProduct: inputData.paymentItem.identifier, viewFactory: viewFactory)
             rows.append(row)
             
             switch field.displayHints.formElement.type {
@@ -40,6 +40,14 @@ class FormRowsConverter {
                     row = textFieldFormRow(from: field, paymentItem: inputData.paymentItem, value: value , isEnabled: isEnabled, confirmedPaymentProducts: confirmedPaymentProducts, viewFactory: viewFactory)
                 case .currencyType:
                     row = currencyFormRow(from: field, paymentItem: inputData.paymentItem, value: value , isEnabled: isEnabled, viewFactory: viewFactory)
+                case .dateType:
+                    row = dateFormRow(from: field, paymentItem: inputData.paymentItem, value: value, isEnabled: isEnabled, viewFactory: viewFactory)
+                    break
+                case .boolType:
+                    rows.removeLast()
+                    row = switchFormRow(from: field, paymentItem: inputData.paymentItem, value: value, isEnabled: isEnabled, viewFactory: viewFactory)
+                    break
+
             }
 
             rows.append(row)
@@ -124,6 +132,11 @@ class FormRowsConverter {
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
             errorMessage = errorMessageValue
         }
+        else if errorClass is ValidationErrorEmailAddress {
+            errorMessageKey = String(format: errorMessageFormat, "emailAddress")
+            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
+            errorMessage = errorMessageValue
+        }
         else {
             errorMessage = ""
             NSException(name: NSExceptionName(rawValue: "Invalid validation error"), reason: "Validation error \(error) is invalid", userInfo: nil).raise()
@@ -152,7 +165,7 @@ class FormRowsConverter {
         case .phoneNumberKeyboard:
             keyboardType = .phonePad
             
-        case .stringKeyboard, .noKeyboard:
+        case .stringKeyboard, .noKeyboard, .dateKeyboard:
             keyboardType = .default
         }
         
@@ -193,7 +206,7 @@ class FormRowsConverter {
             case .phoneNumberKeyboard:
                 keyboardType = .phonePad
             
-            case .stringKeyboard, .noKeyboard:
+            case .stringKeyboard, .noKeyboard, .dateKeyboard:
                 keyboardType = .default
         }
 
@@ -213,6 +226,34 @@ class FormRowsConverter {
         
         return row
     }
+    
+    func switchFormRow(from field: PaymentProductField, paymentItem: PaymentItem, value: String, isEnabled: Bool, viewFactory: ViewFactory) -> FormRowSwitch {
+        
+        let descriptionKey = String(format: "gc.general.paymentProducts.%@.paymentProductFields.%@.label", paymentItem.identifier, field.identifier)
+        let descriptionValue = NSLocalizedString(descriptionKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Accept {link}")
+        let labelKey = String(format: "gc.general.paymentProducts.%@.paymentProductFields.%@.link.label", paymentItem.identifier, field.identifier)
+        let labelValue = NSLocalizedString(labelKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "AfterPay")
+        let nsDescriptionValue = descriptionValue as NSString
+        let range = nsDescriptionValue.range(of: "{link}")
+        let attrString = NSMutableAttributedString(string: descriptionValue)
+        let linkString = NSAttributedString(string: labelValue, attributes: [NSLinkAttributeName: (field.displayHints.link?.absoluteString ?? "")])
+        if range.length > 0 {
+            attrString.replaceCharacters(in: range , with: linkString)
+        }
+        
+        let row = FormRowSwitch(title: attrString, isOn: value == "true", target: nil, action: nil, paymentProductField: field)
+        row.isEnabled = isEnabled;
+        
+        return row;
+    }
+    
+    func dateFormRow(from field: PaymentProductField, paymentItem:PaymentItem, value:String, isEnabled: Bool, viewFactory: ViewFactory) -> FormRowDate {
+        let row = FormRowDate(paymentProductField: field)
+        row.isEnabled = isEnabled;
+        return row;
+    }
+
+    
     
     func setTooltipForFormRow(_ row: FormRowWithInfoButton, with field: PaymentProductField, paymentItem: PaymentItem) {
         if field.displayHints.tooltip?.imagePath != nil {
@@ -234,7 +275,7 @@ class FormRowsConverter {
         
         var identifierToRowMapping = Dictionary<String, String>()
         let valueMapping = field.displayHints.formElement.valueMapping
-        for item: ValueMappingItem in valueMapping where item.displayName != nil && item.value != nil {
+        for item: ValueMappingItem in valueMapping where (item.displayName != nil || item.displayElements.contains { $0.value != nil})  && item.value != nil {
             row.items.append(item)
         }
         
@@ -254,5 +295,6 @@ class FormRowsConverter {
 
         return FormRowLabel(text: labelValue)
     }
+    
 }
 

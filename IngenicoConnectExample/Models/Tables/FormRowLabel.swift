@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-class FormRowLabel: FormRow {
+class FormRowLabel: FormRowWithInfoButton {
     var text: String
     var isBold: Bool
     init(text: String) {
