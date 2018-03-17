@@ -127,6 +127,11 @@ class FormRowsConverter {
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
             errorMessage = errorMessageValue
         }
+        else if errorClass is ValidationErrorTermsAndConditions {
+            errorMessageKey = String(format: errorMessageFormat, "termsAndConditions")
+            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
+            errorMessage = errorMessageValue
+        }
         else if errorClass is ValidationErrorIsRequired {
             errorMessageKey = String(format: errorMessageFormat, "required")
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A5FF6D88A908941AC5D416446E95B8D8826C68D8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A5FF6D88A908941AC5D416446E95B8D8826C68D8" : 9223372036854775807,
+    "C102988C9665DC60B0EA76C78589AC8335C72560" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C9D83BDD-E36E-4305-83D4-629845111274",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A5FF6D88A908941AC5D416446E95B8D8826C68D8" : "globalcollect-sdk-client-swift-example-old\/",
+    "C102988C9665DC60B0EA76C78589AC8335C72560" : "globalcollect-sdk-client-swift-old\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "IngenicoConnectExample",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "IngenicoConnectExample.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "gitlab.isaac.local:ingenico-epayments-sdks\/globalcollect-sdk-client-swift-example.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A5FF6D88A908941AC5D416446E95B8D8826C68D8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "gitlab.isaac.local:ingenico-epayments-sdks\/globalcollect-sdk-client-swift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C102988C9665DC60B0EA76C78589AC8335C72560"
+    }
+  ]
+}

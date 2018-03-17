@@ -408,8 +408,37 @@ class ArvatoProductViewController: PaymentProductViewController {
             }
 
         }
+        if self.inputData.unmaskedValue(forField: "termsAndConditions").isEmpty {
+            self.inputData.setValue(value: "false", forField: "termsAndConditions")
+        }
         formRows = newFormRows
     }
+    override func updateSwitchCell(_ cell: SwitchTableViewCell, row: FormRowSwitch) {
+        guard let field = row.field else {
+            return
+        }
+        
+        if let error = field.errors.first {
+            var customError: ValidationError = error
+            if (field.identifier == "termsAndConditions") {
+                for err in field.errors {
+                    if err is ValidationErrorTermsAndConditions {
+                        customError = err
+                        break
+                    }
+                }
+                //customError = field.errors.first(where: { (err) -> Bool in (err is ValidationErrorTermsAndConditions) }) ?? error
+            }
+            else {
+                customError = error
+            }
+            cell.errorMessage = FormRowsConverter.errorMessage(for: customError, withCurrency: false)
+        } else {
+            cell.errorMessage = nil
+        }
+        
+    }
+
     override func registerReuseIdentifiers() {
         super.registerReuseIdentifiers()
         tableView.register(DetailedPickerViewTableViewCell.self, forCellReuseIdentifier: DetailedPickerViewTableViewCell.reuseIdentifier)

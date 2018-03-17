@@ -4,7 +4,7 @@
 target 'IngenicoConnectExample' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  pod 'IngenicoConnectKit', '~> 1.5'
+  pod 'IngenicoConnectKit', '~> 2.0'
   # Pods for IngenicoConnectExample
   pod 'SVProgressHUD'
   pod 'Alamofire'
