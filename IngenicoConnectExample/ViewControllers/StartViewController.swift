@@ -32,14 +32,15 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     var explanation: UITextView!
     var clientSessionIdLabel: Label!
     var clientSessionIdTextField: TextField!
+    var baseURLLabel: Label!
+    var baseURLTextField: TextField!
+    var assetsBaseURLLabel: Label!
+    var assetsBaseURLTextField: TextField!
+
     var customerIdLabel: Label!
     var customerIdTextField: TextField!
     var merchantIdLabel: Label!
     var merchantIdTextField: TextField!
-    var regionLabel: Label!
-    var regionControl: UISegmentedControl!
-    var environmentLabel: Label!
-    var environmentPicker: PickerView!
     var amountLabel: Label!
     var amountTextField: TextField!
     var countryCodeLabel: Label!
@@ -75,15 +76,14 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         countryCodes = CountryCode.allValues.sorted { $0.rawValue.localizedCaseInsensitiveCompare($1.rawValue) == .orderedAscending }
         currencyCodes = CurrencyCode.allValues.sorted { $0.rawValue.localizedCaseInsensitiveCompare($1.rawValue) == .orderedAscending }
         
-        let viewHeight: CGFloat = 1530
         
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.delaysContentTouches = false
-        scrollView.contentSize = CGSize(width: CGFloat(view.bounds.size.width), height: CGFloat(viewHeight))
         scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view.addSubview(scrollView)
         
-        let superContainerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: viewHeight))
+        let superContainerView = UIView()
+        superContainerView.translatesAutoresizingMaskIntoConstraints = false
         superContainerView.autoresizingMask = .flexibleWidth
         scrollView.addSubview(superContainerView)
         
@@ -91,14 +91,6 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.translatesAutoresizingMaskIntoConstraints = false
         superContainerView.addSubview(containerView!)
         
-        var constraint = NSLayoutConstraint(item: containerView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: viewHeight)
-        containerView.addConstraint(constraint)
-        constraint = NSLayoutConstraint(item: containerView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320)
-        containerView.addConstraint(constraint)
-        constraint = NSLayoutConstraint(item: containerView!, attribute: .centerX, relatedBy: .equal, toItem: superContainerView, attribute: .centerX, multiplier: 1, constant: 0)
-        superContainerView.addConstraint(constraint)
-        constraint = NSLayoutConstraint(item: containerView!, attribute: .top, relatedBy: .equal, toItem: superContainerView, attribute: .top, multiplier: 1, constant: 0)
-        superContainerView.addConstraint(constraint)
         
         explanation = UITextView()
         explanation.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +99,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         explanation.backgroundColor = UIColor(red: CGFloat(0.85), green: CGFloat(0.94), blue: CGFloat(0.97), alpha: CGFloat(1))
         explanation.textColor = UIColor(red: CGFloat(0), green: CGFloat(0.58), blue: CGFloat(0.82), alpha: CGFloat(1))
         explanation.layer.cornerRadius = 5.0
+        explanation.isScrollEnabled = false
         containerView.addSubview(explanation)
         
         clientSessionIdLabel = viewFactory.labelWithType(type: .gcLabelType)
@@ -152,26 +145,37 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.addSubview(merchantIdLabel)
         containerView.addSubview(merchantIdTextField)
         
-        regionLabel = viewFactory.labelWithType(type: .gcLabelType)
-        regionLabel.text = NSLocalizedString("Region", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Region")
-        regionLabel.translatesAutoresizingMaskIntoConstraints = false
-        regionControl = UISegmentedControl(items: ["EU", "US", "AMS", "PAR"])
-        regionControl.selectedSegmentIndex = 0
-        regionControl.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(regionLabel)
-        containerView.addSubview(regionControl)
-        
-        environmentLabel = viewFactory.labelWithType(type: .gcLabelType)
-        environmentLabel.text = NSLocalizedString("Environment", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Environment")
-        environmentLabel.translatesAutoresizingMaskIntoConstraints = false
-        environmentPicker = viewFactory.pickerViewWithType(type: .gcPickerViewType)
-        environmentPicker.translatesAutoresizingMaskIntoConstraints = false
-        environmentPicker.content = ["Production", "Pre-production", "Sandbox"]
-        environmentPicker.dataSource = self
-        environmentPicker.delegate = self
-        environmentPicker.selectRow(2, inComponent: 0, animated: false)
-        containerView.addSubview(environmentLabel)
-        containerView.addSubview(environmentPicker)
+        baseURLLabel = viewFactory.labelWithType(type: .gcLabelType)
+        baseURLLabel.text = NSLocalizedString("BaseURL", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Region")
+        baseURLLabel.translatesAutoresizingMaskIntoConstraints = false
+        baseURLTextField = viewFactory.getTextField()
+        baseURLTextField.translatesAutoresizingMaskIntoConstraints = false
+        baseURLTextField.autocapitalizationType = .none
+        baseURLTextField.autocorrectionType = .no
+        baseURLTextField.keyboardType = .URL
+        if let text = UserDefaults.standard.value(forKey: AppConstants.kBaseURL) as? String {
+            baseURLTextField.text = text
+        } else {
+            baseURLTextField.text = ""
+        }
+        containerView.addSubview(baseURLLabel)
+        containerView.addSubview(baseURLTextField)
+
+        assetsBaseURLLabel = viewFactory.labelWithType(type: .gcLabelType)
+        assetsBaseURLLabel.text = NSLocalizedString("AssetsBaseURL", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Region")
+        assetsBaseURLLabel.translatesAutoresizingMaskIntoConstraints = false
+        assetsBaseURLTextField = viewFactory.getTextField()
+        assetsBaseURLTextField.translatesAutoresizingMaskIntoConstraints = false
+        assetsBaseURLTextField.autocapitalizationType = .none
+        assetsBaseURLTextField.autocorrectionType = .no
+        assetsBaseURLTextField.keyboardType = .URL
+        if let text = UserDefaults.standard.value(forKey: AppConstants.kAssetsBaseURL) as? String {
+            assetsBaseURLTextField.text = text
+        } else {
+            assetsBaseURLTextField.text = ""
+        }
+        containerView.addSubview(assetsBaseURLLabel)
+        containerView.addSubview(assetsBaseURLTextField)
         
         amountLabel = viewFactory.labelWithType(type: .gcLabelType)
         amountLabel.text = NSLocalizedString("AmountInCents", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Amount in cents")
@@ -248,10 +252,10 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             "customerIdTextField": customerIdTextField,
             "merchantIdLabel": merchantIdLabel,
             "merchantIdTextField": merchantIdTextField,
-            "regionLabel": regionLabel,
-            "regionControl": regionControl,
-            "environmentLabel": environmentLabel,
-            "environmentPicker": environmentPicker,
+            "baseURLLabel": baseURLLabel,
+            "baseURLTextField": baseURLTextField,
+            "assetsBaseURLLabel": assetsBaseURLLabel,
+            "assetsBaseURLTextField": assetsBaseURLTextField,
             "amountLabel": amountLabel,
             "amountTextField": amountTextField,
             "countryCodeLabel": countryCodeLabel,
@@ -262,9 +266,12 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             "isRecurringSwitch": isRecurringSwitch,
             "payButton": payButton,
             "shouldGroupProductsSwitchLabel": shouldGroupProductsSwitchLabel,
-            "shouldGroupProductsSwitch": shouldGroupProductsSwitch
+            "shouldGroupProductsSwitch": shouldGroupProductsSwitch,
+            "superContainerView": superContainerView,
+            "containerView": containerView,
+            "scrollView": scrollView
         ]
-        let metrics = ["largeSpace": "24"]
+        let metrics = ["fieldSeparator": "24", "groupSeparator": "72"]
         
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[explanation]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[clientSessionIdLabel]-|", options: [], metrics: nil, views: views))
@@ -273,10 +280,12 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[customerIdTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdTextField]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[regionLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[regionControl]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[environmentLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[environmentPicker]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdLabel]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdTextField]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[baseURLLabel]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[baseURLTextField]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[assetsBaseURLLabel]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[assetsBaseURLTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[amountLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[amountTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodeLabel]-|", options: [], metrics: nil, views: views))
@@ -288,7 +297,19 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         //containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|--|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[shouldGroupProductsSwitchLabel]-[shouldGroupProductsSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[payButton]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(largeSpace)-[explanation(==100)]-(largeSpace)-[clientSessionIdLabel]-[clientSessionIdTextField]-(largeSpace)-[customerIdLabel]-[customerIdTextField]-(largeSpace)-[merchantIdLabel]-[merchantIdTextField]-(largeSpace)-[regionLabel]-[regionControl]-(largeSpace)-[environmentLabel]-[environmentPicker]-(largeSpace)-[amountLabel]-[amountTextField]-(largeSpace)-[countryCodeLabel]-[countryCodePicker]-(largeSpace)-[currencyCodeLabel]-[currencyCodePicker]-(largeSpace)-[isRecurringSwitch]-(largeSpace)-[shouldGroupProductsSwitch]-(largeSpace)-[payButton]-|", options: [], metrics: metrics, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[clientSessionIdLabel]-[clientSessionIdTextField]-(fieldSeparator)-[customerIdLabel]-[customerIdTextField]-(fieldSeparator)-[baseURLLabel]-[baseURLTextField]-(fieldSeparator)-[assetsBaseURLLabel]-[assetsBaseURLTextField]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodePicker]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodePicker]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[shouldGroupProductsSwitch]-(fieldSeparator)-[payButton]-|", options: [], metrics: metrics, views: views))
+        self.view.addConstraints([NSLayoutConstraint(item:superContainerView, attribute:.leading, relatedBy:.equal, toItem:self.view, attribute:.leading, multiplier:1, constant:0), NSLayoutConstraint(item:superContainerView, attribute:.trailing, relatedBy:.equal, toItem:self.view, attribute:.trailing, multiplier:1, constant:0)]);
+
+        self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[superContainerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[superContainerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+    
+        superContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        superContainerView.addConstraint(NSLayoutConstraint(item: self.containerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320))
+        self.view.addConstraint(NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0))
+
+
     }
     
     func initializeTapRecognizer() {
@@ -304,7 +325,33 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             }
         }
     }
-    
+    private func checkURL(url: String) -> Bool {
+        if var finalComponents = URLComponents(string: url) {
+            var components = finalComponents.path.split(separator: "/").map { String($0)}
+            let versionComponents = (SDKConstants.kApiVersion as NSString).pathComponents
+            
+            switch components.count {
+            case 0:
+                break
+            case 1:
+                if components[0] != versionComponents[0] {
+                    return false
+                }
+            case 2:
+                if components[0] != versionComponents[0] {
+                    return false
+                }
+                if components[1] != versionComponents[1] {
+                    return false
+                }
+            default:
+                return false
+            }
+            return true
+        }
+        return false
+
+    }
     // MARK: Button actions
     
     func buyButtonTapped(_ sender: UIButton) {
@@ -326,25 +373,22 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         if let merchantId = merchantIdTextField.text {
             UserDefaults.standard.set(merchantId, forKey: AppConstants.kMerchantId)
         }
-        
-        let region: Region
-        
-        if regionControl.selectedSegmentIndex == 0 {
-            region = .EU
-        } else if regionControl.selectedSegmentIndex == 1 {
-            region = .US
-        } else if regionControl.selectedSegmentIndex == 2 {
-            region = .AMS
-        } else {
-            region = .PAR
+        let baseURL = baseURLTextField.text
+        guard checkURL(url: baseURL ?? "") else {
+            let alert = UIAlertController(title: NSLocalizedString("InvalidBaseURLTitle", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          message: NSLocalizedString("This version of the connectSDK is only compatible with \(SDKConstants.kApiVersion), you supplied: '\(NSURL(string: baseURL ?? "")?.path ?? "an invalid URL")'", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            SVProgressHUD.dismiss()
+            return
         }
+        UserDefaults.standard[AppConstants.kBaseURL] = baseURL
         
-        var environment = Environment.sandbox
-        if environmentPicker.selectedRow(inComponent: 0) == 0 {
-            environment = Environment.production
-        } else if environmentPicker.selectedRow(inComponent: 0) == 1 {
-            environment = Environment.preProduction
-        }
+        let assetBaseURL = assetsBaseURLTextField.text
+        UserDefaults.standard[AppConstants.kAssetsBaseURL] = assetBaseURL
+        
+
         
         // ***************************************************************************
         //
@@ -361,7 +405,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         //
         // ***************************************************************************
         
-        session = Session(clientSessionId: clientSessionId!, customerId: customerId!, region: region, environment: environment, appIdentifier: AppConstants.kApplicationIdentifier)
+        session = Session(clientSessionId: clientSessionId!, customerId: customerId!, baseURL: baseURL ?? "", assetBaseURL: assetBaseURL ?? "", appIdentifier: AppConstants.kApplicationIdentifier)
 
         let countryCode = countryCodes[countryCodePicker.selectedRow(inComponent: 0)]
         UserDefaults.standard.set(countryCodePicker.selectedRow(inComponent: 0), forKey: AppConstants.kCountryCode)

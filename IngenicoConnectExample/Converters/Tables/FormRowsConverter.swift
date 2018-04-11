@@ -137,6 +137,11 @@ class FormRowsConverter {
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
             errorMessage = errorMessageValue
         }
+        else if errorClass is ValidationErrorIBAN {
+            errorMessageKey = String(format: errorMessageFormat, "regularExpression")
+            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
+            errorMessage = errorMessageValue
+        }
         else if errorClass is ValidationErrorEmailAddress {
             errorMessageKey = String(format: errorMessageFormat, "emailAddress")
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")

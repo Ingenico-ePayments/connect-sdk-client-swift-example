@@ -125,6 +125,7 @@ class CardProductViewController: PaymentProductViewController {
             tableView.beginUpdates()
             let oldFormRows = self.formRows
             self.initializeFormRows()
+            self.addExtraRows()
             let oldCardNumberIndex = oldFormRows.index(where: { (r) -> Bool in
                 (r as? FormRowTextField)?.paymentProductField.identifier == "cardNumber"
             }) ?? 0
