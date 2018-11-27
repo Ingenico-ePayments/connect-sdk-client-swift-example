@@ -13,7 +13,7 @@ class FormRowButton: FormRow {
     var title: String
     var target: Any
     var action: Selector
-    var buttonType: ButtonType = .primary
+    var buttonType: ExampleButtonType = .primary
 
     init(title: String, target: Any, action: Selector) {
         self.title = title

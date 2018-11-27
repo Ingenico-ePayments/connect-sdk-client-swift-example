@@ -555,8 +555,6 @@
 				A30330AD197CEF73008B7AF0 /* Sources */,
 				A30330AE197CEF73008B7AF0 /* Frameworks */,
 				A30330AF197CEF73008B7AF0 /* Resources */,
-				694B63269ACE2B4CA1D0943F /* [CP] Embed Pods Frameworks */,
-				96EBCC333D76A28D053385FB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -577,7 +575,6 @@
 				A351DCAC196296000033E23C /* Frameworks */,
 				A351DCAD196296000033E23C /* Resources */,
 				6B8076DCCE7C2AF2771102AD /* [CP] Embed Pods Frameworks */,
-				890CB6CB82E445E59ED699FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -753,21 +750,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		694B63269ACE2B4CA1D0943F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6B8076DCCE7C2AF2771102AD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -790,36 +772,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		890CB6CB82E445E59ED699FE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		96EBCC333D76A28D053385FB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F80525160E723E18DF3264F2 /* [CP] Check Pods Manifest.lock */ = {

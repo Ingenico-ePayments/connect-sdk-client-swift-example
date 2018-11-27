@@ -14,12 +14,12 @@ class ButtonTableViewCell: TableViewCell {
     
     override class var reuseIdentifier: String {return "button-cell"}
 
-    var buttonType: ButtonType {
+    var buttonType: ExampleButtonType {
         get {
-            return button.type
+            return button.exampleButtonType
         }
         set {
-            button.type = newValue
+            button.exampleButtonType = newValue
         }
     }
     

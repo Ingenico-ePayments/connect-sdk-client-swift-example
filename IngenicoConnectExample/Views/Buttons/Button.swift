@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum ButtonType {
+enum ExampleButtonType {
     case primary
     case secondary
     case destructive
@@ -18,7 +18,7 @@ enum ButtonType {
 class Button : UIButton {
     
     init() {
-        self.type = .primary
+        self.exampleButtonType = .primary
         super.init(frame: .zero)
         layer.cornerRadius = 5
     }
@@ -27,9 +27,9 @@ class Button : UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var type: ButtonType {
+    var exampleButtonType: ExampleButtonType {
         didSet {
-            switch type {
+            switch exampleButtonType {
             case .primary:
                 setTitleColor(UIColor.white, for: .normal)
                 setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)

@@ -11,9 +11,9 @@ import UIKit
 
 class ViewFactory {
     
-    func buttonWithType(type: ButtonType) -> Button {
+    func buttonWithType(type: ExampleButtonType) -> Button {
         let button = Button()
-        button.type = type
+        button.exampleButtonType = type
 
         return button
     }
