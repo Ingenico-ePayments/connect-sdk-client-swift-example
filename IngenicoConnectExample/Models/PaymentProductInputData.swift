@@ -22,7 +22,7 @@ class PaymentProductInputData {
             fatalError("Invalid paymentItem")
         }
 
-        let paymentRequest = PaymentRequest(paymentProduct: paymentItem, accountOnFile: accountOnFile, tokenize: false)
+        let paymentRequest = PaymentRequest(paymentProduct: paymentItem, accountOnFile: accountOnFile, tokenize: self.tokenize)
 
         let keys = Array(fieldValues.keys)
         
@@ -88,14 +88,14 @@ class PaymentProductInputData {
             return accountOnFile.isReadOnly(field: paymentProductFieldId)
         }
     }
-    
-    func setAccountOnFile(_ accountOnFile: AccountOnFile) {
+    // TODO: Maybe remove this, it's not used anywhere, and contradicts requirements
+    /*func setAccountOnFile(_ accountOnFile: AccountOnFile) {
         self.accountOnFile = accountOnFile
         let attributes = accountOnFile.attributes.attributes
         for attribute in attributes where attribute.key != nil {
             fieldValues[attribute.key] = attribute.value
         }
-    }
+    }*/
     
     func mask(forField paymentProductFieldId: String) -> String? {
         let field = self.paymentItem.paymentProductField(withId: paymentProductFieldId )
@@ -121,29 +121,35 @@ class PaymentProductInputData {
         let request = self.paymentRequest();
         let paymentProductFields = paymentItem.fields.paymentProductFields
         for field in paymentProductFields {
-            if self.unmaskedValue(forField: field.identifier) == "" {
-                let validators = field.dataRestrictions.validators.validators
-                var hasFixedValidator = false
-                for validator in validators {
-                    if let fixedListValidator = validator as? ValidatorFixedList {
-                        // It's not possible to choose an empty string with a picker
-                        // If it is neccessary to choose an invalid value here (placeholder, see ArvatoViewController), choose a different value from ""
-                        hasFixedValidator = true
-                        let value = fixedListValidator.allowedValues[0]
-                        setValue(value: value, forField: field.identifier)
+            if !fieldIsPartOfAccountOnFile(paymentProductFieldId: field.identifier) {
+                if self.unmaskedValue(forField: field.identifier) == "" {
+                    let validators = field.dataRestrictions.validators.validators
+                    var hasFixedValidator = false
+                    for validator in validators {
+                        if let fixedListValidator = validator as? ValidatorFixedList {
+                            // It's not possible to choose an empty string with a picker
+                            // If it is neccessary to choose an invalid value here (placeholder, see ArvatoViewController), choose a different value from ""
+                            // Except if it is on the accountOnFile
+                            hasFixedValidator = true
+                            let value = fixedListValidator.allowedValues[0]
+                            setValue(value: value, forField: field.identifier)
+                        }
+                    }
+                    // It's not possible to choose an empty string with a date picker
+                    // If not set, we assume the first is chosen
+                    if !hasFixedValidator && field.type == .dateString {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyyMMdd"
+                        setValue(value: formatter.string(from: Date()), forField: field.identifier)
+                    }
+                    
+                    // It's not possible to choose an empty boolean with a switch
+                    // If not set, we assume false is chosen
+                    if !hasFixedValidator && field.type == .boolString {
+                        setValue(value: "false", forField: field.identifier)
                     }
                 }
-                // It's not possible to choose an empty string with a date picker
-                // If not set, we assume the first is chosen
-                if !hasFixedValidator && field.type == .dateString {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyyMMdd"
-                    setValue(value: formatter.string(from: Date()), forField: field.identifier)
-                }
-
-            }
-
-            if !fieldIsPartOfAccountOnFile(paymentProductFieldId: field.identifier) {
+                
                 if exceptFieldNames.contains(field.identifier) {
                     continue
                 }

@@ -1,5 +1,5 @@
 //
-//  DetailPickerViewTableViewCell.swift
+//  DetailedPickerViewTableViewCell.swift
 //  IngenicoConnectExample
 //
 //  Created for Ingenico ePayments on 12/07/2017.

@@ -65,6 +65,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         initializeTapRecognizer()
         
         inputData = PaymentProductInputData()
+        inputData.accountOnFile = self.accountOnFile
         inputData.paymentItem = paymentItem
         if let product = paymentItem as? PaymentProduct {
             confirmedPaymentProducts.insert(product.identifier)
@@ -268,6 +269,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         // Add error messages for cells
         cell.delegate = self
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
+        cell.readonly = !row.isEnabled
         cell.field = row.field
         if let error = row.paymentProductField.errors.first {
             cell.error = FormRowsConverter.errorMessage(for: error, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType)
@@ -287,18 +289,22 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     func cell(for row: FormRowDate, tableView: UITableView) -> DatePickerTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DatePickerTableViewCell.reuseIdentifier) as! DatePickerTableViewCell
         
+        cell.readonly = !row.isEnabled
+        cell.date = row.date
+        
         cell.delegate = self
         
         return cell
     }
 
-    // TODO: not tested, not present in current API
+    // Not present in current API
     func cell(for row: FormRowCurrency, tableView: UITableView) -> CurrencyTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyTableViewCell.reuseIdentifier) as! CurrencyTableViewCell
 
         cell.delegate = self
         cell.integerField = row.integerField
         cell.fractionalField = row.fractionalField
+        cell.readonly = !row.isEnabled
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
 
         return cell
@@ -311,6 +317,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         cell.delegate = self
         cell.isOn = row.isOn
         cell.attributedTitle = row.title
+        cell.readonly = !row.isEnabled
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
         if let error = row.field?.errors.first, validation {
             cell.errorMessage = FormRowsConverter.errorMessage(for: error, withCurrency: false)
@@ -326,6 +333,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         cell.dataSource = self
         cell.items = row.items
         cell.selectedRow = row.selectedRow
+        cell.readonly = !row.isEnabled
         
         return cell
     }
@@ -651,6 +659,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         guard let row = formRows[indexPath.row] as? FormRowDate else {
             return
         }
+        row.date = date
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd"
         inputData.setValue(value: formatter.string(from: date), forField: row.paymentProductField.identifier)

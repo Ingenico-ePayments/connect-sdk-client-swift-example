@@ -38,7 +38,14 @@ class TextFieldTableViewCell: TableViewCell {
             textField.rightView = newValue
         }
     }
-    
+    var readonly: Bool {
+        get {
+            return !textField.isEnabled
+        }
+        set {
+            textField.isEnabled = !newValue
+        }
+    }
     var error: String? {
         get {
             return errorLabel.text

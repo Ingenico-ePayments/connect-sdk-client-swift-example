@@ -46,7 +46,15 @@ class SwitchTableViewCell: TableViewCell {
             setNeedsLayout()
         }
     }
-    
+    var readonly: Bool {
+        get {
+            return !switchControl.isEnabled
+        }
+        set {
+            switchControl.isEnabled = !newValue
+        }
+    }
+
     var delegate: SwitchTableViewCellDelegate?
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

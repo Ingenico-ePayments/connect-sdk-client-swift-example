@@ -47,7 +47,13 @@ class PickerViewTableViewCell: TableViewCell {
             pickerView.selectRow(newValue ?? 0, inComponent: 0, animated: false)
         }
     }
-    
+    var readonly: Bool = false {
+        didSet{
+            pickerView.isUserInteractionEnabled = !self.readonly
+            pickerView.alpha = (self.readonly) ? 0.6 : 1.0
+        }
+    }
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(pickerView)

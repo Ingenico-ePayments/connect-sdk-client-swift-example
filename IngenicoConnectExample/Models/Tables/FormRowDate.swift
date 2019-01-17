@@ -12,8 +12,18 @@ import IngenicoConnectKit
 class FormRowDate : FormRow {
     
     var paymentProductField: PaymentProductField
-    
-    init(paymentProductField field: PaymentProductField) {
+    var date: Date
+    init(paymentProductField field: PaymentProductField, value: String) {
+        if value != "" {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyyMMdd"
+            
+            date = formatter.date(from: value) ?? Date()
+
+        } else {
+            date = Date()
+        }
+
         self.paymentProductField = field
     }
     

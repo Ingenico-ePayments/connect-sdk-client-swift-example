@@ -19,11 +19,18 @@ class DatePickerTableViewCell : TableViewCell {
     var delegate: DatePickerTableViewCellDelegate?
     let datePicker: UIDatePicker = UIDatePicker()
     
+    var date: Date {
+        didSet{
+            datePicker.date = date
+        }
+    }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        date = Date()
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(didPickNewDate(_:)), for: .valueChanged)
+        datePicker.date = date
         addSubview(datePicker)
     }
     
@@ -34,7 +41,14 @@ class DatePickerTableViewCell : TableViewCell {
     func didPickNewDate(_ sender: UIDatePicker) {
         delegate?.datePicker(sender, selectedNewDate: sender.date)
     }
-    
+    var readonly: Bool {
+        get {
+            return !self.datePicker.isEnabled
+        }
+        set {
+            self.datePicker.isEnabled = !newValue
+        }
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         

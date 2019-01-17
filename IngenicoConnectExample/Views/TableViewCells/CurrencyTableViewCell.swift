@@ -27,6 +27,12 @@ class CurrencyTableViewCell: TableViewCell {
             fractionalTextField.delegate = newValue
         }
     }
+    var readonly: Bool = false {
+        didSet {
+            integerTextField.isEnabled = !readonly
+            fractionalTextField.isEnabled = !readonly
+        }
+    }
 
     var currencyCode: String? {
         didSet {
@@ -45,10 +51,10 @@ class CurrencyTableViewCell: TableViewCell {
 
     var fractionalField: FormRowField? {
         didSet {
-            integerTextField.text = fractionalField?.text
-            integerTextField.placeholder = fractionalField?.placeholder
-            integerTextField.keyboardType = fractionalField?.keyboardType ?? .default
-            integerTextField.isSecureTextEntry = fractionalField?.isSecure ?? false
+            fractionalTextField.text = fractionalField?.text
+            fractionalTextField.placeholder = fractionalField?.placeholder
+            fractionalTextField.keyboardType = fractionalField?.keyboardType ?? .default
+            fractionalTextField.isSecureTextEntry = fractionalField?.isSecure ?? false
         }
     }
 
@@ -60,7 +66,9 @@ class CurrencyTableViewCell: TableViewCell {
         separatorlabel.text = formatter.decimalSeparator!
         contentView.addSubview(separatorlabel)
         contentView.addSubview(currencyCodeLabel)
-
+        
+        integerTextField.textAlignment = .right
+        
         addSubview(integerTextField)
         addSubview(fractionalTextField)
     }

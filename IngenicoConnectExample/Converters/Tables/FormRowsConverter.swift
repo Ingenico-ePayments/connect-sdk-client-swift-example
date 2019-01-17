@@ -220,7 +220,7 @@ class FormRowsConverter {
                 keyboardType = .default
         }
 
-        let integerPart = (Double(value) ?? 0) / 100
+        let integerPart = Int((Double(value) ?? 0) / 100)
         let fractionalPart = Int(llabs((Int64(value) ?? 0) % 100))
 
         let integerField =  FormRowField(text: "\(integerPart)", placeholder: placeholderValue, keyboardType: keyboardType, isSecure: field.displayHints.obfuscate)
@@ -258,7 +258,7 @@ class FormRowsConverter {
     }
     
     func dateFormRow(from field: PaymentProductField, paymentItem:PaymentItem, value:String, isEnabled: Bool, viewFactory: ViewFactory) -> FormRowDate {
-        let row = FormRowDate(paymentProductField: field)
+        let row = FormRowDate(paymentProductField: field, value: value)
         row.isEnabled = isEnabled;
         return row;
     }
@@ -290,7 +290,7 @@ class FormRowsConverter {
         }
         
         row.selectedRow = row.items.map({ $0.value }).index(of: value) ?? 0
-        
+        row.isEnabled = isEnabled
         return row
     }
     

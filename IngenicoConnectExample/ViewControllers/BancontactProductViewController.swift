@@ -192,7 +192,7 @@ class BancontactProductViewController: PaymentProductViewController {
                 self.statusViewController.externalAppStatus = .Completed
                 self.statusViewController.dismiss(animated: true){
                     // Don't run callback, because this is the last time we poll
-                    self.paymentRequestTarget?.didSubmitPaymentRequest(paymentRequest: PaymentRequest(paymentProduct: self.paymentItem as! PaymentProduct, accountOnFile: self.accountOnFile, tokenize: false))
+                    self.paymentRequestTarget?.didSubmitPaymentRequest(paymentRequest: PaymentRequest(paymentProduct: self.paymentItem as! PaymentProduct, accountOnFile: self.accountOnFile, tokenize: self.inputData.tokenize))
                 }
             }
             
