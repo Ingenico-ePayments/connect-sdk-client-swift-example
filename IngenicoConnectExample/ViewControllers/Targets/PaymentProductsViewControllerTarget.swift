@@ -328,7 +328,7 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         // The authorizationViewController will be nil if the paymentRequest was incomplete or not created correctly
         if let authorizationViewController = authorizationViewController, PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentProductNetworks.paymentProductNetworks) {
             applePayPaymentProduct = paymentProduct
-            navigationController!.topViewController!.present(authorizationViewController, animated: true, completion: { _ in })
+            navigationController!.topViewController!.present(authorizationViewController, animated: true, completion: { return })
         }
     }
     
@@ -455,7 +455,7 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
     // The delegate is responsible for dismissing the view controller in this method.
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         applePayPaymentProduct = nil
-        authorizationViewController?.dismiss(animated: true, completion: { _ in })
+        authorizationViewController?.dismiss(animated: true, completion: { return })
     }
     
     // Sent when the user has selected a new payment card.  Use this delegate callback if you need to

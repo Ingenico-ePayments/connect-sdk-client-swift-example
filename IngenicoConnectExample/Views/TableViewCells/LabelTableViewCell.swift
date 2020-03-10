@@ -39,7 +39,7 @@ class LabelTableViewCell: TableViewCell {
 
         }
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(labelView)
         labelView.numberOfLines = 0
@@ -50,7 +50,7 @@ class LabelTableViewCell: TableViewCell {
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = .byWordWrapping;
         let text = text as NSString
-        let rect = text.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSFontAttributeName: labelFont(bold:bold), NSParagraphStyleAttributeName: style], context: nil)
+        let rect = text.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font: labelFont(bold:bold), NSAttributedString.Key.paragraphStyle: style], context: nil)
         return rect.size
     }
     class func cellSize(width: CGFloat, formRow: FormRowLabel) -> CGSize {

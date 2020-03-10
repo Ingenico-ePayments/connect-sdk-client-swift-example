@@ -19,7 +19,7 @@ class ReadonlyReviewCell: TableViewCell {
     }
     private var labelNeedsUpdate: Bool = true
     var labelView: UITextView = UITextView()
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(labelView)
         labelView.isEditable = false

@@ -58,7 +58,7 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
         }
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(pickerView)
         addSubview(labelView)
@@ -108,7 +108,7 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
                 }
                 old.append(new)
                 return old}
-        attributedString?.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, (attributedString?.length)!))
+        attributedString?.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, (attributedString?.length)!))
         return attributedString ?? NSAttributedString()
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -133,7 +133,7 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
             left = NSAttributedString(string: elementId)
             right = NSAttributedString(string: element.value)
         case .uri:
-            left = NSAttributedString(string: elementId, attributes: [NSLinkAttributeName: element.value])
+            left = NSAttributedString(string: elementId, attributes: [NSAttributedString.Key.link: element.value])
             right = nil
         case .integer:
             left = NSAttributedString(string: elementId)

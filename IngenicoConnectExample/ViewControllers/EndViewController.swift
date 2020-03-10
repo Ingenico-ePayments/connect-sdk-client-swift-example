@@ -74,7 +74,7 @@ class EndViewController: UIViewController {
         container.addConstraints(constraints)
     }
     
-    func continueButtonTapped() {
+    @objc func continueButtonTapped() {
         target.didSelectContinueShopping()
     }
 }

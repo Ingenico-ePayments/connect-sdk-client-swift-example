@@ -246,7 +246,7 @@ class FormRowsConverter {
         let nsDescriptionValue = descriptionValue as NSString
         let range = nsDescriptionValue.range(of: "{link}")
         let attrString = NSMutableAttributedString(string: descriptionValue)
-        let linkString = NSAttributedString(string: labelValue, attributes: [NSLinkAttributeName: (field.displayHints.link?.absoluteString ?? "")])
+        let linkString = NSAttributedString(string: labelValue, attributes: [NSAttributedString.Key.link: (field.displayHints.link?.absoluteString ?? "")])
         if range.length > 0 {
             attrString.replaceCharacters(in: range , with: linkString)
         }

@@ -57,7 +57,7 @@ class SwitchTableViewCell: TableViewCell {
 
     var delegate: SwitchTableViewCellDelegate?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         clipsToBounds = true
@@ -86,7 +86,7 @@ class SwitchTableViewCell: TableViewCell {
         switchControl.addTarget(target ?? self, action: action ?? #selector(didSwitch(_:)), for: .touchUpInside)
     }
     
-    func didSwitch(_ sender: Switch) {
+    @objc func didSwitch(_ sender: Switch) {
         delegate?.switchChanged(sender)
     }
     

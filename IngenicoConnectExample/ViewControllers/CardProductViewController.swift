@@ -137,16 +137,16 @@ class CardProductViewController: PaymentProductViewController {
 
             if (diffCardNumberIndex >= 0) {
                 let insertIndexes = (0 ..< diffCardNumberIndex).map{ (i) in IndexPath(row: oldCardNumberIndex - 1 + i, section: 0)}
-                tableView.insertRows(at:  insertIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.insertRows(at:  insertIndexes, with: UITableView.RowAnimation.automatic)
                 let updateIndexes = (0 ..< oldCardNumberIndex).map { (i) in IndexPath(row: i, section: 0) }
-                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.reloadRows(at: updateIndexes, with: UITableView.RowAnimation.automatic)
 
             }
             if (diffCardNumberIndex < 0) {
                 let deleteIndexes = (0 ..< -diffCardNumberIndex).map{ (i) in IndexPath(row:  i, section: 0)}
-                tableView.deleteRows(at:  deleteIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.deleteRows(at:  deleteIndexes, with: UITableView.RowAnimation.automatic)
                 let updateIndexes = (0 ..< oldCardNumberIndex + diffCardNumberIndex).map { (i) in IndexPath(row: oldCardNumberIndex - i, section: 0) }
-                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.reloadRows(at: updateIndexes, with: UITableView.RowAnimation.automatic)
             }
 
             let oldAfterCardNumberCount = oldFormRows.count - oldCardNumberIndex - 1
@@ -158,16 +158,16 @@ class CardProductViewController: PaymentProductViewController {
             }
             if (diffAfterCardNumberCount >= 0) {
                 let insertIndexes = (0 ..< diffAfterCardNumberCount).map{ (i) in IndexPath(row: oldFormRows.count + i, section: 0)}
-                tableView.insertRows(at:  insertIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.insertRows(at:  insertIndexes, with: UITableView.RowAnimation.automatic)
                 let updateIndexes = (0 ..< oldAfterCardNumberCount).map { (i) in IndexPath(row: i + oldCardNumberIndex + 1, section: 0) }
-                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.reloadRows(at: updateIndexes, with: UITableView.RowAnimation.automatic)
 
             }
             if (diffAfterCardNumberCount < 0) {
                 let deleteIndexes = (0 ..< -diffAfterCardNumberCount).map{ (i) in IndexPath(row:  oldFormRows.count - i - 1, section: 0)}
-                tableView.deleteRows(at:  deleteIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.deleteRows(at:  deleteIndexes, with: UITableView.RowAnimation.automatic)
                 let updateIndexes = (0 ..< newAfterCardNumberCount).map { (i) in IndexPath(row: self.formRows.count - i - 1 - diffCardNumberIndex, section: 0) }
-                tableView.reloadRows(at: updateIndexes, with: UITableViewRowAnimation.automatic)
+                tableView.reloadRows(at: updateIndexes, with: UITableView.RowAnimation.automatic)
 
             }
             
@@ -184,10 +184,10 @@ class CardProductViewController: PaymentProductViewController {
         
         if row.paymentProductField.identifier == "cardNumber" {
             var unmasked = inputData.unmaskedValue(forField: row.paymentProductField.identifier)
-            if unmasked.characters.count >= 6, cursorPosition <= 7 {
+            if unmasked.count >= 6, cursorPosition <= 7 {
                 unmasked = unmasked.substring(to: unmasked.index(unmasked.startIndex, offsetBy: 6))
                 session.iinDetails(forPartialCreditCardNumber: unmasked, context: context, success: {(_ response: IINDetailsResponse) -> Void in
-                    guard self.inputData.unmaskedValue(forField: row.paymentProductField.identifier).characters.count >= 6 else {
+                    guard self.inputData.unmaskedValue(forField: row.paymentProductField.identifier).count >= 6 else {
                         return
                     }
                     
@@ -216,7 +216,7 @@ class CardProductViewController: PaymentProductViewController {
 
                 }, failure: { error in
                 })
-            } else if unmasked.characters.count < 6 {
+            } else if unmasked.count < 6 {
                 // Remove cobrands
                 var deleteRows = [IndexPath]()
                 for (index, row) in self.formRows.enumerated() {

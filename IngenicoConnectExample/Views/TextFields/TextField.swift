@@ -16,7 +16,7 @@ class TextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        borderStyle = UITextBorderStyle.roundedRect
+        borderStyle = UITextField.BorderStyle.roundedRect
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -14,7 +14,7 @@ class COBrandsExplanationTableViewCell: TableViewCell {
     override class var reuseIdentifier: String {return "co-brand-explanation-cell"}
     var limitedBackgroundView = UIView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         textLabel?.attributedText = COBrandsExplanationTableViewCell.cellString()
@@ -31,7 +31,7 @@ class COBrandsExplanationTableViewCell: TableViewCell {
     
     class func cellString() -> NSAttributedString {
         let font = UIFont.systemFont(ofSize: 12)
-        let fontAttribute = [NSFontAttributeName: font]
+        let fontAttribute = [NSAttributedString.Key.font: font]
         
         let cellKey = "gc.general.cobrands.introText"
         let cellString = NSLocalizedString(cellKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")

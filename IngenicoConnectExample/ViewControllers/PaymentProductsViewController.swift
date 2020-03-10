@@ -21,7 +21,7 @@ class PaymentProductsViewController: UITableViewController {
     var sections = [PaymentProductsTableSection]()
     var header : SummaryTableHeaderView!
     
-    init(style: UITableViewStyle, viewFactory: ViewFactory, paymentItems:PaymentItems) {
+    init(style: UITableView.Style, viewFactory: ViewFactory, paymentItems:PaymentItems) {
         super.init(style: style)
         
         self.viewFactory = viewFactory

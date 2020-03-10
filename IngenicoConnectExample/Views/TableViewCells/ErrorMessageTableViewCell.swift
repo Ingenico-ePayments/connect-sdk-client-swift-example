@@ -13,7 +13,7 @@ class ErrorMessageTableViewCell: LabelTableViewCell {
 
     override class var reuseIdentifier: String { return "error-cell" }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         labelView.font = UIFont.systemFont(ofSize: 12.0)

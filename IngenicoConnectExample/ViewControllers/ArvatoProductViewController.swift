@@ -99,7 +99,7 @@ class ArvatoProductViewController: PaymentProductViewController {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    func searchButtonTapped() {
+    @objc func searchButtonTapped() {
         //let enabledRows = self.formRows.filter { (fr) -> Bool in
         //    fr.isEnabled
         //}
@@ -186,15 +186,15 @@ class ArvatoProductViewController: PaymentProductViewController {
             
         }
     }
-    func enterManuallyButtonTapped() {
+    @objc func enterManuallyButtonTapped() {
         didFind = true
         reload()
     }
-    func editInformationButtonTapped() {
+    @objc func editInformationButtonTapped() {
         fullData = false
         reload()
     }
-    func searchAgainButtonTapped() {
+    @objc func searchAgainButtonTapped() {
         didFind = false
         fullData = false
         failCount = 0
@@ -244,7 +244,7 @@ class ArvatoProductViewController: PaymentProductViewController {
         let searchAgainButtonTitle = NSLocalizedString("gc.app.paymentProductDetails.searchConsumer.buttons.searchAgain", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "Enter manually", comment: "Title of the enter manually button on the payment product screen.")
         let searchAgainButtonFormRow = FormRowButton(title: searchAgainButtonTitle, target: self, action: #selector(searchAgainButtonTapped))
         searchAgainButtonFormRow.buttonType = .primary
-        let hadLookup = paymentItem.fields.paymentProductFields.map { (field) -> Bool in
+        let _ = paymentItem.fields.paymentProductFields.map { (field) -> Bool in
             return field.usedForLookup
             }.reduce(false) { (result, bool) -> Bool in
                 return result || bool

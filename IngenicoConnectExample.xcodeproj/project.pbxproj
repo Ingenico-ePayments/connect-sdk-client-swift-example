@@ -599,6 +599,7 @@
 						TestTargetID = A351DCAE196296000033E23C;
 					};
 					A351DCAE196296000033E23C = {
+						DevelopmentTeam = UTWYEN5FS2;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -620,6 +621,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				"en-AU",
 				"ar-EG",
@@ -756,7 +758,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/IngenicoConnectKit/IngenicoConnectKit.framework",
@@ -771,7 +773,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F80525160E723E18DF3264F2 /* [CP] Check Pods Manifest.lock */ = {
@@ -929,6 +931,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.globalcollect.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = IngenicoConnectExampleTests;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -954,6 +957,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.globalcollect.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = IngenicoConnectExampleTests;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -992,10 +996,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "A0A13123-5845-42BE-A813-90ED61E2B2CF";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1026,9 +1031,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PROVISIONING_PROFILE = "A0A13123-5845-42BE-A813-90ED61E2B2CF";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1045,7 +1051,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = UTWYEN5FS2;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
@@ -1056,12 +1062,12 @@
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.globalcollect.GlobalCollectExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.ingenico.connect.SwiftExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "GlobalCollectSDK/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1078,7 +1084,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = UTWYEN5FS2;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
@@ -1089,11 +1095,11 @@
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.globalcollect.GlobalCollectExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.ingenico.connect.SwiftExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "GlobalCollectSDK/**";
 				WRAPPER_EXTENSION = app;
 			};

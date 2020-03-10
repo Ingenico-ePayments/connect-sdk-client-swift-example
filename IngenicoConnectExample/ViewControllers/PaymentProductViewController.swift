@@ -95,7 +95,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         tableView.addGestureRecognizer(tapScrollView)
     }
     
-    func tableViewTapped() {
+    @objc func tableViewTapped() {
         UIApplication.shared.keyWindow?.endEditing(false)
     }
     
@@ -225,7 +225,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         
         let row = formRows[indexPath.row]
         let cell = formRowCell(for: row, indexPath: indexPath)
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
     
@@ -297,7 +297,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         return cell
     }
 
-    // Not present in current API
     func cell(for row: FormRowCurrency, tableView: UITableView) -> CurrencyTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyTableViewCell.reuseIdentifier) as! CurrencyTableViewCell
 
@@ -472,7 +471,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         row.field = field
         formRows[indexPath.row] = row
 
-        var cursorPosition = range.location + string.characters.count
+        var cursorPosition = range.location + string.count
         formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath)
         
         return false;
@@ -487,7 +486,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let formattedString = inputData.maskedValue(forField: row.paymentProductField.identifier, cursorPosition: &cursorPosition).trimmingCharacters(in: trimSet)
         row.field.text = formattedString
         textField.text = formattedString
-        cursorPosition = min(cursorPosition, formattedString.characters.count)
+        cursorPosition = min(cursorPosition, formattedString.count)
         
         let cursorPositionInTextField = textField.position(from: textField.beginningOfDocument, offset: cursorPosition)!
         textField.selectedTextRange = textField.textRange(from: cursorPositionInTextField, to: cursorPositionInTextField)
@@ -504,11 +503,11 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
 
         var integerString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         
-        if integerString.characters.count > 16 {
+        if integerString.count > 16 {
             return false
         }
         
-        if string.characters.count == 0 {
+        if string.count == 0 {
             return true
         }
 
@@ -532,13 +531,13 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
 
         var fractionalString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         
-        if fractionalString.characters.count > 2 {
+        if fractionalString.count > 2 {
             let end = fractionalString.endIndex
             let start = fractionalString.index(end, offsetBy: -2)
             fractionalString = fractionalString.substring(with: start..<end)
         }
         
-        if string.characters.count == 0 {
+        if string.count == 0 {
             return true
         }
 
@@ -563,8 +562,8 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     }
     
     func updateRow(withCurrencyValue currencyValue: String, forCell cell: CurrencyTableViewCell) {
-        cell.integerTextField.text = currencyValue.substring(to: currencyValue.index(currencyValue.startIndex, offsetBy: currencyValue.characters.count - 2))
-        cell.fractionalTextField.text = currencyValue.substring(from: currencyValue.index(currencyValue.startIndex, offsetBy: currencyValue.characters.count - 2))
+        cell.integerTextField.text = currencyValue.substring(to: currencyValue.index(currencyValue.startIndex, offsetBy: currencyValue.count - 2))
+        cell.fractionalTextField.text = currencyValue.substring(from: currencyValue.index(currencyValue.startIndex, offsetBy: currencyValue.count - 2))
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -612,7 +611,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     
     // MARK: Button target methods
     
-    func payButtonTapped() {
+    @objc func payButtonTapped() {
         var valid = false
         inputData.validate()
         if inputData.errors.count == 0 {
@@ -629,7 +628,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         }
     }
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         paymentRequestTarget?.didCancelPaymentRequest()
     }
     
@@ -666,7 +665,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         
     }
     
-    func switchChanged(_ sender: Switch) {
+    @objc func switchChanged(_ sender: Switch) {
         
         guard let cell = sender.superview as? SwitchTableViewCell else {
             return

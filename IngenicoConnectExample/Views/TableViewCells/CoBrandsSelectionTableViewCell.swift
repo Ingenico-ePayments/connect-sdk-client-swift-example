@@ -13,11 +13,11 @@ import IngenicoConnectKit
 class CoBrandsSelectionTableViewCell: TableViewCell {
     override class var reuseIdentifier: String { return "co-brand-selection-cell" }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         let font = UIFont.systemFont(ofSize: 13)
-        let underlineAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue, NSFontAttributeName: font] as [String : Any]
+        let underlineAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue, NSAttributedString.Key.font: font] as [NSAttributedString.Key : Any]?
         
         let cobrandsString = NSLocalizedString("gc.general.cobrands.toggleCobrands", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
         

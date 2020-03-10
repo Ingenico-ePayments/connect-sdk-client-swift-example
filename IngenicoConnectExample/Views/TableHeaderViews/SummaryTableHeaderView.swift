@@ -66,16 +66,16 @@ class SummaryTableHeaderView: UIView {
             "banner": banner
         ]
         let metrics = ["bannerInnerMargin": "8"]
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(10)-[banner]-(10)-|", options: NSLayoutFormatOptions(), metrics: nil, views: viewMapping))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[securePaymentContainer]-(10)-|", options: NSLayoutFormatOptions(), metrics: nil, views: viewMapping))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[banner]-(1)-[securePaymentContainer]", options: NSLayoutFormatOptions(), metrics: nil, views: viewMapping))
-        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(bannerInnerMargin)-[summaryLabel]", options: NSLayoutFormatOptions(), metrics: metrics, views: viewMapping))
-        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[amountLabel]-(bannerInnerMargin)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: viewMapping))
-        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(bannerInnerMargin)-[summaryLabel]-(bannerInnerMargin)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: viewMapping))
-        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(bannerInnerMargin)-[amountLabel]-(bannerInnerMargin)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: viewMapping))
-        securePaymentContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[securePaymentIcon(==7)]-(3)-[securePaymentLabel]|", options: NSLayoutFormatOptions(), metrics: nil, views: viewMapping))
-        securePaymentContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[securePaymentLabel(==20)]", options: NSLayoutFormatOptions(), metrics: nil, views: viewMapping))
-        securePaymentContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(5)-[securePaymentIcon(==7)]", options: NSLayoutFormatOptions(), metrics: nil, views: viewMapping))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(10)-[banner]-(10)-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewMapping))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[securePaymentContainer]-(10)-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewMapping))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[banner]-(1)-[securePaymentContainer]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewMapping))
+        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(bannerInnerMargin)-[summaryLabel]", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: viewMapping))
+        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[amountLabel]-(bannerInnerMargin)-|", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: viewMapping))
+        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(bannerInnerMargin)-[summaryLabel]-(bannerInnerMargin)-|", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: viewMapping))
+        banner.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(bannerInnerMargin)-[amountLabel]-(bannerInnerMargin)-|", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: viewMapping))
+        securePaymentContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[securePaymentIcon(==7)]-(3)-[securePaymentLabel]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewMapping))
+        securePaymentContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[securePaymentLabel(==20)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewMapping))
+        securePaymentContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(5)-[securePaymentIcon(==7)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewMapping))
     }
     
     required init?(coder aDecoder: NSCoder) {

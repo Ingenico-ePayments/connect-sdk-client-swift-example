@@ -12,10 +12,10 @@ import UIKit
 class TableViewCell: UITableViewCell {
     class var reuseIdentifier: String { return "tableviewcell" }
     init(reuseIdentifier: String?) {
-        super.init(style: UITableViewCellStyle.default, reuseIdentifier: reuseIdentifier)
+        super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     

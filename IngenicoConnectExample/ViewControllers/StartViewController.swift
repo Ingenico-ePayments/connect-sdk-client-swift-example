@@ -300,12 +300,12 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[clientSessionIdLabel]-[clientSessionIdTextField]-(fieldSeparator)-[customerIdLabel]-[customerIdTextField]-(fieldSeparator)-[baseURLLabel]-[baseURLTextField]-(fieldSeparator)-[assetsBaseURLLabel]-[assetsBaseURLTextField]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodePicker]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodePicker]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[shouldGroupProductsSwitch]-(fieldSeparator)-[payButton]-|", options: [], metrics: metrics, views: views))
         self.view.addConstraints([NSLayoutConstraint(item:superContainerView, attribute:.leading, relatedBy:.equal, toItem:self.view, attribute:.leading, multiplier:1, constant:0), NSLayoutConstraint(item:superContainerView, attribute:.trailing, relatedBy:.equal, toItem:self.view, attribute:.trailing, multiplier:1, constant:0)]);
 
-        self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[superContainerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[superContainerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[superContainerView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[superContainerView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
     
-        superContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        superContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
         superContainerView.addConstraint(NSLayoutConstraint(item: self.containerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320))
         self.view.addConstraint(NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0))
 
@@ -318,7 +318,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         view.addGestureRecognizer(tapScrollView)
     }
     
-    func tableViewTapped() {
+    @objc func tableViewTapped() {
         for view: UIView in containerView!.subviews {
             if let textField = view as? TextField, textField.isFirstResponder {
                 textField.resignFirstResponder()
@@ -354,7 +354,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     }
     // MARK: Button actions
     
-    func buyButtonTapped(_ sender: UIButton) {
+    @objc func buyButtonTapped(_ sender: UIButton) {
         if payButton == sender, let newValue = Int(amountTextField.text!) {
             amountValue = newValue
             UserDefaults.standard.set(newValue, forKey: AppConstants.kPrice)

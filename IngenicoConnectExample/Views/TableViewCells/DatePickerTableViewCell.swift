@@ -24,7 +24,7 @@ class DatePickerTableViewCell : TableViewCell {
             datePicker.date = date
         }
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         date = Date()
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -38,7 +38,7 @@ class DatePickerTableViewCell : TableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func didPickNewDate(_ sender: UIDatePicker) {
+    @objc func didPickNewDate(_ sender: UIDatePicker) {
         delegate?.datePicker(sender, selectedNewDate: sender.date)
     }
     var readonly: Bool {

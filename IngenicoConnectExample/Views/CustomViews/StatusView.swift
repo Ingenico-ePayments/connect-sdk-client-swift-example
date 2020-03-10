@@ -17,13 +17,13 @@ class StatusView: UIView {
         didSet {
             switch self.status {
             case .Waiting:
-                self.showCheckMark(color: UIColor(colorLiteralRed: 0.8, green: 0.8, blue: 0.8, alpha: 1.0))
+                self.showCheckMark(color: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0))
                 break
             case .Progress:
                 self.showActivityIndicator()
                 break
             case .Finished:
-                self.showCheckMark(color: UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 1.0))
+                self.showCheckMark(color: UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0))
                 break
             }
         }
@@ -50,7 +50,7 @@ class StatusView: UIView {
         self.status = status
         self.checkMarkView = CheckMarkView(frame: CGRect(x: 10.0, y: 10.0, width: frame.width - 20.0, height: frame.height - 20.0))
         self.activityIndicatorView = UIActivityIndicatorView(frame: frame)
-        self.activityIndicatorView.activityIndicatorViewStyle = .gray
+        self.activityIndicatorView.style = .gray
         super.init(frame: frame)
         self.checkMarkView.backgroundColor = self.backgroundColor
         self.checkMarkView.isOpaque = false

@@ -127,7 +127,7 @@ class BancontactProductViewController: PaymentProductViewController {
     /// Sets up a timer that fires at most once every second
     func startPolling() {
         self.polling = true
-        var callback: ((Void)->Void)! = nil;
+        var callback: (()->Void)! = nil;
         callback = {
             self.poll { (status: ThirdPartyStatus) in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: callback)
@@ -251,7 +251,7 @@ class BancontactProductViewController: PaymentProductViewController {
     ///
     /// - Parameter obj: The sender of the notification.
     
-    func didReturn(obj: AnyObject) {
+    @objc func didReturn(obj: AnyObject) {
         // START: Uncomment the following code to test locally
         //self.testTime += 10.0;
         // END
@@ -263,7 +263,7 @@ class BancontactProductViewController: PaymentProductViewController {
     
     
     /// Called in response to press of the "Open App" button. Opens the Bancontact app, and registers a notification to see when the app retrurns.
-    func didTapOpenAppButton() {
+    @objc func didTapOpenAppButton() {
         // START: Remove the following code to test locally
         guard let url = URL(string: self.appRedirectURL) else {
             return
@@ -283,7 +283,7 @@ class BancontactProductViewController: PaymentProductViewController {
         } else {
             UIApplication.shared.openURL(url)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(didReturn), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReturn), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     /// Fully initializes a model for a separator row with an "Or" label, or a localization of it, and inserts it as first row.

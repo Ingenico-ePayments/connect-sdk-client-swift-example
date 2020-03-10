@@ -59,7 +59,7 @@ class PaymentProductTableViewCell: TableViewCell {
     
     var limitedContainer = UIView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         accessoryType = .disclosureIndicator
