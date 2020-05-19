@@ -15,6 +15,8 @@ class CardProductViewController: PaymentProductViewController {
     var cursorPositionInCreditCardNumberTextField: UITextPosition?
     var iinDetailsResponse: IINDetailsResponse?
     var cobrands: [IINDetail] = []
+    var previousEnteredCreditCardNumber: String = ""
+
     override func registerReuseIdentifiers() {
         super.registerReuseIdentifiers()
         tableView.register(CoBrandsSelectionTableViewCell.self, forCellReuseIdentifier: CoBrandsSelectionTableViewCell.reuseIdentifier)
@@ -183,9 +185,8 @@ class CardProductViewController: PaymentProductViewController {
         }
         
         if row.paymentProductField.identifier == "cardNumber" {
-            var unmasked = inputData.unmaskedValue(forField: row.paymentProductField.identifier)
-            if unmasked.count >= 6, cursorPosition <= 7 {
-                unmasked = unmasked.substring(to: unmasked.index(unmasked.startIndex, offsetBy: 6))
+            let unmasked = inputData.unmaskedValue(forField: row.paymentProductField.identifier)
+            if unmasked.count >= 6, oneOfFirst8DigitsChangedIn(currentEnteredCreditCardNumber: unmasked) {
                 session.iinDetails(forPartialCreditCardNumber: unmasked, context: context, success: {(_ response: IINDetailsResponse) -> Void in
                     guard self.inputData.unmaskedValue(forField: row.paymentProductField.identifier).count >= 6 else {
                         return
@@ -223,9 +224,6 @@ class CardProductViewController: PaymentProductViewController {
                     if row is FormRowCoBrandsSelection || row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow {
                         deleteRows.append(IndexPath(row: index, section: 0))
                     }
-                    //if let row = row as? FormRowTextField, row.paymentProductField.identifier == "cardNumber" {
-                    //    updateFormRows()
-                    //}
                 }
                 for indexPath in deleteRows.reversed() {
                     self.formRows.remove(at: indexPath.row)
@@ -235,9 +233,14 @@ class CardProductViewController: PaymentProductViewController {
                 // To toggle card logo
                 //switchToPaymentProduct(paymentProductId: self.initialPaymentProduct?.identifier)
             }
+            previousEnteredCreditCardNumber = unmasked
         }
     }
-    
+
+    private func oneOfFirst8DigitsChangedIn(currentEnteredCreditCardNumber: String) -> Bool {
+        return currentEnteredCreditCardNumber.prefix(8) != previousEnteredCreditCardNumber.prefix(8)
+    }
+
     func coBrandForms(inputCoBrands: [IINDetail]) -> [FormRow] {
         var coBrands = [String]()
         for coBrand: IINDetail in inputCoBrands where coBrand.allowedInContext {

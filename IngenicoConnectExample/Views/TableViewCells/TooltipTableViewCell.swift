@@ -65,8 +65,10 @@ class TooltipTableViewCell: TableViewCell {
         tooltipLabel.sizeToFit()
         if let image = tooltipImage {
             let ratio = image.size.width / image.size.height
-            tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 100 * ratio, height: 100)
-        } else {
+            if !ratio.isNaN {
+                tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 100 * ratio, height: 100)
+                return
+            }
             tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 0, height: 0)
         }
     }
