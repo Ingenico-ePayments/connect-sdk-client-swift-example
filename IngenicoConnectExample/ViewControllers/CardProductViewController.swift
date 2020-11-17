@@ -30,11 +30,17 @@ class CardProductViewController: PaymentProductViewController {
         // Add card logo for cardNumber field
         if row.paymentProductField.identifier == "cardNumber" {
             if confirmedPaymentProducts.contains(paymentItem.identifier) {
-                let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+                let size = cell.frame.height * 0.8
+                let padding = cell.frame.height * 0.1
+
+                let outerView = UIView(frame: CGRect(x: padding, y: padding, width: size, height: size))
+                let innerView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+                innerView.contentMode = .scaleAspectFit
+                outerView.addSubview(innerView)
                 view.contentMode = .scaleAspectFit
-                row.logo = paymentItem.displayHints.logoImage
-                view.image = row.logo
-                cell.rightView = view
+
+                innerView.image = row.logo
+                cell.rightView = outerView
             }
             else {
                 row.logo = nil

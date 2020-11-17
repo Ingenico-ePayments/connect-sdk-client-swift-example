@@ -102,52 +102,12 @@ class FormRowsConverter {
             }
             let errorMessageValueWithPlaceholder = errorMessageValueWithPlaceholders.replacingOccurrences(of: "{maxValue}", with: String(maxString))
             errorMessage = errorMessageValueWithPlaceholder.replacingOccurrences(of: "{minValue}", with: String(minString))
-        } else if errorClass is ValidationErrorExpirationDate {
-            errorMessageKey = String(format: errorMessageFormat, "expirationDate")
+
+        } else if let errorMessageFromClass = errorClass.errorMessageKey() {
+            errorMessageKey = String(format: errorMessageFormat, errorMessageFromClass)
             errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
             errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorFixedList {
-            errorMessageKey = String(format: errorMessageFormat, "fixedList")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorLuhn {
-            errorMessageKey = String(format: errorMessageFormat, "luhn")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorAllowed {
-            errorMessageKey = String(format: errorMessageFormat, "allowedInContext")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorRegularExpression {
-            errorMessageKey = String(format: errorMessageFormat, "regularExpression")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorTermsAndConditions {
-            errorMessageKey = String(format: errorMessageFormat, "termsAndConditions")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorIsRequired {
-            errorMessageKey = String(format: errorMessageFormat, "required")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorIBAN {
-            errorMessageKey = String(format: errorMessageFormat, "regularExpression")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else if errorClass is ValidationErrorEmailAddress {
-            errorMessageKey = String(format: errorMessageFormat, "emailAddress")
-            errorMessageValue = NSLocalizedString(errorMessageKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            errorMessage = errorMessageValue
-        }
-        else {
+        } else {
             errorMessage = ""
             NSException(name: NSExceptionName(rawValue: "Invalid validation error"), reason: "Validation error \(error) is invalid", userInfo: nil).raise()
         }

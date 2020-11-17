@@ -71,6 +71,7 @@
 		73E9DC1B1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1A1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift */; };
 		73E9DC1E1EFBB87600969D43 /* CheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1D1EFBB87600969D43 /* CheckMarkView.swift */; };
 		73E9DC201EFBC01000969D43 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1F1EFBC01000969D43 /* StatusView.swift */; };
+		746163FB252DE76700F733E0 /* ValidationErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746163FA252DE76700F733E0 /* ValidationErrorExtension.swift */; };
 		81BCAD281F06B38B000B0BCF /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCAD271F06B38B000B0BCF /* SeparatorView.swift */; };
 		81BCAD2A1F06B40C000B0BCF /* FormRowSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCAD291F06B40C000B0BCF /* FormRowSeparator.swift */; };
 		81BCAD2C1F06BBB8000B0BCF /* SeparatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCAD2B1F06BBB8000B0BCF /* SeparatorTableViewCell.swift */; };
@@ -172,6 +173,7 @@
 		73E9DC1A1EFBB0BC00969D43 /* ExternalAppStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalAppStatusViewController.swift; path = ViewControllers/ExternalAppStatusViewController.swift; sourceTree = "<group>"; };
 		73E9DC1D1EFBB87600969D43 /* CheckMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckMarkView.swift; path = Views/CustomViews/CheckMarkView.swift; sourceTree = "<group>"; };
 		73E9DC1F1EFBC01000969D43 /* StatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusView.swift; path = Views/CustomViews/StatusView.swift; sourceTree = "<group>"; };
+		746163FA252DE76700F733E0 /* ValidationErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrorExtension.swift; sourceTree = "<group>"; };
 		818CD49BA44A2B0A900CFB4F /* Pods-IngenicoConnectExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81BCAD271F06B38B000B0BCF /* SeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeparatorView.swift; path = Views/CustomViews/SeparatorView.swift; sourceTree = "<group>"; };
 		81BCAD291F06B40C000B0BCF /* FormRowSeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowSeparator.swift; path = Models/Tables/FormRowSeparator.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 			children = (
 				6D3914C41E20F3C9007C8400 /* FormRowsConverter.swift */,
 				B4DC6A0E1E1E6E8800D9A8BA /* TableSectionConverter.swift */,
+				746163FA252DE76700F733E0 /* ValidationErrorExtension.swift */,
 			);
 			name = Tables;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				6DF724691E1CF47100D6BA15 /* TableViewCell.swift in Sources */,
 				6D7E21731E1BF939007BA84B /* FormRowWithInfoButton.swift in Sources */,
 				6D9A638E1E1BFE99001799FE /* MerchantLogoImageView.swift in Sources */,
+				746163FB252DE76700F733E0 /* ValidationErrorExtension.swift in Sources */,
 				6D9A638C1E1BFE56001799FE /* FormRowSwitch.swift in Sources */,
 				B4DC6A011E1E5A4800D9A8BA /* AppDelegate.swift in Sources */,
 				6D9A63B41E1C0FD8001799FE /* FormRowCoBrandsExplanation.swift in Sources */,

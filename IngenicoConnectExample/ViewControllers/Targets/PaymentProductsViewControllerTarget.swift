@@ -304,18 +304,19 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         
         generateSummaryItems()
         let paymentRequest = PKPaymentRequest()
-        paymentRequest.countryCode = context.countryCode.rawValue
+
+        if let acquirerCountry = paymentProduct.acquirerCountry,
+           !acquirerCountry.isEmpty{
+            paymentRequest.countryCode = acquirerCountry
+        } else {
+            paymentRequest.countryCode = context.countryCode.rawValue
+        }
+
         paymentRequest.currencyCode = context.amountOfMoney.currencyCode.rawValue
         paymentRequest.supportedNetworks = paymentProductNetworks.paymentProductNetworks
         paymentRequest.paymentSummaryItems = summaryItems
-        
-        // These capabilities should always be set to this value unless the merchant specifically does not want either Debit or Credit
-        if #available(iOS 9.0, *) {
-            paymentRequest.merchantCapabilities = [.capability3DS, .capabilityDebit, .capabilityCredit]
-        } else {
-            paymentRequest.merchantCapabilities = [.capability3DS]
-        }
-        
+        paymentRequest.merchantCapabilities = [.capability3DS, .capabilityDebit, .capabilityCredit]
+
         // This merchant id is set in the merchants apple developer portal and is linked to a certificate
         paymentRequest.merchantIdentifier = merchantId
         

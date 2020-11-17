@@ -20,6 +20,7 @@ xcuserdata/
 ## Other
 *.moved-aside
 *.xcuserstate
+*.DS_store
 
 ## Obj-C/Swift specific
 *.hmap
@@ -51,6 +52,9 @@ Pods/
 # Carthage/Checkouts
 
 Carthage/Build
+
+# MacOS
+.DS_store
 
 # fastlane
 #
