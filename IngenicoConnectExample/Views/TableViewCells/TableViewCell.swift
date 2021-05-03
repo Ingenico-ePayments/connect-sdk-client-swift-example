@@ -13,14 +13,17 @@ class TableViewCell: UITableViewCell {
     class var reuseIdentifier: String { return "tableviewcell" }
     init(reuseIdentifier: String?) {
         super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
+        contentView.isUserInteractionEnabled = true
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        contentView.isUserInteractionEnabled = true
     }
     func accessoryAndMarginCompatibleWidth() -> CGFloat {
         if self.accessoryType != .none {

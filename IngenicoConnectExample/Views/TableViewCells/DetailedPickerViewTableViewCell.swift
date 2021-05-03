@@ -75,6 +75,7 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
 
         self.clipsToBounds = true
         self.setNeedsLayout()
+        contentView.isUserInteractionEnabled = true
     }
     
     
