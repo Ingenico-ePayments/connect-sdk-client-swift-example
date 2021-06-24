@@ -56,6 +56,8 @@
 		6DF7248B1E1D2E4500D6BA15 /* PaymentRequestTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF7248A1E1D2E4500D6BA15 /* PaymentRequestTarget.swift */; };
 		6DF7248F1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF7248E1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift */; };
 		6DF724911E1D2EAA00D6BA15 /* PaymentFinishedTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF724901E1D2EAA00D6BA15 /* PaymentFinishedTarget.swift */; };
+		7240260E262ECD5300AC8673 /* StartPaymentParsedJsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7240260D262ECD5300AC8673 /* StartPaymentParsedJsonData.swift */; };
+		7240261A262ED3B900AC8673 /* JsonDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72402619262ED3B800AC8673 /* JsonDialogViewController.swift */; };
 		732012E51EF2805700A736A5 /* FormRowImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732012E41EF2805700A736A5 /* FormRowImage.swift */; };
 		732012E71EF2806F00A736A5 /* FormRowQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732012E61EF2806F00A736A5 /* FormRowQRCode.swift */; };
 		732012E91EF285F300A736A5 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732012E81EF285F300A736A5 /* ImageTableViewCell.swift */; };
@@ -91,6 +93,7 @@
 		B4DC6A0D1E1E6E1F00D9A8BA /* PaymentProductsViewControllerTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC6A0C1E1E6E1F00D9A8BA /* PaymentProductsViewControllerTarget.swift */; };
 		B4DC6A0F1E1E6E8800D9A8BA /* TableSectionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC6A0E1E1E6E8800D9A8BA /* TableSectionConverter.swift */; };
 		DB35BF7010EF9323D8BEBD6C /* Pods_IngenicoConnectExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9049FBA53C858E8D40B5889B /* Pods_IngenicoConnectExampleTests.framework */; };
+		E9BB319A152C66027E12877F /* ParseJsonTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB3C55E589D8266BDBE4C8 /* ParseJsonTarget.swift */; };
 		F52E88931E9BDE8300546DC2 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E88921E9BDE8300546DC2 /* Button.swift */; };
 		F553D8B81EB09CC00075622C /* BoletoProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F553D8B71EB09CC00075622C /* BoletoProductViewController.swift */; };
 		F56177071EA6509800B75175 /* CardProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56177061EA6509800B75175 /* CardProductViewController.swift */; };
@@ -158,6 +161,8 @@
 		6DF7248E1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContinueShoppingTarget.swift; path = Protocols/ContinueShoppingTarget.swift; sourceTree = "<group>"; };
 		6DF724901E1D2EAA00D6BA15 /* PaymentFinishedTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentFinishedTarget.swift; path = Protocols/PaymentFinishedTarget.swift; sourceTree = "<group>"; };
 		703B2C979786638FDE02611B /* Pods_IngenicoConnectExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IngenicoConnectExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7240260D262ECD5300AC8673 /* StartPaymentParsedJsonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartPaymentParsedJsonData.swift; path = Models/StartPaymentParsedJsonData.swift; sourceTree = "<group>"; };
+		72402619262ED3B800AC8673 /* JsonDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JsonDialogViewController.swift; path = ViewControllers/JsonDialogViewController.swift; sourceTree = "<group>"; };
 		732012E41EF2805700A736A5 /* FormRowImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowImage.swift; path = Models/Tables/FormRowImage.swift; sourceTree = "<group>"; };
 		732012E61EF2806F00A736A5 /* FormRowQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowQRCode.swift; path = Models/Tables/FormRowQRCode.swift; sourceTree = "<group>"; };
 		732012E81EF285F300A736A5 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageTableViewCell.swift; path = Views/TableViewCells/ImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -198,6 +203,7 @@
 		B4DC6A0E1E1E6E8800D9A8BA /* TableSectionConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableSectionConverter.swift; path = Converters/Tables/TableSectionConverter.swift; sourceTree = "<group>"; };
 		D79336923AC8E6EAE04F182B /* Pods-IngenicoConnectExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		E2409D13D797F30393861742 /* Pods-IngenicoConnectExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample.debug.xcconfig"; sourceTree = "<group>"; };
+		E9BB3C55E589D8266BDBE4C8 /* ParseJsonTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseJsonTarget.swift; path = Protocols/ParseJsonTarget.swift; sourceTree = "<group>"; };
 		F519A9D21DBF5F2100E61034 /* IngenicoConnectExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IngenicoConnectExample.entitlements; sourceTree = "<group>"; };
 		F52E88921E9BDE8300546DC2 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = Views/Buttons/Button.swift; sourceTree = "<group>"; };
 		F553D8B71EB09CC00075622C /* BoletoProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoletoProductViewController.swift; path = ViewControllers/BoletoProductViewController.swift; sourceTree = "<group>"; };
@@ -359,6 +365,7 @@
 			children = (
 				B4DC6A081E1E6E1500D9A8BA /* StartViewController.swift */,
 				B4DC6A061E1E6E1500D9A8BA /* PaymentProductsViewController.swift */,
+				72402619262ED3B800AC8673 /* JsonDialogViewController.swift */,
 				B4DC6A071E1E6E1500D9A8BA /* PaymentProductViewController.swift */,
 				6DEAB9641E2798E800C36908 /* EndViewController.swift */,
 				F56177061EA6509800B75175 /* CardProductViewController.swift */,
@@ -427,6 +434,7 @@
 				6DF7248A1E1D2E4500D6BA15 /* PaymentRequestTarget.swift */,
 				6DF7248E1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift */,
 				6DF724901E1D2EAA00D6BA15 /* PaymentFinishedTarget.swift */,
+				E9BB3C55E589D8266BDBE4C8 /* ParseJsonTarget.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -497,6 +505,7 @@
 			children = (
 				A3FE1F921962A099005FF3FA /* Tables */,
 				6DF724841E1D0D7700D6BA15 /* PaymentProductInputData.swift */,
+				7240260D262ECD5300AC8673 /* StartPaymentParsedJsonData.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -815,6 +824,7 @@
 			files = (
 				6DF7246B1E1CF80500D6BA15 /* TooltipTableViewCell.swift in Sources */,
 				6DF7247F1E1D0A3700D6BA15 /* COBrandsExplanationTableViewCell.swift in Sources */,
+				7240261A262ED3B900AC8673 /* JsonDialogViewController.swift in Sources */,
 				6D7E216D1E1BF814007BA84B /* ViewType.swift in Sources */,
 				6D9A63861E1BFD39001799FE /* PickerView.swift in Sources */,
 				6D9A63AA1E1C0E3A001799FE /* FormRowCurrency.swift in Sources */,
@@ -863,6 +873,7 @@
 				73B656D41F0F83BD00BBAF8D /* ArvatoProductViewController.swift in Sources */,
 				81BCAD281F06B38B000B0BCF /* SeparatorView.swift in Sources */,
 				73E9DC201EFBC01000969D43 /* StatusView.swift in Sources */,
+				7240260E262ECD5300AC8673 /* StartPaymentParsedJsonData.swift in Sources */,
 				81BCAD2C1F06BBB8000B0BCF /* SeparatorTableViewCell.swift in Sources */,
 				F553D8B81EB09CC00075622C /* BoletoProductViewController.swift in Sources */,
 				6D9A63961E1C0647001799FE /* FractionalTextField.swift in Sources */,
@@ -886,6 +897,7 @@
 				6D7E21711E1BF8CF007BA84B /* FormRow.swift in Sources */,
 				6D7E216B1E1BF7DC007BA84B /* PaymentType.swift in Sources */,
 				73E9AB961F9DC80000AC1893 /* DatePickerTableViewCell.swift in Sources */,
+				E9BB319A152C66027E12877F /* ParseJsonTarget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

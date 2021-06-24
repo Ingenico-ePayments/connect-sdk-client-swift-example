@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import IngenicoConnectKit
 
 protocol PaymentFinishedTarget {
-    func didFinishPayment()
+    func didFinishPayment(_ preparedPaymentRequest: PreparedPaymentRequest)
 }

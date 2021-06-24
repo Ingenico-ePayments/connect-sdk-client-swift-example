@@ -11,6 +11,7 @@ import PassKit
 import UIKit
 import SVProgressHUD
 import IngenicoConnectKit
+import IngenicoConnectExample
 
 // Enable subscripting userdefaults
 extension UserDefaults {
@@ -24,10 +25,11 @@ extension UserDefaults {
     }
 }
 
-public class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFinishedTarget {
-    
+public class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFinishedTarget, ParseJsonTarget {
+
     var containerView: UIView!
     var scrollView: UIScrollView!
+    var parsableFieldsContainer: UIView!
     
     var explanation: UITextView!
     var clientSessionIdLabel: Label!
@@ -39,6 +41,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
 
     var customerIdLabel: Label!
     var customerIdTextField: TextField!
+    var jsonButton: UIButton!
     var merchantIdLabel: Label!
     var merchantIdTextField: TextField!
     var amountLabel: Label!
@@ -62,6 +65,8 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     
     var countryCodes = [CountryCode]()
     var currencyCodes = [CurrencyCode]()
+    
+    let jsonDialogViewController = JsonDialogViewController()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +107,12 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         explanation.isScrollEnabled = false
         containerView.addSubview(explanation)
         
+        parsableFieldsContainer = UIView()
+        parsableFieldsContainer.translatesAutoresizingMaskIntoConstraints = false
+        parsableFieldsContainer.layer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
+        parsableFieldsContainer.layer.cornerRadius = 10
+        containerView.addSubview(parsableFieldsContainer)
+        
         clientSessionIdLabel = viewFactory.labelWithType(type: .gcLabelType)
         clientSessionIdLabel.text = NSLocalizedString("ClientSessionIdentifier", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Client session identifier")
         clientSessionIdLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -113,9 +124,10 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         } else {
             clientSessionIdTextField.text = ""
         }
+        clientSessionIdTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         
-        containerView.addSubview(clientSessionIdLabel)
-        containerView.addSubview(clientSessionIdTextField)
+        parsableFieldsContainer.addSubview(clientSessionIdLabel)
+        parsableFieldsContainer.addSubview(clientSessionIdTextField)
         
         customerIdLabel = viewFactory.labelWithType(type: .gcLabelType)
         customerIdLabel.text = NSLocalizedString("CustomerIdentifier", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Customer identifier")
@@ -128,8 +140,17 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         } else {
             customerIdTextField.text = ""
         }
-        containerView.addSubview(customerIdLabel)
-        containerView.addSubview(customerIdTextField)
+        customerIdTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        parsableFieldsContainer.addSubview(customerIdLabel)
+        parsableFieldsContainer.addSubview(customerIdTextField)
+        
+        jsonButton = viewFactory.buttonWithType(type: .secondary)
+        jsonButton.translatesAutoresizingMaskIntoConstraints = false
+        jsonButton.backgroundColor = UIColor.lightGray
+        jsonButton.setTitleColor(UIColor.white, for: .normal)
+        jsonButton.setTitle(NSLocalizedString("Paste", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Paste JSON button"), for: .normal)
+        jsonButton.addTarget(self, action: #selector(StartViewController.presentJsonDialog), for: .touchUpInside)
+        parsableFieldsContainer.addSubview(jsonButton)
         
         merchantIdLabel = viewFactory.labelWithType(type: .gcLabelType)
         merchantIdLabel.text = NSLocalizedString("MerchantIdentifier", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Merchant identifier")
@@ -158,8 +179,9 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         } else {
             baseURLTextField.text = ""
         }
-        containerView.addSubview(baseURLLabel)
-        containerView.addSubview(baseURLTextField)
+        baseURLTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        parsableFieldsContainer.addSubview(baseURLLabel)
+        parsableFieldsContainer.addSubview(baseURLTextField)
 
         assetsBaseURLLabel = viewFactory.labelWithType(type: .gcLabelType)
         assetsBaseURLLabel.text = NSLocalizedString("AssetsBaseURL", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Region")
@@ -174,8 +196,9 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         } else {
             assetsBaseURLTextField.text = ""
         }
-        containerView.addSubview(assetsBaseURLLabel)
-        containerView.addSubview(assetsBaseURLTextField)
+        assetsBaseURLTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        parsableFieldsContainer.addSubview(assetsBaseURLLabel)
+        parsableFieldsContainer.addSubview(assetsBaseURLTextField)
         
         amountLabel = viewFactory.labelWithType(type: .gcLabelType)
         amountLabel.text = NSLocalizedString("AmountInCents", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Amount in cents")
@@ -201,7 +224,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         if let row = UserDefaults.standard.value(forKey: AppConstants.kCountryCode) as? Int {
             countryCodePicker.selectRow(row, inComponent: 0, animated: false)
         } else {
-            countryCodePicker.selectRow(165, inComponent: 0, animated: false)
+            countryCodePicker.selectRow(166, inComponent: 0, animated: false)
         }
         containerView.addSubview(countryCodeLabel)
         containerView.addSubview(countryCodePicker)
@@ -250,6 +273,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             "clientSessionIdTextField": clientSessionIdTextField,
             "customerIdLabel": customerIdLabel,
             "customerIdTextField": customerIdTextField,
+            "jsonButton": jsonButton,
             "merchantIdLabel": merchantIdLabel,
             "merchantIdTextField": merchantIdTextField,
             "baseURLLabel": baseURLLabel,
@@ -269,35 +293,38 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             "shouldGroupProductsSwitch": shouldGroupProductsSwitch,
             "superContainerView": superContainerView,
             "containerView": containerView,
+            "parsableFields": parsableFieldsContainer,
             "scrollView": scrollView
         ]
         let metrics = ["fieldSeparator": "24", "groupSeparator": "72"]
         
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[clientSessionIdLabel]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[clientSessionIdTextField]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[customerIdLabel]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[customerIdTextField]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[jsonButton(>=120)]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[baseURLLabel]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[baseURLTextField]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[assetsBaseURLLabel]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[assetsBaseURLTextField]-|", options: [], metrics: nil, views: views))
+        parsableFieldsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[clientSessionIdLabel]-[clientSessionIdTextField]-(fieldSeparator)-[customerIdLabel]-[customerIdTextField]-(fieldSeparator)-[baseURLLabel]-[baseURLTextField]-(fieldSeparator)-[assetsBaseURLLabel]-[assetsBaseURLTextField]-(fieldSeparator)-[jsonButton]-|", options: [], metrics: metrics, views: views))
+        
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[explanation]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[clientSessionIdLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[clientSessionIdTextField]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[customerIdLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[customerIdTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdLabel]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[parsableFields]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[merchantIdTextField]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[baseURLLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[baseURLTextField]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[assetsBaseURLLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[assetsBaseURLTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[amountLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[amountTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodeLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodePicker]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodeLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodePicker]-|", options: [], metrics: nil, views: views))
-        //containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[isRecurringLabel]-[isRecurringSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
-        //containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|--|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[shouldGroupProductsSwitchLabel]-[shouldGroupProductsSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[payButton]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[clientSessionIdLabel]-[clientSessionIdTextField]-(fieldSeparator)-[customerIdLabel]-[customerIdTextField]-(fieldSeparator)-[baseURLLabel]-[baseURLTextField]-(fieldSeparator)-[assetsBaseURLLabel]-[assetsBaseURLTextField]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodePicker]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodePicker]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[shouldGroupProductsSwitch]-(fieldSeparator)-[payButton]-|", options: [], metrics: metrics, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[parsableFields]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodePicker]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodePicker]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[shouldGroupProductsSwitch]-(fieldSeparator)-[payButton]-|", options: [], metrics: metrics, views: views))
         self.view.addConstraints([NSLayoutConstraint(item:superContainerView, attribute:.leading, relatedBy:.equal, toItem:self.view, attribute:.leading, multiplier:1, constant:0), NSLayoutConstraint(item:superContainerView, attribute:.trailing, relatedBy:.equal, toItem:self.view, attribute:.trailing, multiplier:1, constant:0)]);
 
         self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[superContainerView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
@@ -306,7 +333,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
     
         superContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
-        superContainerView.addConstraint(NSLayoutConstraint(item: self.containerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320))
+        superContainerView.addConstraint(NSLayoutConstraint(item: containerView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320))
         self.view.addConstraint(NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0))
 
 
@@ -353,6 +380,15 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
 
     }
     // MARK: Button actions
+    
+    @objc func presentJsonDialog() {
+        jsonDialogViewController.callback = self
+        self.present(jsonDialogViewController, animated: true)
+    }
+    
+    private func fillJsonData(json data: StartPaymentParsedJsonData) {
+        
+    }
     
     @objc func buyButtonTapped(_ sender: UIButton) {
         if payButton == sender, let newValue = Int(amountTextField.text!) {
@@ -456,7 +492,15 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             SVProgressHUD.dismiss()
         }
     }
-    
+
+    // MARK: Parsed Session JSON to object target
+    func success(sessionData data: StartPaymentParsedJsonData) {
+        // Do something
+        baseURLTextField.text = data.baseUrl
+        assetsBaseURLTextField.text = data.assetUrl
+        clientSessionIdTextField.text = data.clientId
+        customerIdTextField.text = data.customerId
+    }
     
     // MARK: Continue shopping target
     
@@ -466,10 +510,11 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     
     // MARK: Payment finished target
     
-    func didFinishPayment() {
+    func didFinishPayment(_ preparedPaymentRequest: PreparedPaymentRequest) {
         let end = EndViewController()
         end.target = self
         end.viewFactory = viewFactory
+        end.preparedPaymentRequest = preparedPaymentRequest
         navigationController!.pushViewController(end, animated: true)
     }
     

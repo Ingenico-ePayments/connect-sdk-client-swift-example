@@ -37,7 +37,7 @@ class TableSectionConverter {
         let section = PaymentProductsTableSection()
         
         for paymentItem in paymentItems.paymentItems.sorted(by: { (a, b) -> Bool in
-            return a.displayHints.displayOrder ?? Int.max < b.displayHints.displayOrder ?? Int.max;
+            return a.displayHints.displayOrder ?? Int.max < b.displayHints.displayOrder ?? Int.max
         }) {
             section.type = .gcPaymentProductType
             

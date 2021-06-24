@@ -385,7 +385,7 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             // that it can be sent to the Ingenico ePayments platform via your server.
             //
             // ***************************************************************************
-            self.paymentFinishedTarget?.didFinishPayment()
+            self.paymentFinishedTarget?.didFinishPayment(preparedPaymentRequest)
             success?()
         }, failure: { error in
             SVProgressHUD.dismiss()
