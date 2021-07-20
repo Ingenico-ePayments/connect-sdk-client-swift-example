@@ -477,12 +477,11 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         return false;
     }
     
-    func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath) {
+    func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath, trimSet: CharacterSet = CharacterSet(charactersIn: " /-_")) {
         guard let row = formRows[indexPath.row] as? FormRowTextField else {
             return
         }
-        
-        let trimSet = CharacterSet(charactersIn: " /-_")
+
         let formattedString = inputData.maskedValue(forField: row.paymentProductField.identifier, cursorPosition: &cursorPosition).trimmingCharacters(in: trimSet)
         row.field.text = formattedString
         textField.text = formattedString

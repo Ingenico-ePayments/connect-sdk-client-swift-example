@@ -240,7 +240,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         if let row = UserDefaults.standard.value(forKey: AppConstants.kCurrency) as? Int {
             currencyCodePicker.selectRow(row, inComponent: 0, animated: false)
         } else {
-            currencyCodePicker.selectRow(42, inComponent: 0, animated: false)
+            currencyCodePicker.selectRow(43, inComponent: 0, animated: false)
         }
         containerView.addSubview(currencyCodeLabel)
         containerView.addSubview(currencyCodePicker)

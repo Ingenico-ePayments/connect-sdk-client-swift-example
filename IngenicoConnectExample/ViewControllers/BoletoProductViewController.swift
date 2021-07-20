@@ -43,7 +43,7 @@ class BoletoProductViewController: PaymentProductViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath) {
+    override func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath, trimSet: CharacterSet) {
         super.formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath)
         
         guard let row = formRows[indexPath.row] as? FormRowTextField else {

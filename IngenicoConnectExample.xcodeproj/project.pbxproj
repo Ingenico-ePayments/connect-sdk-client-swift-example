@@ -943,7 +943,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = IngenicoConnectExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.globalcollect.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = IngenicoConnectExampleTests;
 				PROVISIONING_PROFILE = "";
@@ -969,7 +969,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = IngenicoConnectExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.globalcollect.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = IngenicoConnectExampleTests;
 				PROVISIONING_PROFILE = "";
@@ -1012,7 +1012,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "A0A13123-5845-42BE-A813-90ED61E2B2CF";
 				SDKROOT = iphoneos;
@@ -1047,7 +1047,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PROVISIONING_PROFILE = "A0A13123-5845-42BE-A813-90ED61E2B2CF";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -1076,7 +1076,7 @@
 					"\"${SRCROOT}\"",
 				);
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.ingenico.connect.SwiftExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;
@@ -1109,7 +1109,7 @@
 					"\"${SRCROOT}\"",
 				);
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.ingenico.connect.SwiftExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;

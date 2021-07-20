@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.9.1)
   - CryptoSwift (1.0.0)
-  - IngenicoConnectKit (4.6.0):
+  - IngenicoConnectKit (5.0.0):
     - Alamofire (~> 4.8)
     - CryptoSwift (= 1.0.0)
   - SVProgressHUD (2.2.5)
@@ -22,9 +22,9 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  IngenicoConnectKit: d7880a199aed02fa9c03d207b27ecfc5a9f0c67e
+  IngenicoConnectKit: 1b879cf65275bbe293a65925916b2f11571f6296
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 17b4abbebe0e27f54ddb7e6e98051d491fe8299a
+PODFILE CHECKSUM: cd92ad9a02524447f9be705e37b46baa3f172de1
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0

@@ -183,11 +183,15 @@ class CardProductViewController: PaymentProductViewController {
         }
         super.updateFormRows()
     }
-    override func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath) {
-        super.formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath)
-        
+    override func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath, trimSet: CharacterSet) {
         guard let row = formRows[indexPath.row] as? FormRowTextField else {
             return
+        }
+
+        if row.paymentProductField.identifier == "cardholderName" {
+            super.formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath, trimSet: CharacterSet(charactersIn: "?`~!@#$%^&*()_+=[]{}|\\;:\"<>£¥•,€"))
+        } else {
+            super.formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath)
         }
         
         if row.paymentProductField.identifier == "cardNumber" {
