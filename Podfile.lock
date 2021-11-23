@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.9.1)
   - CryptoSwift (1.0.0)
-  - IngenicoConnectKit (5.0.0):
+  - IngenicoConnectKit (5.2.0):
     - Alamofire (~> 4.8)
     - CryptoSwift (= 1.0.0)
   - SVProgressHUD (2.2.5)

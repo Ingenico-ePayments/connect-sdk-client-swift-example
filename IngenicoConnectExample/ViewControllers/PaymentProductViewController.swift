@@ -106,7 +106,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let amountAsNumber = Double(amount) / 100.0
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        numberFormatter.currencyCode = context.amountOfMoney.currencyCode.rawValue
+        numberFormatter.currencyCode = context.amountOfMoney.currencyCodeString
         let amountAsString = numberFormatter.string(from: NSNumber(value: amountAsNumber))
         header.setAmount(amount: amountAsString!)
         header.setSecurePayment(securePayment: NSLocalizedString("gc.app.general.securePaymentText", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Text indicating that a secure payment method is used."))

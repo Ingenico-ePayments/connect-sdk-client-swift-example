@@ -309,10 +309,10 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
            !acquirerCountry.isEmpty{
             paymentRequest.countryCode = acquirerCountry
         } else {
-            paymentRequest.countryCode = context.countryCode.rawValue
+            paymentRequest.countryCode = context.countryCodeString
         }
 
-        paymentRequest.currencyCode = context.amountOfMoney.currencyCode.rawValue
+        paymentRequest.currencyCode = context.amountOfMoney.currencyCodeString
         paymentRequest.supportedNetworks = paymentProductNetworks.paymentProductNetworks
         paymentRequest.paymentSummaryItems = summaryItems
         paymentRequest.merchantCapabilities = [.capability3DS, .capabilityDebit, .capabilityCredit]

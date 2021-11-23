@@ -47,9 +47,9 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     var amountLabel: Label!
     var amountTextField: TextField!
     var countryCodeLabel: Label!
-    var countryCodePicker: PickerView!
+    var countryCodeTextField: TextField!
     var currencyCodeLabel: Label!
-    var currencyCodePicker: PickerView!
+    var currencyCodeTextField: TextField!
     var isRecurringLabel: Label!
     var isRecurringSwitch: Switch!
     var payButton: UIButton!
@@ -63,9 +63,6 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
     var session: Session?
     var context: PaymentContext?
     
-    var countryCodes = [CountryCode]()
-    var currencyCodes = [CurrencyCode]()
-    
     let jsonDialogViewController = JsonDialogViewController()
     
     override public func viewDidLoad() {
@@ -77,11 +74,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         }
         
         viewFactory = ViewFactory()
-        
-        countryCodes = CountryCode.allValues.sorted { $0.rawValue.localizedCaseInsensitiveCompare($1.rawValue) == .orderedAscending }
-        currencyCodes = CurrencyCode.allValues.sorted { $0.rawValue.localizedCaseInsensitiveCompare($1.rawValue) == .orderedAscending }
-        
-        
+
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.delaysContentTouches = false
         scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -216,34 +209,34 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         countryCodeLabel = viewFactory.labelWithType(type: .gcLabelType)
         countryCodeLabel.text = NSLocalizedString("CountryCode", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Country code")
         countryCodeLabel.translatesAutoresizingMaskIntoConstraints = false
-        countryCodePicker = viewFactory.pickerViewWithType(type: .gcPickerViewType)
-        countryCodePicker.translatesAutoresizingMaskIntoConstraints = false
-        countryCodePicker.content = countryCodes.map { $0.rawValue }
-        countryCodePicker.dataSource = self
-        countryCodePicker.delegate = self
-        if let row = UserDefaults.standard.value(forKey: AppConstants.kCountryCode) as? Int {
-            countryCodePicker.selectRow(row, inComponent: 0, animated: false)
+        
+        
+        countryCodeTextField = viewFactory.getTextField()
+        countryCodeTextField.translatesAutoresizingMaskIntoConstraints = false
+        countryCodeTextField.autocapitalizationType = .none
+        if let text = UserDefaults.standard.value(forKey: AppConstants.kCountryCode) as? String {
+            countryCodeTextField.text = text
         } else {
-            countryCodePicker.selectRow(166, inComponent: 0, animated: false)
+            countryCodeTextField.text = ""
         }
         containerView.addSubview(countryCodeLabel)
-        containerView.addSubview(countryCodePicker)
+        containerView.addSubview(countryCodeTextField)
         
         currencyCodeLabel = viewFactory.labelWithType(type: .gcLabelType)
         currencyCodeLabel.text = NSLocalizedString("CurrencyCode", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Currency code")
         currencyCodeLabel.translatesAutoresizingMaskIntoConstraints = false
-        currencyCodePicker = viewFactory.pickerViewWithType(type: .gcPickerViewType)
-        currencyCodePicker.translatesAutoresizingMaskIntoConstraints = false
-        currencyCodePicker.content = currencyCodes.map { $0.rawValue }
-        currencyCodePicker.dataSource = self
-        currencyCodePicker.delegate = self
-        if let row = UserDefaults.standard.value(forKey: AppConstants.kCurrency) as? Int {
-            currencyCodePicker.selectRow(row, inComponent: 0, animated: false)
+    
+        
+        currencyCodeTextField = viewFactory.getTextField()
+        currencyCodeTextField.translatesAutoresizingMaskIntoConstraints = false
+        currencyCodeTextField.autocapitalizationType = .none
+        if let text = UserDefaults.standard.value(forKey: AppConstants.kCurrency) as? String {
+            currencyCodeTextField.text = text
         } else {
-            currencyCodePicker.selectRow(43, inComponent: 0, animated: false)
+            currencyCodeTextField.text = ""
         }
         containerView.addSubview(currencyCodeLabel)
-        containerView.addSubview(currencyCodePicker)
+        containerView.addSubview(currencyCodeTextField)
         
         isRecurringLabel = viewFactory.labelWithType(type: .gcLabelType)
         isRecurringLabel.text = NSLocalizedString("RecurringPayment", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: "Payment is recurring")
@@ -283,9 +276,9 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             "amountLabel": amountLabel,
             "amountTextField": amountTextField,
             "countryCodeLabel": countryCodeLabel,
-            "countryCodePicker": countryCodePicker,
+            "countryCodeTextField": countryCodeTextField,
             "currencyCodeLabel": currencyCodeLabel,
-            "currencyCodePicker": currencyCodePicker,
+            "currencyCodeTextField": currencyCodeTextField,
             "isRecurringLabel": isRecurringLabel,
             "isRecurringSwitch": isRecurringSwitch,
             "payButton": payButton,
@@ -318,13 +311,13 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[amountLabel]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[amountTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodeLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodePicker]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[countryCodeTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodeLabel]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodePicker]-|", options: [], metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[currencyCodeTextField]-|", options: [], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[isRecurringLabel]-[isRecurringSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[shouldGroupProductsSwitchLabel]-[shouldGroupProductsSwitch]-|", options: [.alignAllCenterY], metrics: nil, views: views))
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-[payButton]-|", options: [], metrics: nil, views: views))
-        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[parsableFields]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodePicker]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodePicker]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[shouldGroupProductsSwitch]-(fieldSeparator)-[payButton]-|", options: [], metrics: metrics, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[parsableFields]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodeTextField]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodeTextField]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[shouldGroupProductsSwitch]-(fieldSeparator)-[payButton]-|", options: [], metrics: metrics, views: views))
         self.view.addConstraints([NSLayoutConstraint(item:superContainerView, attribute:.leading, relatedBy:.equal, toItem:self.view, attribute:.leading, multiplier:1, constant:0), NSLayoutConstraint(item:superContainerView, attribute:.trailing, relatedBy:.equal, toItem:self.view, attribute:.trailing, multiplier:1, constant:0)]);
 
         self.scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[superContainerView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views))
@@ -443,10 +436,10 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         
         session = Session(clientSessionId: clientSessionId!, customerId: customerId!, baseURL: baseURL ?? "", assetBaseURL: assetBaseURL ?? "", appIdentifier: AppConstants.kApplicationIdentifier)
 
-        let countryCode = countryCodes[countryCodePicker.selectedRow(inComponent: 0)]
-        UserDefaults.standard.set(countryCodePicker.selectedRow(inComponent: 0), forKey: AppConstants.kCountryCode)
-        let currencyCode = currencyCodes[currencyCodePicker.selectedRow(inComponent: 0)]
-        UserDefaults.standard.set(currencyCodePicker.selectedRow(inComponent: 0), forKey: AppConstants.kCurrency)
+        let countryCode = countryCodeTextField.text
+        UserDefaults.standard[AppConstants.kCountryCode] = countryCode
+        let currencyCode = currencyCodeTextField.text
+        UserDefaults.standard[AppConstants.kCurrency] = currencyCode
         let isRecurring = isRecurringSwitch.isOn
         
         // ***************************************************************************
@@ -461,8 +454,8 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         //
         // ***************************************************************************
         do {
-            let amountOfMoney = try PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
-            context = try PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode)
+            let amountOfMoney = try PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode!)
+            context = try PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode!)
             session!.paymentItems(for: context!, groupPaymentProducts: self.shouldGroupProductsSwitch.isOn, success: {(_ paymentItems: PaymentItems) -> Void in
                 SVProgressHUD.dismiss()
                 self.showPaymentProductSelection(paymentItems)
@@ -487,7 +480,7 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
             let paymentProductSelection = PaymentProductsViewController(style: .grouped, viewFactory: viewFactory, paymentItems: paymentItems)
             paymentProductSelection.target = paymentProductsViewControllerTarget
             paymentProductSelection.amount = amountValue
-            paymentProductSelection.currencyCode = context.amountOfMoney.currencyCode.rawValue
+            paymentProductSelection.currencyCode = context.amountOfMoney.currencyCodeString
             navigationController!.pushViewController(paymentProductSelection, animated: true)
             SVProgressHUD.dismiss()
         }
@@ -518,25 +511,4 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         navigationController!.pushViewController(end, animated: true)
     }
     
-}
-
-
-extension StartViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
-    // MARK: Picker view delegate
-    
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        let picker = pickerView as! PickerView
-        return picker.content.count
-    }
-    
-    public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let picker = pickerView as! PickerView
-        let item = picker.content[row]
-        let string = NSAttributedString(string: item)
-        return string
-    }
 }

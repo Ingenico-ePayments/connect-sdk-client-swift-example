@@ -457,7 +457,7 @@ class ArvatoProductViewController: PaymentProductViewController {
 
         let currencyFormatter = NumberFormatter()
         currencyFormatter.numberStyle = .currency
-        currencyFormatter.currencyCode = context.amountOfMoney.currencyCode.rawValue
+        currencyFormatter.currencyCode = context.amountOfMoney.currencyCodeString
         for m in row.items {
             guard let amount = m.displayElements.first(where: { $0.id == "installmentAmount" })?.value else {
                 continue
