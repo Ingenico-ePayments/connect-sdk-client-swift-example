@@ -27,8 +27,9 @@ class PaymentProductInputData {
         let keys = Array(fieldValues.keys)
         
         for key: String in keys {
-            let value = fieldValues[key]
-            paymentRequest.setValue(forField: key, value: value!)
+            if let value = fieldValues[key] {
+                paymentRequest.setValue(forField: key, value: value)
+            }
         }
         
         return paymentRequest
@@ -39,13 +40,11 @@ class PaymentProductInputData {
     }
     
     func value(forField paymentProductFieldId: String) -> String {
-        var value = fieldValues[paymentProductFieldId]
-        
-        if value == nil {
-            value = ""
+        guard let value = fieldValues[paymentProductFieldId] else {
+            return ""
         }
         
-        return value!
+        return value
     }
     
     func maskedValue(forField paymentProductFieldId: String) -> String {
@@ -55,25 +54,20 @@ class PaymentProductInputData {
     
     func maskedValue(forField paymentProductFieldId: String, cursorPosition: inout Int) -> String {
         let value = self.value(forField: paymentProductFieldId)
-        let maskValue = mask(forField: paymentProductFieldId)
-        if maskValue == nil {
+        guard let maskValue = mask(forField: paymentProductFieldId) else {
             return value
         }
-        else {
-            return formatter.formatString(string: value, mask: maskValue!, cursorPosition: &cursorPosition)
-        }
+        
+        return formatter.formatString(string: value, mask: maskValue, cursorPosition: &cursorPosition)
     }
     
     func unmaskedValue(forField paymentProductFieldId: String) -> String {
         let value = self.value(forField: paymentProductFieldId)
-        let maskValue = mask(forField: paymentProductFieldId)
-        if maskValue == nil {
+        guard let maskValue = mask(forField: paymentProductFieldId) else {
             return value
         }
-        else {
-            let unformattedString = formatter.unformatString(string: value , mask: maskValue!)
-            return unformattedString
-        }
+       
+        return formatter.unformatString(string: value , mask: maskValue)
     }
     
     func fieldIsPartOfAccountOnFile(paymentProductFieldId: String) -> Bool {

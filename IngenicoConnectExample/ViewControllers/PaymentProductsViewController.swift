@@ -57,12 +57,15 @@ class PaymentProductsViewController: UITableViewController {
         header = viewFactory.tableHeaderViewWithType(type: .gcSummaryTableHeaderViewType, frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 70))
         let totalLabel = NSLocalizedString("gc.app.general.shoppingCart.total", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Description of the amount header.")
         header.setSummary(summary: "\(totalLabel):")
-        let amountAsNumber = (amount / 100) as NSNumber
+        let amountAsNumber = (Double(amount) / Double(100)) as NSNumber
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.currencyCode = currencyCode
-        let amountAsString = numberFormatter.string(from: amountAsNumber)!
-        header.setAmount(amount: amountAsString)
+        if let amountAsString = numberFormatter.string(from: amountAsNumber) {
+            header.setAmount(amount: amountAsString)
+        } else {
+            header.setAmount(amount: "Error retrieving total amount")
+        }
         header.setSecurePayment(securePayment: NSLocalizedString("gc.app.general.securePaymentText", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Text indicating that a secure payment method is used."))
         tableView.tableHeaderView = header
     }

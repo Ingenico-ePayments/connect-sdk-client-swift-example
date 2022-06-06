@@ -103,12 +103,12 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         header = viewFactory.tableHeaderViewWithType(type: .gcSummaryTableHeaderViewType, frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 80))
         header.setSummary(summary: "\(NSLocalizedString("gc.app.general.shoppingCart.total", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Description of the amount header.")):")
         
-        let amountAsNumber = Double(amount) / 100.0
+        let amountAsNumber = (Double(amount) / Double(100)) as NSNumber
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.currencyCode = context.amountOfMoney.currencyCodeString
-        let amountAsString = numberFormatter.string(from: NSNumber(value: amountAsNumber))
-        header.setAmount(amount: amountAsString!)
+        let amountAsString = numberFormatter.string(from: amountAsNumber) ?? "NaN"
+        header.setAmount(amount: amountAsString)
         header.setSecurePayment(securePayment: NSLocalizedString("gc.app.general.securePaymentText", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "Text indicating that a secure payment method is used."))
         tableView.tableHeaderView = header
     }
@@ -262,8 +262,14 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         else {
             NSException(name: NSExceptionName(rawValue: "Invalid form row class"), reason: "Form row class is invalid", userInfo: nil).raise()
         }
-        cell?.clipsToBounds = true
-        return cell!
+        
+        guard let cell = cell else {
+            let emptyCell = TableViewCell()
+            return emptyCell
+        }
+        
+        cell.clipsToBounds = true
+        return cell
     }
     func updateTextFieldCell(cell: TextFieldTableViewCell, row: FormRowTextField) {
         // Add error messages for cells
@@ -400,12 +406,13 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
             return height
         } else if row is FormRowButton {
             return 52
-        } else if let row = row as? FormRowTextField, row.paymentProductField.errors.count > 0 {
+        } else if let row = row as? FormRowTextField,
+                    let error = row.paymentProductField.errors.first {
             var width = tableView.bounds.width - 20
             if row.showInfoButton {
                 width -= 48
             }
-            let str = NSAttributedString(string: FormRowsConverter.errorMessage(for: row.paymentProductField.errors.first!, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType))
+            let str = NSAttributedString(string: FormRowsConverter.errorMessage(for: error, withCurrency: row.paymentProductField.displayHints.formElement.type == .currencyType))
             
             return 44 + str.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil).height
         } else if let row = row as? FormRowSwitch {
@@ -459,12 +466,13 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     func standardTextField(_ textField: TextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let cell = textField.superview as? UITableViewCell,
               let indexPath = tableView.indexPath(for: cell),
-              let row = formRows[indexPath.row] as? FormRowTextField else
+              let row = formRows[indexPath.row] as? FormRowTextField,
+              let text = textField.text else
         {
             return false
         }
         
-        let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        let newString = (text as NSString).replacingCharacters(in: range, with: string)
         inputData.setValue(value: newString, forField: row.paymentProductField.identifier)
         var field = row.field
         field.text = inputData.maskedValue(forField: row.paymentProductField.identifier)
@@ -487,7 +495,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         textField.text = formattedString
         cursorPosition = min(cursorPosition, formattedString.count)
         
-        let cursorPositionInTextField = textField.position(from: textField.beginningOfDocument, offset: cursorPosition)!
+        guard let cursorPositionInTextField = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) else {
+            return
+        }
         textField.selectedTextRange = textField.textRange(from: cursorPositionInTextField, to: cursorPositionInTextField)
         
     }
@@ -495,12 +505,13 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     func integerTextField(_ textField: IntegerTextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let cell = textField.superview as? CurrencyTableViewCell,
             let indexPath = tableView.indexPath(for: cell),
-            let row = formRows[indexPath.row] as? FormRowCurrency else
+            let row = formRows[indexPath.row] as? FormRowCurrency,
+            let text = textField.text else
         {
             return false
         }
-
-        var integerString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        
+        let integerString = (text as NSString).replacingCharacters(in: range, with: string)
         
         if integerString.count > 16 {
             return false
@@ -523,12 +534,12 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
     func fractionalTextField(_ textField: FractionalTextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let cell = textField.superview as? CurrencyTableViewCell,
             let indexPath = tableView.indexPath(for: cell),
-            let row = formRows[indexPath.row] as? FormRowCurrency else
+            let row = formRows[indexPath.row] as? FormRowCurrency,
+            let text = textField.text else
         {
             return false
         }
-
-        var fractionalString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        var fractionalString = (text as NSString).replacingCharacters(in: range, with: string)
         
         if fractionalString.count > 2 {
             let end = fractionalString.endIndex
@@ -672,16 +683,18 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        let row = formRows[indexPath.row] as? FormRowSwitch
-        let field = row?.field
+        guard let row = formRows[indexPath.row] as? FormRowSwitch else {
+            return
+        }
+        let field = row.field
         
         if let field = field {
             inputData.setValue(value: sender.isOn ? "true" : "false", forField: field.identifier)
-            row?.isOn = sender.isOn
+            row.isOn = sender.isOn
             if validation {
                 validateData()
             }
-            updateSwitchCell(cell, row: row!)
+            updateSwitchCell(cell, row: row)
         } else {
             inputData.tokenize = sender.isOn
         }

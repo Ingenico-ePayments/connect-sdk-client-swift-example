@@ -438,7 +438,12 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             }
 
             let request = PaymentRequest(paymentProduct: applePayPaymentProduct)
-            request.setValue(forField: "encryptedPaymentData", value: String(data: payment.token.paymentData, encoding: String.Encoding.utf8)!)
+            
+            guard let paymentDataString = String(data: payment.token.paymentData, encoding: String.Encoding.utf8) else {
+                completion(.failure)
+                return
+            }
+            request.setValue(forField: "encryptedPaymentData", value: paymentDataString)
             request.setValue(forField: "transactionId" , value: payment.token.transactionIdentifier)
 
             self.didSubmitPaymentRequest(request, success: {() -> Void in

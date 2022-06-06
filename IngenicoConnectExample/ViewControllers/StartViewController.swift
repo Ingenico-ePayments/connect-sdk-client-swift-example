@@ -395,17 +395,26 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         let status = NSLocalizedString("gc.app.general.loading.body", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "",comment: "")
         SVProgressHUD.show(withStatus: status)
         
-        let clientSessionId = clientSessionIdTextField.text
+        guard let clientSessionId = clientSessionIdTextField.text,
+              let customerId = customerIdTextField.text else {
+            let alert = UIAlertController(title: NSLocalizedString("FieldErrorTitle", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          message: NSLocalizedString("FieldErrorClientSessionIdCustomerIdExplanation", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            SVProgressHUD.dismiss()
+            return
+        }
+        
         UserDefaults.standard[AppConstants.kClientSessionId] = clientSessionId
-        let customerId = customerIdTextField.text
         UserDefaults.standard[AppConstants.kCustomerId] = customerId
         if let merchantId = merchantIdTextField.text {
             UserDefaults.standard.set(merchantId, forKey: AppConstants.kMerchantId)
         }
         let baseURL = baseURLTextField.text
         guard checkURL(url: baseURL ?? "") else {
-            let alert = UIAlertController(title: NSLocalizedString("InvalidBaseURLTitle", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
-                                          message: NSLocalizedString("This version of the connectSDK is only compatible with \(SDKConstants.kApiVersion), you supplied: '\(NSURL(string: baseURL ?? "")?.path ?? "an invalid URL")'", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+            let alert = UIAlertController(title: NSLocalizedString("ConnectionErrorTitle", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          message: NSLocalizedString("PaymentProductsErrorExplanation", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
                                           preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -434,11 +443,20 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         //
         // ***************************************************************************
         
-        session = Session(clientSessionId: clientSessionId!, customerId: customerId!, baseURL: baseURL ?? "", assetBaseURL: assetBaseURL ?? "", appIdentifier: AppConstants.kApplicationIdentifier)
+        session = Session(clientSessionId: clientSessionId, customerId: customerId, baseURL: baseURL ?? "", assetBaseURL: assetBaseURL ?? "", appIdentifier: AppConstants.kApplicationIdentifier)
 
-        let countryCode = countryCodeTextField.text
+        guard let countryCode = countryCodeTextField.text,
+              let currencyCode = currencyCodeTextField.text else {
+            let alert = UIAlertController(title: NSLocalizedString("FieldErrorTitle", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          message: NSLocalizedString("FieldErrorCountryCodeCurrencyExplanation", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            SVProgressHUD.dismiss()
+            return
+        }
+        
         UserDefaults.standard[AppConstants.kCountryCode] = countryCode
-        let currencyCode = currencyCodeTextField.text
         UserDefaults.standard[AppConstants.kCurrency] = currencyCode
         let isRecurring = isRecurringSwitch.isOn
         
@@ -454,9 +472,21 @@ public class StartViewController: UIViewController, ContinueShoppingTarget, Paym
         //
         // ***************************************************************************
         do {
-            let amountOfMoney = try PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode!)
-            context = try PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode!)
-            session!.paymentItems(for: context!, groupPaymentProducts: self.shouldGroupProductsSwitch.isOn, success: {(_ paymentItems: PaymentItems) -> Void in
+            let amountOfMoney = try PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
+            context = try PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode)
+            
+            guard let context = context else {
+                Macros.DLog(message: "Could not find context")
+                let alert = UIAlertController(title: NSLocalizedString("ConnectionErrorTitle", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                              message: NSLocalizedString("PaymentProductsErrorExplanation", tableName: AppConstants.kAppLocalizable, bundle: AppConstants.appBundle, value: "", comment: ""),
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+                return
+            }
+            
+            session?.paymentItems(for: context, groupPaymentProducts: self.shouldGroupProductsSwitch.isOn, success: {(_ paymentItems: PaymentItems) -> Void in
                 SVProgressHUD.dismiss()
                 self.showPaymentProductSelection(paymentItems)
             }, failure: { error in
