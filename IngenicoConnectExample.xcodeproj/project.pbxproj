@@ -7,15 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08D0F6431CEF3FFD00FEC674 /* PaymentProductInputDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D0F6421CEF3FFD00FEC674 /* PaymentProductInputDataTestCase.m */; };
-		08D0F6451CEF427400FEC674 /* paymentProduct.json in Resources */ = {isa = PBXBuildFile; fileRef = 08D0F6441CEF427400FEC674 /* paymentProduct.json */; };
-		1AD1299DED21B0E2E5F56F12 /* Pods_IngenicoConnectExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703B2C979786638FDE02611B /* Pods_IngenicoConnectExample.framework */; };
 		42974C791DC8A56300B91814 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42974C781DC8A56300B91814 /* PassKit.framework */; };
 		6D3914C51E20F3C9007C8400 /* FormRowsConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3914C41E20F3C9007C8400 /* FormRowsConverter.swift */; };
 		6D7E21671E1BF53B007BA84B /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E21661E1BF53B007BA84B /* AppConstants.swift */; };
 		6D7E21691E1BF6F1007BA84B /* PaymentProductsTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E21681E1BF6F1007BA84B /* PaymentProductsTableRow.swift */; };
 		6D7E216B1E1BF7DC007BA84B /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E216A1E1BF7DC007BA84B /* PaymentType.swift */; };
-		6D7E216D1E1BF814007BA84B /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E216C1E1BF814007BA84B /* ViewType.swift */; };
 		6D7E216F1E1BF85E007BA84B /* PaymentProductsTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E216E1E1BF85E007BA84B /* PaymentProductsTableSection.swift */; };
 		6D7E21711E1BF8CF007BA84B /* FormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E21701E1BF8CF007BA84B /* FormRow.swift */; };
 		6D7E21731E1BF939007BA84B /* FormRowWithInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E21721E1BF939007BA84B /* FormRowWithInfoButton.swift */; };
@@ -51,7 +47,6 @@
 		6DF7247D1E1D076700D6BA15 /* CoBrandsSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF7247C1E1D076700D6BA15 /* CoBrandsSelectionTableViewCell.swift */; };
 		6DF7247F1E1D0A3700D6BA15 /* COBrandsExplanationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF7247E1E1D0A3700D6BA15 /* COBrandsExplanationTableViewCell.swift */; };
 		6DF724851E1D0D7700D6BA15 /* PaymentProductInputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF724841E1D0D7700D6BA15 /* PaymentProductInputData.swift */; };
-		6DF724871E1D25EA00D6BA15 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF724861E1D25EA00D6BA15 /* ViewFactory.swift */; };
 		6DF724891E1D2A2A00D6BA15 /* PaymentProductSelectionTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF724881E1D2A2A00D6BA15 /* PaymentProductSelectionTarget.swift */; };
 		6DF7248B1E1D2E4500D6BA15 /* PaymentRequestTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF7248A1E1D2E4500D6BA15 /* PaymentRequestTarget.swift */; };
 		6DF7248F1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF7248E1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift */; };
@@ -74,13 +69,11 @@
 		73E9DC1E1EFBB87600969D43 /* CheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1D1EFBB87600969D43 /* CheckMarkView.swift */; };
 		73E9DC201EFBC01000969D43 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9DC1F1EFBC01000969D43 /* StatusView.swift */; };
 		746163FB252DE76700F733E0 /* ValidationErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746163FA252DE76700F733E0 /* ValidationErrorExtension.swift */; };
+		7B3E9DA8299CD450003C1C22 /* FormRowWithProductField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3E9DA7299CD450003C1C22 /* FormRowWithProductField.swift */; };
+		7B3E9DAC299CDCB7003C1C22 /* FormRowWithInfoButtonProductField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3E9DAB299CDCB7003C1C22 /* FormRowWithInfoButtonProductField.swift */; };
 		81BCAD281F06B38B000B0BCF /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCAD271F06B38B000B0BCF /* SeparatorView.swift */; };
 		81BCAD2A1F06B40C000B0BCF /* FormRowSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCAD291F06B40C000B0BCF /* FormRowSeparator.swift */; };
 		81BCAD2C1F06BBB8000B0BCF /* SeparatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCAD2B1F06BBB8000B0BCF /* SeparatorTableViewCell.swift */; };
-		A30330B3197CEF73008B7AF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A351DCB2196296000033E23C /* Foundation.framework */; };
-		A30330B4197CEF73008B7AF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A351DCB6196296000033E23C /* UIKit.framework */; };
-		A30330BC197CEF73008B7AF0 /* TableSectionConverterTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = A30330BB197CEF73008B7AF0 /* TableSectionConverterTestCase.m */; };
-		A30330C4197CEFB2008B7AF0 /* paymentProducts.json in Resources */ = {isa = PBXBuildFile; fileRef = A30330C3197CEFB2008B7AF0 /* paymentProducts.json */; };
 		A351DCB3196296000033E23C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A351DCB2196296000033E23C /* Foundation.framework */; };
 		A351DCB5196296000033E23C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A351DCB4196296000033E23C /* CoreGraphics.framework */; };
 		A351DCB7196296000033E23C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A351DCB6196296000033E23C /* UIKit.framework */; };
@@ -92,34 +85,22 @@
 		B4DC6A0B1E1E6E1600D9A8BA /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC6A081E1E6E1500D9A8BA /* StartViewController.swift */; };
 		B4DC6A0D1E1E6E1F00D9A8BA /* PaymentProductsViewControllerTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC6A0C1E1E6E1F00D9A8BA /* PaymentProductsViewControllerTarget.swift */; };
 		B4DC6A0F1E1E6E8800D9A8BA /* TableSectionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC6A0E1E1E6E8800D9A8BA /* TableSectionConverter.swift */; };
-		DB35BF7010EF9323D8BEBD6C /* Pods_IngenicoConnectExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9049FBA53C858E8D40B5889B /* Pods_IngenicoConnectExampleTests.framework */; };
+		DA088FCC26102A2280E6B07D /* Pods_IngenicoConnectExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6007BECA43AA22550417A4A8 /* Pods_IngenicoConnectExample.framework */; };
 		E9BB319A152C66027E12877F /* ParseJsonTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB3C55E589D8266BDBE4C8 /* ParseJsonTarget.swift */; };
 		F52E88931E9BDE8300546DC2 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E88921E9BDE8300546DC2 /* Button.swift */; };
 		F553D8B81EB09CC00075622C /* BoletoProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F553D8B71EB09CC00075622C /* BoletoProductViewController.swift */; };
 		F56177071EA6509800B75175 /* CardProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56177061EA6509800B75175 /* CardProductViewController.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		A30330BE197CEF73008B7AF0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A351DCA7196296000033E23C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A351DCAE196296000033E23C;
-			remoteInfo = GlobalCollectDemoApp;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		08D0F6421CEF3FFD00FEC674 /* PaymentProductInputDataTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentProductInputDataTestCase.m; sourceTree = "<group>"; };
-		08D0F6441CEF427400FEC674 /* paymentProduct.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paymentProduct.json; sourceTree = "<group>"; };
 		1CC504681E8022970003677F /* IngenicoConnectExample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IngenicoConnectExample-Prefix.pch"; sourceTree = "<group>"; };
-		38ED7C93863D9ED82104C6C1 /* Pods-IngenicoConnectExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample.release.xcconfig"; sourceTree = "<group>"; };
+		24D3CCF705D98A48B00DB0F8 /* Pods-IngenicoConnectExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExample.release.xcconfig"; path = "Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample.release.xcconfig"; sourceTree = "<group>"; };
 		42974C781DC8A56300B91814 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		6007BECA43AA22550417A4A8 /* Pods_IngenicoConnectExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IngenicoConnectExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D3914C41E20F3C9007C8400 /* FormRowsConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowsConverter.swift; path = Converters/Tables/FormRowsConverter.swift; sourceTree = "<group>"; };
 		6D7E21661E1BF53B007BA84B /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppConstants.swift; path = Constants/AppConstants.swift; sourceTree = "<group>"; };
 		6D7E21681E1BF6F1007BA84B /* PaymentProductsTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentProductsTableRow.swift; path = Models/Tables/PaymentProductsTableRow.swift; sourceTree = "<group>"; };
 		6D7E216A1E1BF7DC007BA84B /* PaymentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentType.swift; path = Enumerations/PaymentType.swift; sourceTree = "<group>"; };
-		6D7E216C1E1BF814007BA84B /* ViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewType.swift; path = Enumerations/ViewType.swift; sourceTree = "<group>"; };
 		6D7E216E1E1BF85E007BA84B /* PaymentProductsTableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentProductsTableSection.swift; path = Models/Tables/PaymentProductsTableSection.swift; sourceTree = "<group>"; };
 		6D7E21701E1BF8CF007BA84B /* FormRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRow.swift; path = Models/Tables/FormRow.swift; sourceTree = "<group>"; };
 		6D7E21721E1BF939007BA84B /* FormRowWithInfoButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowWithInfoButton.swift; path = Models/Tables/FormRowWithInfoButton.swift; sourceTree = "<group>"; };
@@ -155,12 +136,10 @@
 		6DF7247C1E1D076700D6BA15 /* CoBrandsSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoBrandsSelectionTableViewCell.swift; path = Views/TableViewCells/CoBrandsSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		6DF7247E1E1D0A3700D6BA15 /* COBrandsExplanationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = COBrandsExplanationTableViewCell.swift; path = Views/TableViewCells/COBrandsExplanationTableViewCell.swift; sourceTree = "<group>"; };
 		6DF724841E1D0D7700D6BA15 /* PaymentProductInputData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentProductInputData.swift; path = Models/PaymentProductInputData.swift; sourceTree = "<group>"; };
-		6DF724861E1D25EA00D6BA15 /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFactory.swift; path = Factories/ViewFactory.swift; sourceTree = "<group>"; };
 		6DF724881E1D2A2A00D6BA15 /* PaymentProductSelectionTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentProductSelectionTarget.swift; path = Protocols/PaymentProductSelectionTarget.swift; sourceTree = "<group>"; };
 		6DF7248A1E1D2E4500D6BA15 /* PaymentRequestTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentRequestTarget.swift; path = Protocols/PaymentRequestTarget.swift; sourceTree = "<group>"; };
 		6DF7248E1E1D2E8900D6BA15 /* ContinueShoppingTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContinueShoppingTarget.swift; path = Protocols/ContinueShoppingTarget.swift; sourceTree = "<group>"; };
 		6DF724901E1D2EAA00D6BA15 /* PaymentFinishedTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentFinishedTarget.swift; path = Protocols/PaymentFinishedTarget.swift; sourceTree = "<group>"; };
-		703B2C979786638FDE02611B /* Pods_IngenicoConnectExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IngenicoConnectExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7240260D262ECD5300AC8673 /* StartPaymentParsedJsonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartPaymentParsedJsonData.swift; path = Models/StartPaymentParsedJsonData.swift; sourceTree = "<group>"; };
 		72402619262ED3B800AC8673 /* JsonDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JsonDialogViewController.swift; path = ViewControllers/JsonDialogViewController.swift; sourceTree = "<group>"; };
 		732012E41EF2805700A736A5 /* FormRowImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowImage.swift; path = Models/Tables/FormRowImage.swift; sourceTree = "<group>"; };
@@ -179,15 +158,11 @@
 		73E9DC1D1EFBB87600969D43 /* CheckMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckMarkView.swift; path = Views/CustomViews/CheckMarkView.swift; sourceTree = "<group>"; };
 		73E9DC1F1EFBC01000969D43 /* StatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusView.swift; path = Views/CustomViews/StatusView.swift; sourceTree = "<group>"; };
 		746163FA252DE76700F733E0 /* ValidationErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrorExtension.swift; sourceTree = "<group>"; };
-		818CD49BA44A2B0A900CFB4F /* Pods-IngenicoConnectExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7B3E9DA7299CD450003C1C22 /* FormRowWithProductField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRowWithProductField.swift; sourceTree = "<group>"; };
+		7B3E9DAB299CDCB7003C1C22 /* FormRowWithInfoButtonProductField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRowWithInfoButtonProductField.swift; sourceTree = "<group>"; };
 		81BCAD271F06B38B000B0BCF /* SeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeparatorView.swift; path = Views/CustomViews/SeparatorView.swift; sourceTree = "<group>"; };
 		81BCAD291F06B40C000B0BCF /* FormRowSeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormRowSeparator.swift; path = Models/Tables/FormRowSeparator.swift; sourceTree = "<group>"; };
 		81BCAD2B1F06BBB8000B0BCF /* SeparatorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeparatorTableViewCell.swift; path = Views/TableViewCells/SeparatorTableViewCell.swift; sourceTree = "<group>"; };
-		9049FBA53C858E8D40B5889B /* Pods_IngenicoConnectExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IngenicoConnectExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A30330B1197CEF73008B7AF0 /* IngenicoConnectExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IngenicoConnectExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A30330B7197CEF73008B7AF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A30330BB197CEF73008B7AF0 /* TableSectionConverterTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableSectionConverterTestCase.m; sourceTree = "<group>"; };
-		A30330C3197CEFB2008B7AF0 /* paymentProducts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paymentProducts.json; sourceTree = "<group>"; };
 		A351DCAF196296000033E23C /* IngenicoConnectExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IngenicoConnectExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A351DCB2196296000033E23C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A351DCB4196296000033E23C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -201,26 +176,16 @@
 		B4DC6A081E1E6E1500D9A8BA /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = ViewControllers/StartViewController.swift; sourceTree = "<group>"; };
 		B4DC6A0C1E1E6E1F00D9A8BA /* PaymentProductsViewControllerTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentProductsViewControllerTarget.swift; path = ViewControllers/Targets/PaymentProductsViewControllerTarget.swift; sourceTree = "<group>"; };
 		B4DC6A0E1E1E6E8800D9A8BA /* TableSectionConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableSectionConverter.swift; path = Converters/Tables/TableSectionConverter.swift; sourceTree = "<group>"; };
-		D79336923AC8E6EAE04F182B /* Pods-IngenicoConnectExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		E2409D13D797F30393861742 /* Pods-IngenicoConnectExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample.debug.xcconfig"; sourceTree = "<group>"; };
+		DED6C208B1793298B8C1C110 /* Pods-IngenicoConnectExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExampleTests.release.xcconfig"; path = "Target Support Files/Pods-IngenicoConnectExampleTests/Pods-IngenicoConnectExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		E9BB3C55E589D8266BDBE4C8 /* ParseJsonTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseJsonTarget.swift; path = Protocols/ParseJsonTarget.swift; sourceTree = "<group>"; };
 		F519A9D21DBF5F2100E61034 /* IngenicoConnectExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IngenicoConnectExample.entitlements; sourceTree = "<group>"; };
 		F52E88921E9BDE8300546DC2 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = Views/Buttons/Button.swift; sourceTree = "<group>"; };
 		F553D8B71EB09CC00075622C /* BoletoProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoletoProductViewController.swift; path = ViewControllers/BoletoProductViewController.swift; sourceTree = "<group>"; };
 		F56177061EA6509800B75175 /* CardProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardProductViewController.swift; path = ViewControllers/CardProductViewController.swift; sourceTree = "<group>"; };
+		FACF56A386901B18A3F52C0C /* Pods-IngenicoConnectExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IngenicoConnectExample.debug.xcconfig"; path = "Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A30330AE197CEF73008B7AF0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A30330B4197CEF73008B7AF0 /* UIKit.framework in Frameworks */,
-				A30330B3197CEF73008B7AF0 /* Foundation.framework in Frameworks */,
-				DB35BF7010EF9323D8BEBD6C /* Pods_IngenicoConnectExampleTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A351DCAC196296000033E23C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,13 +194,24 @@
 				A351DCB5196296000033E23C /* CoreGraphics.framework in Frameworks */,
 				A351DCB7196296000033E23C /* UIKit.framework in Frameworks */,
 				A351DCB3196296000033E23C /* Foundation.framework in Frameworks */,
-				1AD1299DED21B0E2E5F56F12 /* Pods_IngenicoConnectExample.framework in Frameworks */,
+				DA088FCC26102A2280E6B07D /* Pods_IngenicoConnectExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D5C843DE5B2F42755DA7235 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FACF56A386901B18A3F52C0C /* Pods-IngenicoConnectExample.debug.xcconfig */,
+				24D3CCF705D98A48B00DB0F8 /* Pods-IngenicoConnectExample.release.xcconfig */,
+				7768B572CB6F028689740E23 /* Pods-IngenicoConnectExampleTests.debug.xcconfig */,
+				DED6C208B1793298B8C1C110 /* Pods-IngenicoConnectExampleTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		42974C7B1DC8AB5400B91814 /* Targets */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,26 +238,6 @@
 			name = TableHeaderViews;
 			sourceTree = "<group>";
 		};
-		A30330B5197CEF73008B7AF0 /* IngenicoConnectExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				A30330BB197CEF73008B7AF0 /* TableSectionConverterTestCase.m */,
-				A30330B6197CEF73008B7AF0 /* Supporting Files */,
-				08D0F6421CEF3FFD00FEC674 /* PaymentProductInputDataTestCase.m */,
-			);
-			path = IngenicoConnectExampleTests;
-			sourceTree = "<group>";
-		};
-		A30330B6197CEF73008B7AF0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				08D0F6441CEF427400FEC674 /* paymentProduct.json */,
-				A30330C3197CEFB2008B7AF0 /* paymentProducts.json */,
-				A30330B7197CEF73008B7AF0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		A30C8CB3196AD16500F1EDA3 /* Labels */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,10 +250,9 @@
 			isa = PBXGroup;
 			children = (
 				A351DCB8196296000033E23C /* IngenicoConnectExample */,
-				A30330B5197CEF73008B7AF0 /* IngenicoConnectExampleTests */,
 				A351DCB1196296000033E23C /* Frameworks */,
 				A351DCB0196296000033E23C /* Products */,
-				B9220AFEA129F3CC964813CA /* Pods */,
+				1D5C843DE5B2F42755DA7235 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -305,7 +260,6 @@
 			isa = PBXGroup;
 			children = (
 				A351DCAF196296000033E23C /* IngenicoConnectExample.app */,
-				A30330B1197CEF73008B7AF0 /* IngenicoConnectExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -317,8 +271,7 @@
 				A351DCB2196296000033E23C /* Foundation.framework */,
 				A351DCB4196296000033E23C /* CoreGraphics.framework */,
 				A351DCB6196296000033E23C /* UIKit.framework */,
-				703B2C979786638FDE02611B /* Pods_IngenicoConnectExample.framework */,
-				9049FBA53C858E8D40B5889B /* Pods_IngenicoConnectExampleTests.framework */,
+				6007BECA43AA22550417A4A8 /* Pods_IngenicoConnectExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -330,7 +283,6 @@
 				A3FE1FA21962AE7E005FF3FA /* Constants */,
 				A3FE1F901962A076005FF3FA /* Models */,
 				A3FE1F8E1962A036005FF3FA /* Converters */,
-				A3FE1F8D19629FA0005FF3FA /* Factories */,
 				A3FE1F8A19629EFB005FF3FA /* Enumerations */,
 				A3FE1F8819629EC7005FF3FA /* Protocols */,
 				A3FE1F8519629E4C005FF3FA /* Views */,
@@ -451,7 +403,6 @@
 			isa = PBXGroup;
 			children = (
 				6D7E216A1E1BF7DC007BA84B /* PaymentType.swift */,
-				6D7E216C1E1BF814007BA84B /* ViewType.swift */,
 			);
 			name = Enumerations;
 			sourceTree = "<group>";
@@ -472,14 +423,6 @@
 				6D9A63951E1C0647001799FE /* FractionalTextField.swift */,
 			);
 			name = TextFields;
-			sourceTree = "<group>";
-		};
-		A3FE1F8D19629FA0005FF3FA /* Factories */ = {
-			isa = PBXGroup;
-			children = (
-				6DF724861E1D25EA00D6BA15 /* ViewFactory.swift */,
-			);
-			name = Factories;
 			sourceTree = "<group>";
 		};
 		A3FE1F8E1962A036005FF3FA /* Converters */ = {
@@ -523,6 +466,7 @@
 				6D9A638B1E1BFE56001799FE /* FormRowSwitch.swift */,
 				6D9A63971E1C0BE2001799FE /* FormRowTextField.swift */,
 				6D9A63A91E1C0E3A001799FE /* FormRowCurrency.swift */,
+				7B3E9DAB299CDCB7003C1C22 /* FormRowWithInfoButtonProductField.swift */,
 				6D9A63AF1E1C0EF2001799FE /* FormRowTooltip.swift */,
 				6D9A63AB1E1C0E8A001799FE /* FormRowButton.swift */,
 				6D9A63AD1E1C0EC7001799FE /* FormRowErrorMessage.swift */,
@@ -533,6 +477,7 @@
 				81BCAD291F06B40C000B0BCF /* FormRowSeparator.swift */,
 				73B656D51F0FB44A00BBAF8D /* FormRowSmallLogo.swift */,
 				739878A21F17529600A2B7A6 /* FormRowReadonlyReview.swift */,
+				7B3E9DA7299CD450003C1C22 /* FormRowWithProductField.swift */,
 			);
 			name = Tables;
 			sourceTree = "<group>";
@@ -545,48 +490,18 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
-		B9220AFEA129F3CC964813CA /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E2409D13D797F30393861742 /* Pods-IngenicoConnectExample.debug.xcconfig */,
-				38ED7C93863D9ED82104C6C1 /* Pods-IngenicoConnectExample.release.xcconfig */,
-				818CD49BA44A2B0A900CFB4F /* Pods-IngenicoConnectExampleTests.debug.xcconfig */,
-				D79336923AC8E6EAE04F182B /* Pods-IngenicoConnectExampleTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A30330B0197CEF73008B7AF0 /* IngenicoConnectExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A30330C0197CEF73008B7AF0 /* Build configuration list for PBXNativeTarget "IngenicoConnectExampleTests" */;
-			buildPhases = (
-				4FD7D835835FBD08EDE29114 /* [CP] Check Pods Manifest.lock */,
-				A30330AD197CEF73008B7AF0 /* Sources */,
-				A30330AE197CEF73008B7AF0 /* Frameworks */,
-				A30330AF197CEF73008B7AF0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A30330BF197CEF73008B7AF0 /* PBXTargetDependency */,
-			);
-			name = IngenicoConnectExampleTests;
-			productName = GlobalCollectDemoAppTests;
-			productReference = A30330B1197CEF73008B7AF0 /* IngenicoConnectExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		A351DCAE196296000033E23C /* IngenicoConnectExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A351DCDB196296000033E23C /* Build configuration list for PBXNativeTarget "IngenicoConnectExample" */;
 			buildPhases = (
-				F80525160E723E18DF3264F2 /* [CP] Check Pods Manifest.lock */,
+				6C0288C7DBEF0B5E563D2D3C /* [CP] Check Pods Manifest.lock */,
 				A351DCAB196296000033E23C /* Sources */,
 				A351DCAC196296000033E23C /* Frameworks */,
 				A351DCAD196296000033E23C /* Resources */,
-				6B8076DCCE7C2AF2771102AD /* [CP] Embed Pods Frameworks */,
+				4FB06C189B141653C66BE4B8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -606,10 +521,6 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Ingenico;
 				TargetAttributes = {
-					A30330B0197CEF73008B7AF0 = {
-						DevelopmentTeam = S453L3NXGS;
-						TestTargetID = A351DCAE196296000033E23C;
-					};
 					A351DCAE196296000033E23C = {
 						DevelopmentTeam = UTWYEN5FS2;
 						LastSwiftMigration = 0810;
@@ -719,21 +630,11 @@
 			projectRoot = "";
 			targets = (
 				A351DCAE196296000033E23C /* IngenicoConnectExample */,
-				A30330B0197CEF73008B7AF0 /* IngenicoConnectExampleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A30330AF197CEF73008B7AF0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				08D0F6451CEF427400FEC674 /* paymentProduct.json in Resources */,
-				A30330C4197CEFB2008B7AF0 /* paymentProducts.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A351DCAD196296000033E23C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -746,25 +647,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4FD7D835835FBD08EDE29114 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IngenicoConnectExampleTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6B8076DCCE7C2AF2771102AD /* [CP] Embed Pods Frameworks */ = {
+		4FB06C189B141653C66BE4B8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -788,16 +671,20 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IngenicoConnectExample/Pods-IngenicoConnectExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F80525160E723E18DF3264F2 /* [CP] Check Pods Manifest.lock */ = {
+		6C0288C7DBEF0B5E563D2D3C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-IngenicoConnectExample-checkManifestLockResult.txt",
 			);
@@ -809,15 +696,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A30330AD197CEF73008B7AF0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A30330BC197CEF73008B7AF0 /* TableSectionConverterTestCase.m in Sources */,
-				08D0F6431CEF3FFD00FEC674 /* PaymentProductInputDataTestCase.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A351DCAB196296000033E23C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -825,7 +703,6 @@
 				6DF7246B1E1CF80500D6BA15 /* TooltipTableViewCell.swift in Sources */,
 				6DF7247F1E1D0A3700D6BA15 /* COBrandsExplanationTableViewCell.swift in Sources */,
 				7240261A262ED3B900AC8673 /* JsonDialogViewController.swift in Sources */,
-				6D7E216D1E1BF814007BA84B /* ViewType.swift in Sources */,
 				6D9A63861E1BFD39001799FE /* PickerView.swift in Sources */,
 				6D9A63AA1E1C0E3A001799FE /* FormRowCurrency.swift in Sources */,
 				6DF7247B1E1D056400D6BA15 /* CurrencyTableViewCell.swift in Sources */,
@@ -874,6 +751,7 @@
 				81BCAD281F06B38B000B0BCF /* SeparatorView.swift in Sources */,
 				73E9DC201EFBC01000969D43 /* StatusView.swift in Sources */,
 				7240260E262ECD5300AC8673 /* StartPaymentParsedJsonData.swift in Sources */,
+				7B3E9DA8299CD450003C1C22 /* FormRowWithProductField.swift in Sources */,
 				81BCAD2C1F06BBB8000B0BCF /* SeparatorTableViewCell.swift in Sources */,
 				F553D8B81EB09CC00075622C /* BoletoProductViewController.swift in Sources */,
 				6D9A63961E1C0647001799FE /* FractionalTextField.swift in Sources */,
@@ -893,7 +771,7 @@
 				6D9A638C1E1BFE56001799FE /* FormRowSwitch.swift in Sources */,
 				B4DC6A011E1E5A4800D9A8BA /* AppDelegate.swift in Sources */,
 				6D9A63B41E1C0FD8001799FE /* FormRowCoBrandsExplanation.swift in Sources */,
-				6DF724871E1D25EA00D6BA15 /* ViewFactory.swift in Sources */,
+				7B3E9DAC299CDCB7003C1C22 /* FormRowWithInfoButtonProductField.swift in Sources */,
 				6D7E21711E1BF8CF007BA84B /* FormRow.swift in Sources */,
 				6D7E216B1E1BF7DC007BA84B /* PaymentType.swift in Sources */,
 				73E9AB961F9DC80000AC1893 /* DatePickerTableViewCell.swift in Sources */,
@@ -902,14 +780,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		A30330BF197CEF73008B7AF0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A351DCAE196296000033E23C /* IngenicoConnectExample */;
-			targetProxy = A30330BE197CEF73008B7AF0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A363FC261AA704DF00186592 /* AppLocalizable.strings */ = {
@@ -923,62 +793,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		A30330C1197CEF73008B7AF0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 818CD49BA44A2B0A900CFB4F /* Pods-IngenicoConnectExampleTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IngenicoConnectExample.app/IngenicoConnectExample";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = IngenicoConnectExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.globalcollect.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = IngenicoConnectExampleTests;
-				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		A30330C2197CEF73008B7AF0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D79336923AC8E6EAE04F182B /* Pods-IngenicoConnectExampleTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IngenicoConnectExample.app/IngenicoConnectExample";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				INFOPLIST_FILE = IngenicoConnectExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.globalcollect.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = IngenicoConnectExampleTests;
-				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 		A351DCD9196296000033E23C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1058,7 +872,7 @@
 		};
 		A351DCDC196296000033E23C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2409D13D797F30393861742 /* Pods-IngenicoConnectExample.debug.xcconfig */;
+			baseConfigurationReference = FACF56A386901B18A3F52C0C /* Pods-IngenicoConnectExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1076,7 +890,7 @@
 					"\"${SRCROOT}\"",
 				);
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.ingenico.connect.SwiftExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;
@@ -1091,7 +905,7 @@
 		};
 		A351DCDD196296000033E23C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38ED7C93863D9ED82104C6C1 /* Pods-IngenicoConnectExample.release.xcconfig */;
+			baseConfigurationReference = 24D3CCF705D98A48B00DB0F8 /* Pods-IngenicoConnectExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1109,7 +923,7 @@
 					"\"${SRCROOT}\"",
 				);
 				INFOPLIST_FILE = IngenicoConnectExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.ingenico.connect.SwiftExampleApp;
 				PRODUCT_NAME = IngenicoConnectExample;
@@ -1124,15 +938,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A30330C0197CEF73008B7AF0 /* Build configuration list for PBXNativeTarget "IngenicoConnectExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A30330C1197CEF73008B7AF0 /* Debug */,
-				A30330C2197CEF73008B7AF0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A351DCAA196296000033E23C /* Build configuration list for PBXProject "IngenicoConnectExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

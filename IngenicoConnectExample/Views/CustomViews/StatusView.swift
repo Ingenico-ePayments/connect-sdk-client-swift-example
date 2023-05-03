@@ -8,26 +8,23 @@
 
 import UIKit
 enum StatusViewStatus {
-    case Waiting
-    case Progress
-    case Finished
+    case waiting
+    case progress
+    case finished
 }
 class StatusView: UIView {
-    var status: StatusViewStatus = .Waiting {
+    var status: StatusViewStatus = .waiting {
         didSet {
             switch self.status {
-            case .Waiting:
+            case .waiting:
                 self.showCheckMark(color: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0))
-                break
-            case .Progress:
+            case .progress:
                 self.showActivityIndicator()
-                break
-            case .Finished:
+            case .finished:
                 self.showCheckMark(color: UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0))
-                break
             }
         }
-        
+
     }
     private func showActivityIndicator() {
         if checkMarkView.isDescendant(of: self) {
@@ -48,16 +45,19 @@ class StatusView: UIView {
     let activityIndicatorView: UIActivityIndicatorView
     init(frame: CGRect, status: StatusViewStatus) {
         self.status = status
-        self.checkMarkView = CheckMarkView(frame: CGRect(x: 10.0, y: 10.0, width: frame.width - 20.0, height: frame.height - 20.0))
+        self.checkMarkView =
+            CheckMarkView(
+                frame: CGRect(x: 10.0, y: 10.0, width: frame.width - 20.0, height: frame.height - 20.0)
+            )
         self.activityIndicatorView = UIActivityIndicatorView(frame: frame)
         self.activityIndicatorView.style = .gray
         super.init(frame: frame)
         self.checkMarkView.backgroundColor = self.backgroundColor
         self.checkMarkView.isOpaque = false
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

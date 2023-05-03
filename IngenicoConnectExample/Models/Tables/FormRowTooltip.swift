@@ -11,7 +11,6 @@ import UIKit
 import IngenicoConnectKit
 
 class FormRowTooltip: FormRow {
-    var paymentProductField: PaymentProductField?
     var image: UIImage?
     var text: String?
 }

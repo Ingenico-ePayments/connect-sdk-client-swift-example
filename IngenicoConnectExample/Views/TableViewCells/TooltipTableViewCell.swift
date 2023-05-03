@@ -32,10 +32,10 @@ class TooltipTableViewCell: TableViewCell {
             tooltipImageContainer.image = newValue
         }
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         tooltipImageContainer.contentMode = .scaleAspectFit
         tooltipLabel.font = UIFont.systemFont(ofSize: 10.0)
         tooltipLabel.numberOfLines = 0
@@ -46,9 +46,15 @@ class TooltipTableViewCell: TableViewCell {
     }
     private class func labelSize(width: CGFloat, text: String) -> CGSize {
         let style = NSMutableParagraphStyle()
-        style.lineBreakMode = .byWordWrapping;
+        style.lineBreakMode = .byWordWrapping
         let text = text as NSString
-        let rect = text.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [:], context: nil)
+        let rect =
+            text.boundingRect(
+                with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
+                options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin),
+                attributes: [:],
+                context: nil
+            )
         return rect.size
     }
     class func cellSize(width: CGFloat, formRow: FormRowTooltip) -> CGSize {
@@ -72,7 +78,7 @@ class TooltipTableViewCell: TableViewCell {
             tooltipImageContainer.frame = CGRect(x: leftMargin, y: 40, width: 0, height: 0)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

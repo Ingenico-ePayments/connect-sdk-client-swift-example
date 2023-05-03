@@ -11,9 +11,9 @@ import UIKit
 import IngenicoConnectKit
 
 class PickerViewTableViewCell: TableViewCell {
-    class var pickerHeight: CGFloat { get { return 216 } }
+    class var pickerHeight: CGFloat { return 216 }
     var pickerView = PickerView()
-    override class var reuseIdentifier: String {return "picker-view-cell"}
+    override class var reuseIdentifier: String { return "picker-view-cell" }
 
     var items: [ValueMappingItem]? {
         didSet {
@@ -48,7 +48,7 @@ class PickerViewTableViewCell: TableViewCell {
         }
     }
     var readonly: Bool = false {
-        didSet{
+        didSet {
             pickerView.isUserInteractionEnabled = !self.readonly
             pickerView.alpha = (self.readonly) ? 0.6 : 1.0
         }
@@ -58,33 +58,14 @@ class PickerViewTableViewCell: TableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(pickerView)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    func pickerLeftMargin(for fitsize:CGSize) -> CGFloat {
-        if (self.accessoryType != .none) {
-            if (self.contentView.frame.size.width > self.frame.midX - fitsize.width/2 + fitsize.width)
-            {
-                return self.frame.midX - fitsize.width/2;
-            }
-            else {
-                return 16;
-            }
-        }
-        else {
-            if(self.contentView.frame.size.width > self.frame.midX + fitsize.width/2 + 16 + 22 + 16) {
-                return self.frame.midX - fitsize.width/2;
-            }
-            else {
-                return 16;
-            }
-        }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let width = contentView.frame.width
         var frame = CGRect(x: 10, y: 0, width: width - 20, height: PickerViewTableViewCell.pickerHeight)
         frame.size = pickerView.sizeThatFits(frame.size)

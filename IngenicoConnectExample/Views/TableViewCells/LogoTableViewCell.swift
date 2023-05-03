@@ -22,15 +22,17 @@ class LogoTableViewCell: ImageTableViewCell {
         // Configure the view for the selected state
     }
     private static let imageWidth: CGFloat = 140
-    static func cellSize(width: CGFloat, for row: FormRowSmallLogo) -> CGSize {
-        return CGSize(width: LogoTableViewCell.imageWidth, height:size(transformedFrom: row.image.size, targetWidth: LogoTableViewCell.imageWidth).height)
-    }
+
     override func layoutSubviews() {
         let width = LogoTableViewCell.imageWidth as CGFloat
         let leftMargin = self.frame.midX - width/2
-        let height = LogoTableViewCell.size(transformedFrom: (displayImage?.size)!, targetWidth: LogoTableViewCell.imageWidth).height
-            
-        displayImageView.frame = CGRect(x: leftMargin, y: 0, width:width , height: height)
+        let height =
+            LogoTableViewCell.size(
+                transformedFrom: (displayImage?.size)!,
+                targetWidth: LogoTableViewCell.imageWidth
+            ).height
+
+        displayImageView.frame = CGRect(x: leftMargin, y: 0, width: width, height: height)
     }
 
 }

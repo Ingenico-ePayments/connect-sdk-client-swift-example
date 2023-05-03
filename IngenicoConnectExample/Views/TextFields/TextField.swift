@@ -13,16 +13,16 @@ class TextField: UITextField {
     convenience init() {
         self.init(frame: CGRect.zero)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         borderStyle = UITextField.BorderStyle.roundedRect
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
         var rect = super.rightViewRect(forBounds: bounds)
         rect.origin.x -= 10

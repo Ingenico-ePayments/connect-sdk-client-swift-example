@@ -16,48 +16,68 @@ class ExternalAppStatusViewController: UIViewController {
         didSet {
             switch self.externalAppStatus {
             case .Waiting:
-                self.startStatus?.status = .Progress
-                self.authorizedStatus?.status = .Waiting
-                self.endStatus?.status = .Waiting
-
-                break
+                self.startStatus?.status = .progress
+                self.authorizedStatus?.status = .waiting
+                self.endStatus?.status = .waiting
             case .Initialized:
-                self.startStatus?.status = .Finished
-                self.authorizedStatus?.status = .Progress
-                self.endStatus?.status = .Waiting
+                self.startStatus?.status = .finished
+                self.authorizedStatus?.status = .progress
+                self.endStatus?.status = .waiting
             case .Authorized:
-                self.startStatus?.status = .Finished
-                self.authorizedStatus?.status = .Finished
-                self.endStatus?.status = .Progress
+                self.startStatus?.status = .finished
+                self.authorizedStatus?.status = .finished
+                self.endStatus?.status = .progress
             case .Completed:
-                self.authorizedStatus?.status = .Finished
-                self.endStatus?.status = .Finished
-                break
+                self.authorizedStatus?.status = .finished
+                self.endStatus?.status = .finished
             }
         }
     }
     override func loadView() {
         super.loadView()
-        let limitView = UIView(frame: CGRect(x: self.view.frame.midX - 320/2, y: 0, width: 320, height: self.view.frame.height))
+        let limitView =
+            UIView(frame: CGRect(x: self.view.frame.midX - 320/2, y: 0, width: 320, height: self.view.frame.height))
         self.view.addSubview(limitView)
         let inset: CGFloat = 40.0
         let descriptiveLabel = { () -> UIView in
             let label = UILabel(frame: CGRect(x: 20, y: inset, width: 320, height: 40))
             let key = "gc.general.paymentProducts.3012.processing"
-            let text = NSLocalizedString(key, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "Your payment is being processed", comment: "")
+            let text =
+                NSLocalizedString(
+                    key,
+                    tableName: SDKConstants.kSDKLocalizable,
+                    bundle: AppConstants.sdkBundle,
+                    value: "Your payment is being processed",
+                    comment: ""
+                )
             label.text = text
             label.numberOfLines = 0
             let size = label.sizeThatFits(CGSize(width: 320, height: CGFloat.greatestFiniteMagnitude))
             label.frame.size = size
-            return label;
+            return label
         }()
         limitView.addSubview(descriptiveLabel)
         self.startStatus = { () -> StatusView in
             let label = UILabel(frame: CGRect(x: 40, y: 0, width: self.view.frame.width - 40, height: 40))
             let key = "gc.general.paymentProducts.3012.paymentStatus1"
-            label.text = NSLocalizedString(key, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "Started Processing", comment: "")
-            let statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), status: .Waiting)
-            let containerView = UIView(frame:CGRect(x: 20, y: inset + descriptiveLabel.frame.size.height, width: self.view.frame.width, height: 40))
+            label.text =
+                NSLocalizedString(
+                    key,
+                    tableName: SDKConstants.kSDKLocalizable,
+                    bundle: AppConstants.sdkBundle,
+                    value: "Started Processing",
+                    comment: ""
+                )
+            let statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), status: .waiting)
+            let containerView =
+                UIView(
+                    frame: CGRect(
+                        x: 20,
+                        y: inset + descriptiveLabel.frame.size.height,
+                        width: self.view.frame.width,
+                        height: 40
+                    )
+                )
             containerView.addSubview(statusView)
             containerView.addSubview(label)
             limitView.addSubview(containerView)
@@ -66,9 +86,16 @@ class ExternalAppStatusViewController: UIViewController {
         self.authorizedStatus = { () -> StatusView in
             let label = UILabel(frame: CGRect(x: 40, y: 0, width: self.view.frame.width - 40, height: 40))
             let key = "gc.general.paymentProducts.3012.paymentStatus2"
-            label.text = NSLocalizedString(key, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "Authenticated Transaction", comment: "")
-            let statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), status: .Waiting)
-            let containerView = UIView(frame:CGRect(x: 20, y: inset + 80, width: self.view.frame.width, height: 40))
+            label.text =
+                NSLocalizedString(
+                    key,
+                    tableName: SDKConstants.kSDKLocalizable,
+                    bundle: AppConstants.sdkBundle,
+                    value: "Authenticated Transaction",
+                    comment: ""
+                )
+            let statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), status: .waiting)
+            let containerView = UIView(frame: CGRect(x: 20, y: inset + 80, width: self.view.frame.width, height: 40))
             containerView.addSubview(statusView)
             containerView.addSubview(label)
             limitView.addSubview(containerView)
@@ -78,15 +105,21 @@ class ExternalAppStatusViewController: UIViewController {
         self.endStatus = { () -> StatusView in
             let label = UILabel(frame: CGRect(x: 40, y: 0, width: self.view.frame.width - 40, height: 40))
             let key = "gc.general.paymentProducts.3012.paymentStatus3"
-            label.text = NSLocalizedString(key, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "Completed Payment", comment: "")
-            let statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), status: .Waiting)
-            let containerView = UIView(frame:CGRect(x: 20, y: inset + 120, width: self.view.frame.width, height: 40))
+            label.text =
+                NSLocalizedString(
+                    key,
+                    tableName: SDKConstants.kSDKLocalizable,
+                    bundle: AppConstants.sdkBundle,
+                    value: "Completed Payment",
+                    comment: ""
+                )
+            let statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), status: .waiting)
+            let containerView = UIView(frame: CGRect(x: 20, y: inset + 120, width: self.view.frame.width, height: 40))
             containerView.addSubview(statusView)
             containerView.addSubview(label)
             limitView.addSubview(containerView)
             return statusView
         }()
-
 
     }
 

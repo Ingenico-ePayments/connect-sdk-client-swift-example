@@ -1,5 +1,5 @@
 //
-// Created by Sjors de Haas on 20/04/2021.
+// Created for Ingenico ePayments on 20/04/2021.
 // Copyright (c) 2021 Ingenico. All rights reserved.
 //
 

@@ -11,7 +11,7 @@ import UIKit
 class FormRowQRCode: FormRowImage {
     convenience init(qrCodeString: String) {
         let data = qrCodeString.decode()
-        //let data = qrCodeString.data(using: String.Encoding.utf8)
+        // let data = qrCodeString.data(using: String.Encoding.utf8)
         self.init(data: data)
     }
     init(data: Data) {

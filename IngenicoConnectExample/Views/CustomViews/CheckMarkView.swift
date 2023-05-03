@@ -9,8 +9,8 @@
 import UIKit
 
 class CheckMarkView: UIView {
-    
-    public var currentColor = UIColor.green
+
+    var currentColor = UIColor.green
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
@@ -28,6 +28,5 @@ class CheckMarkView: UIView {
         self.currentColor.setStroke()
         path.stroke()
     }
-    
-    
+
 }

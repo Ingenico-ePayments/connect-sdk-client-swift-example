@@ -9,11 +9,11 @@
 import UIKit
 
 class ImageTableViewCell: TableViewCell {
-    
+
     var displayImageView = UIImageView()
-    
+
     override class var reuseIdentifier: String { return "image-cell" }
-    
+
     var displayImage: UIImage? {
         get {
             return displayImageView.image
@@ -22,24 +22,15 @@ class ImageTableViewCell: TableViewCell {
             displayImageView.image = newValue
         }
     }
-    static internal func size(transformedFrom size: CGSize, targetWidth: CGFloat) -> CGSize {
-        let oldWidth: CGFloat = size.width;
-        guard oldWidth != 0 else {
-            return CGSize(width: 0, height:0)
-        }
-        let scaleFactor = targetWidth / oldWidth;
-        return CGSize(width: targetWidth, height:size.height * scaleFactor)
 
-    }
-    static internal func size(transformedFrom size: CGSize, targetHeight: CGFloat) -> CGSize {
-        let oldHeight: CGFloat = size.height;
-        guard oldHeight != 0 else {
-            return CGSize(width: 0, height:0)
+    static internal func size(transformedFrom size: CGSize, targetWidth: CGFloat) -> CGSize {
+        let oldWidth: CGFloat = size.width
+        guard oldWidth != 0 else {
+            return CGSize(width: 0, height: 0)
         }
-        let scaleFactor = targetHeight / oldHeight;
-        return CGSize(width: size.width * scaleFactor, height:targetHeight)
-        
-        
+        let scaleFactor = targetWidth / oldWidth
+        return CGSize(width: targetWidth, height: size.height * scaleFactor)
+
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -47,22 +38,22 @@ class ImageTableViewCell: TableViewCell {
         addSubview(displayImageView)
         clipsToBounds = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let width = self.accessoryAndMarginCompatibleWidth()
         let leftMargin = accessoryCompatibleLeftMargin()
         let newHeight = ImageTableViewCell.size(transformedFrom: (displayImage?.size)!, targetWidth: width).height
-        //displayImageView.bounds = CGRect(origin: displayImageView.bounds.origin, size: )
-        displayImageView.frame = CGRect(x: leftMargin, y: 0, width:width , height: newHeight)
-        //displayImageView.center = CGPoint( x: self.center.x, y: displayImageView.center.y )
+        // displayImageView.bounds = CGRect(origin: displayImageView.bounds.origin, size: )
+        displayImageView.frame = CGRect(x: leftMargin, y: 0, width: width, height: newHeight)
+        // displayImageView.center = CGPoint( x: self.center.x, y: displayImageView.center.y )
     }
-    
+
     override func prepareForReuse() {
         displayImage = nil
     }

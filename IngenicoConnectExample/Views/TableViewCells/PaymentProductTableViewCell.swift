@@ -48,20 +48,19 @@ class PaymentProductTableViewCell: TableViewCell {
         set {
             if self.shouldHaveMaximalWidth {
                 limitedContainer.backgroundColor = newValue
-            }
-            else {
+            } else {
                 super.backgroundColor = newValue
             }
         }
     }
 
     override class var reuseIdentifier: String { return "payment-product-selection-cell" }
-    
+
     var limitedContainer = UIView()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         accessoryType = .disclosureIndicator
         logoContainer = UIImageView(frame: CGRect.zero)
         logoContainer.contentMode = .scaleAspectFit
@@ -72,51 +71,45 @@ class PaymentProductTableViewCell: TableViewCell {
         textLabel?.removeFromSuperview()
         limitedContainer.addSubview(logoContainer)
         limitedContainer.addSubview(textLabel!)
-//        if #available(iOS 9.0, *) {
-//            let constraint = self.textLabel?.leadingAnchor.constraint(equalTo:self.contentView.layoutMarginsGuide.leadingAnchor)
-//            self.contentView.addConstraint(constraint!);
-//        }
 
         clipsToBounds = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let width: Int
         let leftPadding: Int
         let rightPadding = Int(contentView.layoutMargins.right)
         if self.shouldHaveMaximalWidth {
             width = Int(ceil(accessoryAndMarginCompatibleWidth()))
             leftPadding = Int(ceil(accessoryCompatibleLeftMargin()))
-        }
-        else {
+        } else {
             width = Int(contentView.frame.size.width) - rightPadding
             leftPadding = Int(contentView.layoutMargins.left)
         }
 
         let height = Int(contentView.frame.size.height)
         let logoWidth = 35
-        
+
         let textLabelX: Int
         if logo != nil {
             textLabelX = logoWidth + rightPadding
             logoContainer.frame = CGRect(x: 0, y: 5, width: logoWidth, height: height - 10)
-        }
-        else {
+        } else {
             textLabelX = leftPadding
         }
         textLabel?.frame = CGRect(x: textLabelX, y: 0, width: width - textLabelX, height: height)
         limitedContainer.frame = CGRect(x: leftPadding, y: 0, width: width, height: height)
     }
-    
+
     override func prepareForReuse() {
         name = nil
         logo = nil
     }
-    
+
 }

@@ -23,6 +23,7 @@ class LabelTableViewCell: TableViewCell {
             labelView.text = newValue
         }
     }
+
     class func labelFont(bold: Bool) -> UIFont {
         if bold {
             return UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
@@ -30,15 +31,18 @@ class LabelTableViewCell: TableViewCell {
         return UIFont.systemFont(ofSize: UIFont.systemFontSize)
 
     }
+
     private var labelFont: UIFont {
         return LabelTableViewCell.labelFont(bold: self.isBold)
     }
+
     var isBold: Bool = false {
         didSet {
             labelView.font = self.labelFont
 
         }
     }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(labelView)
@@ -46,25 +50,38 @@ class LabelTableViewCell: TableViewCell {
         labelView.lineBreakMode = .byWordWrapping
         clipsToBounds = true
     }
+
     private class func labelSize(width: CGFloat, bold: Bool, text: String) -> CGSize {
         let style = NSMutableParagraphStyle()
-        style.lineBreakMode = .byWordWrapping;
+        style.lineBreakMode = .byWordWrapping
         let text = text as NSString
-        let rect = text.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font: labelFont(bold:bold), NSAttributedString.Key.paragraphStyle: style], context: nil)
+        let rect =
+            text.boundingRect(
+                with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
+                options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin),
+                attributes: [
+                    NSAttributedString.Key.font: labelFont(bold: bold),
+                    NSAttributedString.Key.paragraphStyle: style
+                ],
+                context: nil
+            )
         return rect.size
     }
+
     class func cellSize(width: CGFloat, formRow: FormRowLabel) -> CGSize {
         var rect = LabelTableViewCell.labelSize(width: width, bold: formRow.isBold, text: formRow.text)
         rect.height += 8
         return rect
     }
+
     private func labelSize(width: CGFloat) -> CGSize {
         return LabelTableViewCell.labelSize(width: width, bold: self.isBold, text: self.label!)
     }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 

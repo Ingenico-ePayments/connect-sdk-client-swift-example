@@ -1,0 +1,9 @@
+workspace: IngenicoConnectExample.xcworkspace
+schemes:
+- IngenicoConnectExample
+targets:
+- IngenicoConnectExample
+clean_build: true
+build_arguments:
+- -destination
+- platform="iOS Simulator,name=iPhone 13,OS=15.5"

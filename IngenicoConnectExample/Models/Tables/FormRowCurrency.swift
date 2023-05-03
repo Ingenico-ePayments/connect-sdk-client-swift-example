@@ -9,20 +9,14 @@
 import Foundation
 import IngenicoConnectKit
 
-enum CurrencyRowType {
-    case integer
-    case fractional
-}
-
-class FormRowCurrency: FormRowWithInfoButton {
+class FormRowCurrency: FormRowWithInfoButtonProductField {
     var integerField: FormRowField
     var fractionalField: FormRowField
-    
-    var paymentProductField: PaymentProductField
-    
+
     init(paymentProductField: PaymentProductField, integerField: FormRowField, fractionalField: FormRowField) {
-        self.paymentProductField = paymentProductField
         self.integerField = integerField
         self.fractionalField = fractionalField
+
+        super.init(paymentProductField: paymentProductField)
     }
 }

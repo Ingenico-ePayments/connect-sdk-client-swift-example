@@ -9,12 +9,7 @@
 import Foundation
 import IngenicoConnectKit
 
-class FormRowList: FormRow {
+class FormRowList: FormRowWithProductField {
     var items = [ValueMappingItem]()
     var selectedRow = 0
-    var paymentProductField: PaymentProductField
-    
-    init(paymentProductField: PaymentProductField) {
-        self.paymentProductField = paymentProductField
-    }
 }

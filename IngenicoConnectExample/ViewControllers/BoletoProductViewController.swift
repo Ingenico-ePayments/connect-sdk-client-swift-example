@@ -24,11 +24,14 @@ class BoletoProductViewController: PaymentProductViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+
         for row in formRows {
-            if let fieldRow = row as? FormRowTextField, let validator = fieldRow.paymentProductField.dataRestrictions.validators.validators.first(where: { (validator) -> Bool in
-                return validator is ValidatorBoletoBancarioRequiredness
-            }) as? ValidatorBoletoBancarioRequiredness {
+            if let fieldRow = row as? FormRowTextField,
+               let validator = fieldRow.paymentProductField.dataRestrictions.validators.validators.first(
+                where: { (validator) -> Bool in
+                    return validator is ValidatorBoletoBancarioRequiredness
+                }
+               ) as? ValidatorBoletoBancarioRequiredness {
                 if validator.fiscalNumberLength < switchLength {
                     row.isEnabled = fiscalNumberType == .personal
                 } else {
@@ -43,9 +46,14 @@ class BoletoProductViewController: PaymentProductViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func formatAndUpdateCharacters(textField: UITextField, cursorPosition: inout Int, indexPath: IndexPath, trimSet: CharacterSet) {
+    override func formatAndUpdateCharacters(
+        textField: UITextField,
+        cursorPosition: inout Int,
+        indexPath: IndexPath,
+        trimSet: CharacterSet
+    ) {
         super.formatAndUpdateCharacters(textField: textField, cursorPosition: &cursorPosition, indexPath: indexPath)
-        
+
         guard let row = formRows[indexPath.row] as? FormRowTextField else {
             return
         }
@@ -68,9 +76,11 @@ class BoletoProductViewController: PaymentProductViewController {
 
     override func updateTextFieldCell(cell: TextFieldTableViewCell, row: FormRowTextField) {
         super.updateTextFieldCell(cell: cell, row: row)
-        if let validator = row.paymentProductField.dataRestrictions.validators.validators.first(where: { (validator) -> Bool in
-            return validator is ValidatorBoletoBancarioRequiredness
-        }) as? ValidatorBoletoBancarioRequiredness {
+        if let validator = row.paymentProductField.dataRestrictions.validators.validators.first(
+            where: { (validator) -> Bool in
+                return validator is ValidatorBoletoBancarioRequiredness
+            }
+        ) as? ValidatorBoletoBancarioRequiredness {
             if validator.fiscalNumberLength < switchLength {
                 row.isEnabled = fiscalNumberType == .personal
                 cell.readonly = !row.isEnabled
@@ -83,17 +93,27 @@ class BoletoProductViewController: PaymentProductViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = formRows[indexPath.row]
-        
-        if let fieldRow = row as? FormRowTextField, fieldRow.paymentProductField.dataRestrictions.validators.validators.contains(where: { (validator) -> Bool in
-            return validator is ValidatorBoletoBancarioRequiredness
-        }), !fieldRow.isEnabled {
-            return 0
-        } else if row is FormRowLabel, indexPath.row + 1 < formRows.count, let fieldRow = formRows[indexPath.row + 1] as? FormRowTextField, fieldRow.paymentProductField.dataRestrictions.validators.validators.contains(where: { (validator) -> Bool in
-            return validator is ValidatorBoletoBancarioRequiredness
-        }), !fieldRow.isEnabled {
-            return 0
+
+        if let fieldRow = row as? FormRowTextField,
+           fieldRow.paymentProductField.dataRestrictions.validators.validators.contains(
+            where: { (validator) -> Bool in
+               return validator is ValidatorBoletoBancarioRequiredness
+            }
+           ),
+           !fieldRow.isEnabled {
+               return 0
+        } else if row is FormRowLabel,
+                  indexPath.row + 1 < formRows.count,
+                  let fieldRow = formRows[indexPath.row + 1] as? FormRowTextField,
+                  fieldRow.paymentProductField.dataRestrictions.validators.validators.contains(
+                    where: { (validator) -> Bool in
+                        return validator is ValidatorBoletoBancarioRequiredness
+                    }
+                  ),
+                  !fieldRow.isEnabled {
+                    return 0
         }
-        
+
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
 }

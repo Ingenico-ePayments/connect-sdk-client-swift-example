@@ -13,12 +13,12 @@ class Switch: UISwitch {
     convenience init() {
         self.init(frame: CGRect.zero)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         onTintColor = AppConstants.kPrimaryColor
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

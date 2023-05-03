@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class TextFieldTableViewCell: TableViewCell {
-    
+
     var delegate: UITextFieldDelegate? {
         get {
             return textField.delegate
@@ -19,7 +19,7 @@ class TextFieldTableViewCell: TableViewCell {
             textField.delegate = newValue
         }
     }
-    
+
     var field: FormRowField? {
         didSet {
             textField.text = field?.text
@@ -28,7 +28,7 @@ class TextFieldTableViewCell: TableViewCell {
             textField.isSecureTextEntry = field?.isSecure ?? false
         }
     }
-    
+
     var rightView: UIView? {
         get {
             return textField.rightView
@@ -54,24 +54,24 @@ class TextFieldTableViewCell: TableViewCell {
             errorLabel.text = newValue
         }
     }
-    
+
     private var textField: TextField = TextField()
-    
+
     private var errorLabel: Label = Label()
-    
+
     override class var reuseIdentifier: String {return "text-field-cell"}
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         clipsToBounds = true
         addSubview(textField)
-        
+
         errorLabel.font = UIFont.systemFont(ofSize: 12.0)
         errorLabel.numberOfLines = 0
         errorLabel.textColor = UIColor.red
         addSubview(errorLabel)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -85,16 +85,16 @@ class TextFieldTableViewCell: TableViewCell {
         errorLabel.sizeToFit()
         errorLabel.frame = CGRect(x: leftMargin, y: 44, width: width, height: errorLabel.frame.height)
     }
-    
+
     override func prepareForReuse() {
         field = nil
         delegate = nil
         rightView = nil
         error = nil
     }
-    
+
     deinit {
         textField.endEditing(true)
     }
-    
+
 }

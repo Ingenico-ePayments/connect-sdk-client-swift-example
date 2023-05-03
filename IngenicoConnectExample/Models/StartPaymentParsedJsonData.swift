@@ -2,13 +2,13 @@
 //  StartPaymentParsedJsonData.swift
 //  IngenicoConnectExample
 //
-//  Created by Sjors de Haas on 20/04/2021.
+//  Created for Ingenico ePayments on 20/04/2021.
 //  Copyright © 2021 Ingenico. All rights reserved.
 //
 
 import Foundation
 
-struct StartPaymentParsedJsonData : Codable {
+struct StartPaymentParsedJsonData: Codable {
     var clientId: String?
     var customerId: String?
     var baseUrl: String?

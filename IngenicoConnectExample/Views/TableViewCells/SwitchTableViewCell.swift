@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol SwitchTableViewCellDelegate {
+protocol SwitchTableViewCellDelegate: AnyObject {
     func switchChanged(_ aSwitch: Switch)
 }
 
@@ -25,18 +25,18 @@ class SwitchTableViewCell: TableViewCell {
             return switchControl.isOn
         }
         set {
-            switchControl.isOn = newValue;
+            switchControl.isOn = newValue
         }
     }
     var attributedTitle: NSAttributedString? {
         get {
-            return textView.attributedText 
+            return textView.attributedText
         }
         set {
             textView.attributedText = newValue
         }
     }
-    
+
     var errorMessage: String? {
         get {
             return errorLabel.text
@@ -55,51 +55,58 @@ class SwitchTableViewCell: TableViewCell {
         }
     }
 
-    var delegate: SwitchTableViewCellDelegate?
+    weak var delegate: SwitchTableViewCellDelegate?
+
+    var kvoTextView: NSKeyValueObservation?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         clipsToBounds = true
         addSubview(switchControl)
-        
-        textView.addObserver(self, forKeyPath: #keyPath(UITextView.contentSize), options: .new, context: nil)
+
+        kvoTextView = textView.observe(\.contentSize, options: .new) { object, _ in
+            self.observeValue(textView: object)
+        }
+
         addSubview(textView)
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: 12.0)
-        
+
         errorLabel.font = textView.font
         errorLabel.numberOfLines = 0
         errorLabel.textColor = .red
         addSubview(errorLabel)
-        
+
         setSwitchTarget(nil, action: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    deinit {
+        kvoTextView?.invalidate()
     }
 
     func setSwitchTarget(_ target: Any?, action: Selector?) {
         switchControl.removeTarget(nil, action: nil, for: .allEvents)
         switchControl.addTarget(target ?? self, action: action ?? #selector(didSwitch(_:)), for: .touchUpInside)
     }
-    
+
     @objc func didSwitch(_ sender: Switch) {
         delegate?.switchChanged(sender)
     }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let textView = object as? UITextView {
-            var topCorrect = (textView.bounds.height - textView.contentSize.height * textView.zoomScale) / 2.0;
-            if (topCorrect < 0) {
-                topCorrect = 0;
-            }
-            textView.contentOffset = CGPoint(x: 0, y: -topCorrect)
+
+    private func observeValue(textView: UITextView) {
+        var topCorrect = (textView.bounds.height - textView.contentSize.height * textView.zoomScale) / 2.0
+        if topCorrect < 0 {
+            topCorrect = 0
         }
+        textView.contentOffset = CGPoint(x: 0, y: -topCorrect)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -109,14 +116,19 @@ class SwitchTableViewCell: TableViewCell {
         let switchWidth = switchControl.frame.size.width
 
         textView.frame = CGRect(x: leftMargin + 16 + switchWidth, y: 10, width: width - switchWidth, height: 44)
-        
-        
+
         switchControl.frame = CGRect(x: leftMargin, y: 7, width: 0, height: 0)
         textLabel?.frame = CGRect(x: leftMargin + switchWidth + 16, y: -1, width: width - switchWidth, height: height)
         errorLabel.frame = CGRect(x: leftMargin, y: 64, width: width, height: 20)
         errorLabel.preferredMaxLayoutWidth = width - 20
         errorLabel.sizeToFit()
-        errorLabel.frame = CGRect(x: leftMargin, y: self.textView.frame.origin.y + self.textView.frame.size.height + 5, width: width, height: self.errorLabel.frame.size.height)
+        errorLabel.frame =
+            CGRect(
+                x: leftMargin,
+                y: self.textView.frame.origin.y + self.textView.frame.size.height + 5,
+                width: width,
+                height: self.errorLabel.frame.size.height
+            )
     }
 
     override func prepareForReuse() {

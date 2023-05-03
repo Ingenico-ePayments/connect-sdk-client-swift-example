@@ -8,11 +8,12 @@
 
 import UIKit
 
-class SeparatorView : UIView {
+class SeparatorView: UIView {
     var separatorString: NSString?
     override func draw(_ rect: CGRect) {
         let textBufferSpace = (separatorString != nil) ? 20.0 as CGFloat : 0 as CGFloat
-        let drawSize = (separatorString != nil) ? separatorString!.size(withAttributes: [:]) : CGSize(width: 0, height: 0)
+        let drawSize =
+            (separatorString != nil) ? separatorString!.size(withAttributes: [:]) : CGSize(width: 0, height: 0)
         let context = UIGraphicsGetCurrentContext()
         let path = UIBezierPath()
         let endX = (self.bounds.width/2 - drawSize.width/2) - textBufferSpace
@@ -27,9 +28,15 @@ class SeparatorView : UIView {
         context?.setStrokeColor(UIColor.darkGray.cgColor)
         path.stroke()
         if let nsstr = separatorString {
-            let drawRect = CGRect(x: firstEndPoint.x + textBufferSpace, y: self.bounds.midY - drawSize.height/2, width: drawSize.width, height: drawSize.height)
-            nsstr.draw(in:drawRect , withAttributes: [NSAttributedString.Key.foregroundColor:UIColor.darkGray])
+            let drawRect =
+                CGRect(
+                    x: firstEndPoint.x + textBufferSpace,
+                    y: self.bounds.midY - drawSize.height/2,
+                    width: drawSize.width,
+                    height: drawSize.height
+                )
+            nsstr.draw(in: drawRect, withAttributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         }
     }
-    
+
 }

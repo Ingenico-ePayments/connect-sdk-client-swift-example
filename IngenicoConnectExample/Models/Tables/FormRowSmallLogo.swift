@@ -9,14 +9,7 @@
 import UIKit
 
 class FormRowSmallLogo: FormRowImage {
-    enum AnchorSide {
-        case left
-        case right
-    }
-    var anchorSide: AnchorSide
     override init(image: UIImage) {
-        anchorSide = .left
-        
         super.init(image: image)
     }
 }
