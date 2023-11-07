@@ -830,6 +830,16 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         // instead of the factory method used below if you want to replace any of the
         // supporting objects.
         //
+        // You can log of requests made to the server and responses received from the server
+        // by passing the `loggingEnabled` parameter to the Session constructor.
+        // In the constructor below, the logging is disabled.
+        // You are also able to disable / enable logging at a later stage
+        // by calling `session.loggingEnabled = `, as shown below.
+        // Logging should be disabled in production.
+        // To use logging in debug, but not in production, you can set `loggingEnabled` within a DEBUG flag.
+        // If you use the DEBUG flag, you can take a look at this app's build settings
+        // to see the setup you should apply to your own app.
+        //
         // ***************************************************************************
 
         session = Session(
@@ -837,8 +847,13 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             customerId: customerId,
             baseURL: baseURL ?? "",
             assetBaseURL: assetBaseURL ?? "",
-            appIdentifier: AppConstants.kApplicationIdentifier
+            appIdentifier: AppConstants.kApplicationIdentifier,
+            loggingEnabled: false
         )
+
+        #if DEBUG
+            session?.loggingEnabled = true
+        #endif
 
         guard let countryCode = countryCodeTextField.text,
               let currencyCode = currencyCodeTextField.text else {

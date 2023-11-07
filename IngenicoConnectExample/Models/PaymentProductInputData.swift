@@ -101,8 +101,6 @@ class PaymentProductInputData {
                 for validator in validators {
                     if let fixedListValidator = validator as? ValidatorFixedList {
                         // It's not possible to choose an empty string with a picker
-                        // If it is neccessary to choose an invalid value here
-                        // (placeholder, see ArvatoViewController), choose a different value from ""
                         // Except if it is on the accountOnFile
                         hasFixedValidator = true
                         let value = fixedListValidator.allowedValues[0]

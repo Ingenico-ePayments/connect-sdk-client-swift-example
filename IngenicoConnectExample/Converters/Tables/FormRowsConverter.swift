@@ -317,7 +317,7 @@ class FormRowsConverter {
                 tableName: SDKConstants.kSDKLocalizable,
                 bundle: AppConstants.sdkBundle,
                 value: "",
-                comment: "AfterPay"
+                comment: ""
             )
         let nsDescriptionValue = descriptionValue as NSString
         let range = nsDescriptionValue.range(of: "{link}")
