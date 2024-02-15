@@ -384,15 +384,12 @@ class FormRowsConverter {
     func listFormRow(from field: PaymentProductField, value: String, isEnabled: Bool) -> FormRowList {
         let row = FormRowList(paymentProductField: field)
 
-        var identifierToRowMapping = [String: String]()
         let valueMapping = field.displayHints.formElement.valueMapping
-        for item: ValueMappingItem in valueMapping where
-            (item.displayName != nil || item.displayElements.contains { $0.value != nil}) &&
-            item.value != nil {
-             row.items.append(item)
+        for item: ValueMappingItem in valueMapping where item.displayName != nil {
+            row.items.append(item)
         }
 
-        row.selectedRow = row.items.map({ $0.value }).index(of: value) ?? 0
+        row.selectedRow = row.items.map({ $0.value }).firstIndex(of: value) ?? 0
         row.isEnabled = isEnabled
         return row
     }

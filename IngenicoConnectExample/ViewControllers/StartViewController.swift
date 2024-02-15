@@ -11,7 +11,6 @@ import PassKit
 import UIKit
 import SVProgressHUD
 import IngenicoConnectKit
-import IngenicoConnectExample
 
 // Enable subscripting userdefaults
 extension UserDefaults {
@@ -59,7 +58,6 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
 
     var amountValue: Int = 0
 
-    var session: Session?
     var context: PaymentContext?
 
     let jsonDialogViewController = JsonDialogViewController()
@@ -701,8 +699,8 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         }
     }
     private func checkURL(url: String) -> Bool {
-        if var finalComponents = URLComponents(string: url) {
-            var components = finalComponents.path.split(separator: "/").map { String($0)}
+        if let finalComponents = URLComponents(string: url) {
+            let components = finalComponents.path.split(separator: "/").map { String($0)}
             let versionComponents = (SDKConstants.kApiVersion as NSString).pathComponents
 
             switch components.count {
@@ -735,10 +733,9 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
     }
 
     @objc func buyButtonTapped(_ sender: UIButton) {
-        if payButton == sender, let newValue = Int(amountTextField.text!) {
-            amountValue = newValue
-            UserDefaults.standard.set(newValue, forKey: AppConstants.kPrice)
-        } else {
+        self.initializeConnectSDK()
+
+        if payButton != sender {
             NSException(
                 name: NSExceptionName(rawValue: "Invalid sender"),
                 reason: "Sender is invalid", userInfo: nil
@@ -756,29 +753,37 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             )
         SVProgressHUD.show(withStatus: status)
 
+        ConnectSDK.clientApi.paymentItems(
+            success: {(_ paymentItems: PaymentItems) -> Void in
+                SVProgressHUD.dismiss()
+                self.showPaymentProductSelection(paymentItems)
+            },
+            failure: { error in
+                Macros.DLog(message: error.localizedDescription)
+                self.showError(titleKey: "ConnectionErrorTitle", messageKey: "PaymentProductsErrorExplanation")
+            },
+            apiFailure: { errorResponse in
+                Macros.DLog(message: errorResponse.errors[0].message)
+                self.showError(titleKey: "ConnectionErrorTitle", messageKey: "PaymentProductsErrorExplanation")
+            }
+        )
+    }
+
+    private func initializeConnectSDK() {
+        // ***************************************************************************
+        //
+        // The GlobalCollect SDK supports processing payments with the static insance of
+        // ConnectSDK.clientApi. The code below shows how to initialize the ConnectSDK object correctly.
+        //
+        // The ConnectSDK uses a number of supporting objects. There is an
+        // initializer for this class that takes these supporting objects as
+        // arguments.
+        //
+        // ***************************************************************************
+
         guard let clientSessionId = clientSessionIdTextField.text,
               let customerId = customerIdTextField.text else {
-            let alert =
-                UIAlertController(
-                    title: NSLocalizedString(
-                        "FieldErrorTitle",
-                        tableName: AppConstants.kAppLocalizable,
-                        bundle: AppConstants.appBundle,
-                        value: "",
-                        comment: ""
-                    ),
-                    message: NSLocalizedString(
-                        "FieldErrorClientSessionIdCustomerIdExplanation",
-                        tableName: AppConstants.kAppLocalizable,
-                        bundle: AppConstants.appBundle,
-                        value: "",
-                        comment: ""
-                    ),
-                    preferredStyle: .alert
-                )
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            SVProgressHUD.dismiss()
+            self.showError(titleKey: "FieldErrorTitle", messageKey: "FieldErrorClientSessionIdCustomerIdExplanation")
             return
         }
 
@@ -789,27 +794,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         }
         let baseURL = baseURLTextField.text
         guard checkURL(url: baseURL ?? "") else {
-            let alert =
-                UIAlertController(
-                    title: NSLocalizedString(
-                        "ConnectionErrorTitle",
-                        tableName: AppConstants.kAppLocalizable,
-                        bundle: AppConstants.appBundle,
-                        value: "",
-                        comment: ""
-                    ),
-                    message: NSLocalizedString(
-                        "PaymentProductsErrorExplanation",
-                        tableName: AppConstants.kAppLocalizable,
-                        bundle: AppConstants.appBundle,
-                        value: "",
-                        comment: ""
-                    ),
-                    preferredStyle: .alert
-                )
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            SVProgressHUD.dismiss()
+            self.showError(titleKey: "ConnectionErrorTitle", messageKey: "PaymentProductsErrorExplanation")
             return
         }
         UserDefaults.standard[AppConstants.kBaseURL] = baseURL
@@ -817,67 +802,58 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         let assetBaseURL = assetsBaseURLTextField.text
         UserDefaults.standard[AppConstants.kAssetsBaseURL] = assetBaseURL
 
+        let sessionConfiguration = SessionConfiguration(
+            clientSessionId: clientSessionId,
+            customerId: customerId,
+            clientApiUrl: baseURL ?? "",
+            assetUrl: assetBaseURL ?? ""
+        )
+
         // ***************************************************************************
         //
-        // The GlobalCollect SDK supports processing payments with instances of the
-        // Session class. The code below shows how such an instance chould be
-        // instantiated.
-        //
-        // The Session class uses a number of supporting objects. There is an
-        // initializer for this class that takes these supporting objects as
-        // arguments. This should make it easy to replace these additional objects
-        // without changing the implementation of the SDK. Use this initializer
-        // instead of the factory method used below if you want to replace any of the
-        // supporting objects.
-        //
         // You can log of requests made to the server and responses received from the server
-        // by passing the `loggingEnabled` parameter to the Session constructor.
+        // by passing the `enableNetworkLogs` parameter to the ConnectSDKConfiguration constructor.
         // In the constructor below, the logging is disabled.
-        // You are also able to disable / enable logging at a later stage
-        // by calling `session.loggingEnabled = `, as shown below.
         // Logging should be disabled in production.
-        // To use logging in debug, but not in production, you can set `loggingEnabled` within a DEBUG flag.
+        // To use logging in debug, but not in production, you can initialize the ConnectSDKConfiguration object
+        // within a DEBUG flag.
         // If you use the DEBUG flag, you can take a look at this app's build settings
         // to see the setup you should apply to your own app.
         //
         // ***************************************************************************
 
-        session = Session(
-            clientSessionId: clientSessionId,
-            customerId: customerId,
-            baseURL: baseURL ?? "",
-            assetBaseURL: assetBaseURL ?? "",
-            appIdentifier: AppConstants.kApplicationIdentifier,
-            loggingEnabled: false
-        )
+        var connectSDKConfiguration: ConnectSDKConfiguration?
 
         #if DEBUG
-            session?.loggingEnabled = true
+        connectSDKConfiguration = ConnectSDKConfiguration(
+            sessionConfiguration: sessionConfiguration,
+            enableNetworkLogs: true,
+            applicationId: AppConstants.kApplicationIdentifier,
+            ipAddress: nil
+        )
+        #else
+        connectSDKConfiguration = ConnectSDKConfiguration(
+            sessionConfiguration: sessionConfiguration,
+            enableNetworkLogs: false,
+            applicationId: AppConstants.kApplicationIdentifier,
+            ipAddress: nil
+        )
         #endif
+
+        guard let newValue = Int(amountTextField.text!) else {
+            NSException(
+                name: NSExceptionName(rawValue: "Invalid sender"),
+                reason: "Sender is invalid", userInfo: nil
+            ).raise()
+            return
+        }
+
+        amountValue = newValue
+        UserDefaults.standard.set(newValue, forKey: AppConstants.kPrice)
 
         guard let countryCode = countryCodeTextField.text,
               let currencyCode = currencyCodeTextField.text else {
-            let alert =
-                UIAlertController(
-                    title: NSLocalizedString(
-                        "FieldErrorTitle",
-                        tableName: AppConstants.kAppLocalizable,
-                        bundle: AppConstants.appBundle,
-                        value: "",
-                        comment: ""
-                    ),
-                    message: NSLocalizedString(
-                        "FieldErrorCountryCodeCurrencyExplanation",
-                        tableName: AppConstants.kAppLocalizable,
-                        bundle: AppConstants.appBundle,
-                        value: "",
-                        comment: ""
-                    ),
-                    preferredStyle: .alert
-                )
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            SVProgressHUD.dismiss()
+            self.showError(titleKey: "FieldErrorTitle", messageKey: "FieldErrorCountryCodeCurrencyExplanation")
             return
         }
 
@@ -890,89 +866,66 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         // To retrieve the available payment products, the information stored in the
         // following PaymentContext object is needed.
         //
-        // After the Session object has retrieved the payment products that match
+        // After the ConnectSDK has retrieved the payment products that match
         // the information stored in the PaymentContext object, a
         // selection screen is shown. This screen itself is not part of the SDK and
         // only illustrates a possible payment product selection screen.
         //
         // ***************************************************************************
-        do {
-            let amountOfMoney = try PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
-            context = try PaymentContext(
-                amountOfMoney: amountOfMoney,
-                isRecurring: isRecurring,
-                countryCode: countryCode
-            )
 
-            guard let context = context else {
-                Macros.DLog(message: "Could not find context")
-                let alert =
-                    UIAlertController(
-                        title: NSLocalizedString(
-                            "ConnectionErrorTitle",
-                            tableName: AppConstants.kAppLocalizable,
-                            bundle: AppConstants.appBundle,
-                            value: "",
-                            comment: ""
-                        ),
-                        message: NSLocalizedString(
-                            "PaymentProductsErrorExplanation",
-                            tableName: AppConstants.kAppLocalizable,
-                            bundle: AppConstants.appBundle,
-                            value: "",
-                            comment: ""
-                        ),
-                        preferredStyle: .alert
-                    )
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-                return
-            }
+        let amountOfMoney = PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
+        context = PaymentContext(
+            amountOfMoney: amountOfMoney,
+            isRecurring: isRecurring,
+            countryCode: countryCode
+        )
 
-            session?.paymentItems(
-                for: context,
-                groupPaymentProducts: self.shouldGroupProductsSwitch.isOn,
-                    success: {(_ paymentItems: PaymentItems) -> Void in
-                    SVProgressHUD.dismiss()
-                    self.showPaymentProductSelection(paymentItems)
-                },
-                failure: { _ in
-                    SVProgressHUD.dismiss()
-                    let alert =
-                        UIAlertController(
-                            title: NSLocalizedString(
-                                "ConnectionErrorTitle",
-                                tableName: AppConstants.kAppLocalizable,
-                                bundle: AppConstants.appBundle,
-                                value: "",
-                                comment: ""
-                            ),
-                            message: NSLocalizedString(
-                                "PaymentProductsErrorExplanation",
-                                tableName: AppConstants.kAppLocalizable,
-                                bundle: AppConstants.appBundle,
-                                value: "",
-                                comment: ""
-                            ),
-                            preferredStyle: .alert
-                        )
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            )
-        } catch {
-
+        guard let context,
+              let connectSDKConfiguration else {
+            self.showError(titleKey: "ConnectionErrorTitle", messageKey: "PaymentProductsErrorExplanation")
+            return
         }
+
+        let paymentConfiguration = PaymentConfiguration(
+            paymentContext: context,
+            groupPaymentProducts: self.shouldGroupProductsSwitch.isOn
+        )
+
+        ConnectSDK.initialize(
+            connectSDKConfiguration: connectSDKConfiguration,
+            paymentConfiguration: paymentConfiguration
+        )
+    }
+
+    private func showError(titleKey: String, messageKey: String) {
+        SVProgressHUD.dismiss()
+        let alert =
+            UIAlertController(
+                title: NSLocalizedString(
+                    titleKey,
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
+                    value: "",
+                    comment: ""
+                ),
+                message: NSLocalizedString(
+                    messageKey,
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
+                    value: "",
+                    comment: ""
+                ),
+                preferredStyle: .alert
+            )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func showPaymentProductSelection(_ paymentItems: PaymentItems) {
-        if let session = session, let context = context {
+        if let context {
             paymentProductsViewControllerTarget =
                 PaymentProductsViewControllerTarget(
-                    navigationController: navigationController!,
-                    session: session,
-                    context: context
+                    navigationController: navigationController!
                 )
             paymentProductsViewControllerTarget!.paymentFinishedTarget = self
             let paymentProductSelection =

@@ -19,8 +19,6 @@ class BancontactProductViewController: PaymentProductViewController {
 
     init(
         paymentItem: PaymentItem,
-        session: Session,
-        context: PaymentContext,
         accountOnFile: AccountOnFile?,
         customServerJSON: [String: Any]
     ) {
@@ -37,7 +35,8 @@ class BancontactProductViewController: PaymentProductViewController {
         }
         paymentItem.fields.paymentProductFields.removeAll()
         for fieldJSON in formFields {
-            if let field = PaymentProductField(json: fieldJSON) {
+            if let fieldData = try? JSONSerialization.data(withJSONObject: fieldJSON),
+               let field = try? JSONDecoder().decode(PaymentProductField.self, from: fieldData) {
                 paymentItem.fields.paymentProductFields.append(field)
             }
         }
@@ -52,8 +51,6 @@ class BancontactProductViewController: PaymentProductViewController {
         })!["value"]!
         super.init(
             paymentItem: paymentItem,
-            session: session,
-            context: context,
             accountOnFile: accountOnFile
         )
     }
@@ -169,23 +166,8 @@ class BancontactProductViewController: PaymentProductViewController {
             _ = self.formRows.map({ (formRow) -> FormRow in
                 return formRow
             })
-            // START: Remove the following code to test locally
-            let thirdPartyStatus = response.thirdPartyStatus
-            // END
 
-            // START: Uncomment the following code to test locally
-            // var thirdPartyStatus = response.thirdPartyStatus
-            // self.testTime += 1.0
-            // if self.testTime >= 10.0 {
-            //        thirdPartyStatus = .Initialized
-            // }
-            // if self.testTime >= 20.0 {
-            //    thirdPartyStatus = .Authorized
-            // }
-            // if self.testTime >= 30.0 {
-            //    thirdPartyStatus = .Completed
-            // }
-            // END
+            let thirdPartyStatus = response.thirdPartyStatus
 
             guard self.thirdPartyStatus != thirdPartyStatus else {
                 if self.thirdPartyStatus != .Completed {
@@ -221,17 +203,18 @@ class BancontactProductViewController: PaymentProductViewController {
                     )
                 }
             }
-
         }
-        self.session.communicator.thirdPartyStatus(forPayment: self.paymentId, success: success, failure: { err in
-            // START: Uncomment the following code to test locally
-            // if let response =
-            //  ThirdPartyStatusResponse(json: ["thirdPartyStatus": ThirdPartyStatus.Waiting.rawValue]) {
-            //    success(response)
-            // }
-            // END
-            print(err.localizedDescription)
-        })
+
+        ConnectSDK.clientApi.thirdPartyStatus(
+            forPayment: self.paymentId,
+            success: success,
+            failure: { error in
+                Macros.DLog(message: error.localizedDescription)
+            },
+            apiFailure: { errorResponse in
+                Macros.DLog(message: errorResponse.errors[0].message)
+            }
+        )
     }
 
     /// Dequeues a SeparatorTableViewCell, and initializes the text according to the model
@@ -295,9 +278,6 @@ class BancontactProductViewController: PaymentProductViewController {
     ///
     /// - Parameter obj: The sender of the notification.
     @objc func didReturn(obj: AnyObject) {
-        // START: Uncomment the following code to test locally
-        // self.testTime += 10.0;
-        // END
         if !self.polling {
             self.startPolling()
         }
@@ -306,15 +286,10 @@ class BancontactProductViewController: PaymentProductViewController {
     /// Called in response to press of the "Open App" button.
     /// Opens the Bancontact app, and registers a notification to see when the app retrurns.
     @objc func didTapOpenAppButton() {
-        // START: Remove the following code to test locally
         guard let url = URL(string: self.appRedirectURL) else {
             return
         }
-        // END
 
-        // START: Uncomment the following to test locally
-        // let url = URL(string: "http://www.google.com")!
-        // END
         guard UIApplication.shared.canOpenURL(url) else {
             return
         }

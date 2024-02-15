@@ -58,7 +58,7 @@ class CardProductViewController: PaymentProductViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = formRows[indexPath.row]
 
-        if (row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow), !row.isEnabled {
+        if (row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow) && !row.isEnabled {
             return 0
         } else if row is FormRowCoBrandsExplanation {
             let cellString = COBrandsExplanationTableViewCell.cellString()
@@ -166,10 +166,10 @@ class CardProductViewController: PaymentProductViewController {
             let oldFormRows = self.formRows
             self.initializeFormRows()
             self.addExtraRows()
-            let oldCardNumberIndex = oldFormRows.index(where: { (row) -> Bool in
+            let oldCardNumberIndex = oldFormRows.firstIndex(where: { (row) -> Bool in
                 (row as? FormRowTextField)?.paymentProductField.identifier == "cardNumber"
             }) ?? 0
-            let newCardNumberIndex = self.formRows.index(where: { (row) -> Bool in
+            let newCardNumberIndex = self.formRows.firstIndex(where: { (row) -> Bool in
                 (row as? FormRowTextField)?.paymentProductField.identifier == "cardNumber"
             })  ?? 0
 
@@ -258,18 +258,22 @@ class CardProductViewController: PaymentProductViewController {
         if row.paymentProductField.identifier == "cardNumber" {
             let unmasked = inputData.unmaskedValue(forField: row.paymentProductField.identifier)
             if unmasked.count >= 6, oneOfFirst8DigitsChangedIn(currentEnteredCreditCardNumber: unmasked) {
-                session.iinDetails(
+                ConnectSDK.clientApi.iinDetails(
                     forPartialCreditCardNumber: unmasked,
-                    context: context,
-                    success: {(_ response: IINDetailsResponse) -> Void in
+                    success: { iinDetailsResponse in
                         guard
                           self.inputData.unmaskedValue(forField: row.paymentProductField.identifier).count >= 6 else {
                             return
                         }
 
-                        self.switchToPaymentProduct(response: response)
+                        self.switchToPaymentProduct(response: iinDetailsResponse)
                     },
-                    failure: { _ in }
+                    failure: { error in
+                        Macros.DLog(message: error.localizedDescription)
+                    },
+                    apiFailure: { errorResponse in
+                        Macros.DLog(message: errorResponse.errors[0].message)
+                    }
                 )
             } else if unmasked.count < 6 {
                 self.removeCoBrands()
@@ -346,10 +350,7 @@ class CardProductViewController: PaymentProductViewController {
                         comment: ""
                     )
                 row.name = paymentProductValue
-
-                let assetManager = AssetManager()
-                let logo = assetManager.logoImage(forItem: id)
-                row.logo = logo
+                row.logo = paymentItem.displayHints.logoImage
 
                 formRows.append(row)
             }

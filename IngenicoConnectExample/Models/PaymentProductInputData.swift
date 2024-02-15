@@ -92,7 +92,6 @@ class PaymentProductInputData {
     func validateExcept(fieldNames exceptFieldNames: Set<String>) {
         errors.removeAllObjects()
 
-        let request = self.paymentRequest()
         let paymentProductFields = paymentItem.fields.paymentProductFields
         for field in paymentProductFields where !fieldIsPartOfAccountOnFile(paymentProductFieldId: field.identifier) {
             if self.unmaskedValue(forField: field.identifier) == "" {
@@ -125,9 +124,9 @@ class PaymentProductInputData {
             if exceptFieldNames.contains(field.identifier) {
                 continue
             }
-            let fieldValue = self.unmaskedValue(forField: field.identifier )
-            field.validateValue(value: fieldValue, for: request)
-            errors.addObjects(from: field.errors)
+            let fieldValue = self.unmaskedValue(forField: field.identifier)
+            let errorMessageIds = field.validateValue(value: fieldValue)
+            errors.addObjects(from: errorMessageIds)
         }
     }
 

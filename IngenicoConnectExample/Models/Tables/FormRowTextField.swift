@@ -15,13 +15,6 @@ struct FormRowField {
     var placeholder: String
     var keyboardType: UIKeyboardType
     var isSecure: Bool
-
-    init(text: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) {
-        self.text = text
-        self.placeholder = placeholder
-        self.keyboardType = keyboardType
-        self.isSecure = isSecure
-    }
 }
 
 class FormRowTextField: FormRowWithInfoButtonProductField {
